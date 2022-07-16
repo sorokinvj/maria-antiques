@@ -1,15 +1,19 @@
 import createOrder from '@/lib/create-order'
 import stripeSigningSecret from '@/lib/stripe-signing-secret'
 
+export const config = { api: { bodyParser: false } }
+
 const handler = async (req, res, event) => {
   const permittedEvents = ['checkout.session.completed']
-
+  console.log('webhook request headers', req.headers)
+  console.log('webhook request', req)
   if (req.method === 'POST') {
     if (permittedEvents.includes(event?.type)) {
       try {
         switch (event?.type) {
           case 'checkout.session.completed':
             await createOrder({ sessionId: event?.data?.object?.id })
+            stripeSigningSecret(req, res)
             break
           default:
             throw new Error(`Unhandled event: ${event?.type}`)
@@ -25,4 +29,4 @@ const handler = async (req, res, event) => {
   }
 }
 
-export default stripeSigningSecret(handler)
+export default handler
