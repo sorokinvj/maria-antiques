@@ -21,8 +21,7 @@ const handler = async (req, res, event) => {
         res.status(500).json({ message: 'Unknown event' })
       }
     }
-
-    res.status(204).json({ message: 'Received' })
+    res.send({ received: true })
   } else {
     res.status(405).json({ message: 'Method not allowed' })
   }
