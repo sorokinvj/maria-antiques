@@ -11,14 +11,19 @@ const handler = async (req, res, event) => {
   const permittedEvents = ['checkout.session.completed']
   console.log('event received', event)
   if (req.method === 'POST') {
-    if (permittedEvents.includes(event.type)) {
+    if (permittedEvents.includes(event?.type)) {
       try {
-        switch (event.type) {
+        switch (event?.type) {
           case 'checkout.session.completed':
-            await createOrder({ sessionId: event.data.object.id })
+            await createOrder({ sessionId: event?.data?.object?.id })
+            console.log(
+              'order ',
+              event?.data?.object?.id,
+              ' successfuly created on GraphCMS'
+            )
             break
           default:
-            throw new Error(`Unhandled event: ${event.type}`)
+            throw new Error(`Unhandled event: ${event?.type}`)
         }
       } catch (error) {
         res.status(500).json({ message: 'Unknown event' })
