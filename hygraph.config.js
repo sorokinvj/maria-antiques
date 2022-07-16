@@ -6,17 +6,14 @@ module.exports = {
       default: true
     },
     {
-      value: 'de',
-      label: 'German'
+      value: 'pt_PT',
+      label: 'Portuguese'
     }
   ],
   currencies: [
     {
-      code: 'GBP',
+      code: 'EUR',
       default: true
-    },
-    {
-      code: 'EUR'
     }
   ]
 }
