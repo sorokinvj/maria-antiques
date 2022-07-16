@@ -13,7 +13,6 @@ const handler = async (req, res, event) => {
         switch (event?.type) {
           case 'checkout.session.completed':
             await createOrder({ sessionId: event?.data?.object?.id })
-            await stripeSigningSecret(req, res)
             break
           default:
             throw new Error(`Unhandled event: ${event?.type}`)
@@ -29,4 +28,4 @@ const handler = async (req, res, event) => {
   }
 }
 
-export default handler
+export default stripeSigningSecret(handler)
