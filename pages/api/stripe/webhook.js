@@ -1,26 +1,15 @@
 import createOrder from '@/lib/create-order'
 import stripeSigningSecret from '@/lib/stripe-signing-secret'
 
-export const config = {
-  api: {
-    bodyParser: false
-  }
-}
-
 const handler = async (req, res, event) => {
   const permittedEvents = ['checkout.session.completed']
-  console.log('event received', event)
+
   if (req.method === 'POST') {
     if (permittedEvents.includes(event?.type)) {
       try {
         switch (event?.type) {
           case 'checkout.session.completed':
             await createOrder({ sessionId: event?.data?.object?.id })
-            console.log(
-              'order ',
-              event?.data?.object?.id,
-              ' successfuly created on GraphCMS'
-            )
             break
           default:
             throw new Error(`Unhandled event: ${event?.type}`)
@@ -29,11 +18,10 @@ const handler = async (req, res, event) => {
         res.status(500).json({ message: 'Unknown event' })
       }
     }
-
-    res.status(204).json({ message: 'Received' })
+    stripeSigningSecret(handler)
   } else {
     res.status(405).json({ message: 'Method not allowed' })
   }
 }
 
-export default stripeSigningSecret(handler)
+export default handler
