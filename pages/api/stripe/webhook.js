@@ -18,10 +18,11 @@ const handler = async (req, res, event) => {
         res.status(500).json({ message: 'Unknown event' })
       }
     }
-    stripeSigningSecret(handler)
+
+    res.status(204).json({ message: 'Received' })
   } else {
     res.status(405).json({ message: 'Method not allowed' })
   }
 }
 
-export default handler
+export default stripeSigningSecret(handler)
