@@ -9,7 +9,7 @@ export const config = {
 
 const handler = async (req, res, event) => {
   const permittedEvents = ['checkout.session.completed']
-
+  console.log('event received', event)
   if (req.method === 'POST') {
     if (permittedEvents.includes(event.type)) {
       try {
