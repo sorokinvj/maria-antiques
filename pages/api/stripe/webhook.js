@@ -5,8 +5,6 @@ export const config = { api: { bodyParser: false } }
 
 const handler = async (req, res, event) => {
   const permittedEvents = ['checkout.session.completed']
-  console.log('webhook request headers', req.headers)
-  console.log('webhook request', req)
   if (req.method === 'POST') {
     if (permittedEvents.includes(event?.type)) {
       try {

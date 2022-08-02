@@ -28,9 +28,6 @@ function ProductPageUI({ product }) {
     router.replace(url, url, { shallow: true })
   }, [activeVariantId])
 
-  // const activeVariant = product.variants.find(
-  //   (variant) => variant.id === activeVariantId
-  // )
   const updateQuantity = (event) =>
     setVariantQuantity(Number(event.target.value))
 
