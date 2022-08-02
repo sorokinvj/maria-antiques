@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { useCart } from 'react-use-cart'
@@ -14,21 +14,23 @@ function ProductPageUI({ product }) {
   const router = useRouter()
   const { activeCurrency } = useSettingsContext()
   const [variantQuantity, setVariantQuantity] = React.useState(1)
+
+  const hasVariant =
+    router.query.variantId !== undefined ||
+    product.variants[0]?.id !== undefined
   const [activeVariantId, setActiveVariantId] = React.useState(
-    router.query.variantId || product.variants[0].id
+    hasVariant ? router.query.variantId || product.variants[0]?.id : product.id
   )
 
-  React.useEffect(() => {
+  useEffect(() => {
     const url = `/products/${product.slug}?variant=${activeVariantId}`
 
     router.replace(url, url, { shallow: true })
   }, [activeVariantId])
 
-  const activeVariant = product.variants.find(
-    (variant) => variant.id === activeVariantId
-  )
   const updateQuantity = (event) =>
     setVariantQuantity(Number(event.target.value))
+
   const updateVariant = (event) => setActiveVariantId(event.target.value)
 
   const [primaryImage] = product.images
@@ -63,11 +65,11 @@ function ProductPageUI({ product }) {
       <div className="mb-8 px-6 md:mb-0 lg:w-1/2">
         <div className="w-full overflow-hidden relative bg-gainsboro rounded-lg">
           <Image
-            src={primaryImage.url}
-            height={primaryImage.height}
-            width={primaryImage.width}
-            alt={product.name}
-            title={product.name}
+            src={primaryImage?.url}
+            height={primaryImage?.height}
+            width={primaryImage?.width}
+            alt={product?.name}
+            title={product?.name}
           />
         </div>
       </div>
