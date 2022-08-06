@@ -1,4 +1,6 @@
+// @ts-expect-error TS(2307): Cannot find module '@/lib/hygraph-mutation-client'... Remove this comment to see the full error message
 import hygraphMutationClient, { gql } from '@/lib/hygraph-mutation-client'
+// @ts-expect-error TS(2307): Cannot find module '@/lib/stripe-client' or its co... Remove this comment to see the full error message
 import stripe from '@/lib/stripe-client'
 
 export const createOrderMutation = gql`
@@ -9,7 +11,9 @@ export const createOrderMutation = gql`
   }
 `
 
-async function createOrder({ sessionId }) {
+async function createOrder({
+  sessionId
+}: any) {
   const {
     customer,
     line_items,
@@ -23,9 +27,10 @@ async function createOrder({ sessionId }) {
       total: session.amount_total,
       stripeCheckoutId: session.id,
       orderItems: {
-        create: line_items.data.map((item) => ({
+        create: line_items.data.map((item: any) => ({
           quantity: item.quantity,
           total: item.amount_total,
+
           product: {
             connect: {
               id: item.price.product.metadata.productId
@@ -34,7 +39,7 @@ async function createOrder({ sessionId }) {
         }))
       }
     }
-  })
+  });
 }
 
 export default createOrder

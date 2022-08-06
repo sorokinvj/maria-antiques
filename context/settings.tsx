@@ -1,11 +1,14 @@
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import * as React from 'react'
 
+// @ts-expect-error TS(2307): Cannot find module 'hygraph.config' or its corresp... Remove this comment to see the full error message
 import { currencies } from 'hygraph.config'
+// @ts-expect-error TS(2307): Cannot find module '@/hooks/use-local-storage' or ... Remove this comment to see the full error message
 import useLocalStorage from '@/hooks/use-local-storage'
 
 const SettingsContext = React.createContext()
 
-function reducer(state, action) {
+function reducer(state: any, action: any) {
   switch (action.type) {
     case 'SWITCH_CURRENCY':
       return { ...state, activeCurrency: action.payload }
@@ -14,18 +17,19 @@ function reducer(state, action) {
   }
 }
 
-function SettingsProvider({ children }) {
+function SettingsProvider({
+  children
+}: any) {
   const [savedSettings, saveSettings] = useLocalStorage(
     'hygraph-commerce-reference',
     {
-      activeCurrency: currencies.find((currency) => Boolean(currency.default))
+      activeCurrency: currencies.find((currency: any) => Boolean(currency.default))
     }
   )
   const [state, dispatch] = React.useReducer(reducer, savedSettings)
   const [hasMounted, setHasMounted] = React.useState(false)
 
-  const switchCurrency = (currency) =>
-    dispatch({ type: 'SWITCH_CURRENCY', payload: currency })
+  const switchCurrency = (currency: any) => dispatch({ type: 'SWITCH_CURRENCY', payload: currency })
 
   React.useEffect(() => {
     saveSettings(state)
@@ -38,6 +42,7 @@ function SettingsProvider({ children }) {
   if (!hasMounted) return null
 
   return (
+    // @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <SettingsContext.Provider
       value={{
         ...state,

@@ -1,6 +1,7 @@
+// @ts-expect-error TS(2307): Cannot find module '@/lib/hygraph-mutation-client'... Remove this comment to see the full error message
 import hygraphMutationClient, { gql } from '@/lib/hygraph-mutation-client'
 
-export default async (req, res) => {
+export default async (req: any, res: any) => {
   try {
     const { review } = await hygraphMutationClient.request(
       gql`

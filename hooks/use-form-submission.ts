@@ -1,6 +1,7 @@
+// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
 import * as React from 'react'
 
-function submissionReducer(state, action) {
+function submissionReducer(state: any, action: any) {
   switch (action.type) {
     case 'ERROR':
       return { ...state, status: 'error', ...action.payload }

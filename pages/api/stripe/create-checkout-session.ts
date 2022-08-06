@@ -1,11 +1,13 @@
+// @ts-expect-error TS(2307): Cannot find module '@/lib/hygraph-client' or its c... Remove this comment to see the full error message
 import hygraphClient, { gql } from '@/lib/hygraph-client'
+// @ts-expect-error TS(2307): Cannot find module '@/lib/stripe-client' or its co... Remove this comment to see the full error message
 import stripe from '@/lib/stripe-client'
 
-export default async (req, res) => {
+export default async (req: any, res: any) => {
   try {
     const { currency, items, locale, success_url, ...rest } = req.body
 
-    const getProduct = async (id) => {
+    const getProduct = async (id: any) => {
       const {
         product: { description, images, name, price, ...product }
       } = await hygraphClient.request(
@@ -36,18 +38,19 @@ export default async (req, res) => {
             ...product
           },
           name,
-          images: images.map((img) => img.url)
+          images: images.map((img: any) => img.url)
         },
         unit_amount: price
-      }
+      };
     }
 
     const line_items = await Promise.all(
-      items.map(async (item) => ({
+      items.map(async (item: any) => ({
         adjustable_quantity: {
           enabled: true,
           minimum: 1
         },
+
         price_data: await getProduct(item.productId),
         quantity: item.quantity
       }))

@@ -1,4 +1,6 @@
+// @ts-expect-error TS(2307): Cannot find module '@/lib/hygraph-client' or its c... Remove this comment to see the full error message
 import hygraphClient, { gql } from '@/lib/hygraph-client'
+// @ts-expect-error TS(2307): Cannot find module '@/lib/graphql-fragments' or it... Remove this comment to see the full error message
 import { CategoryFragment, CollectionFragment } from '@/lib/graphql-fragments'
 
 export const getPageDataQuery = gql`
@@ -24,7 +26,9 @@ export const getPageDataQuery = gql`
   ${[CategoryFragment, CollectionFragment]}
 `
 
-async function getPageData({ locale }) {
+async function getPageData({
+  locale
+}: any) {
   const {
     footerCategories,
     footerCollections,
