@@ -1,15 +1,15 @@
-// @ts-expect-error TS(2307): Cannot find module '@/lib/hygraph-client' or its c... Remove this comment to see the full error message
-import hygraphClient, { gql } from '@/lib/hygraph-client'
-// @ts-expect-error TS(2307): Cannot find module '@/lib/stripe-client' or its co... Remove this comment to see the full error message
-import stripe from '@/lib/stripe-client'
+import hygraphClient, { gql } from "@/lib/hygraph-client";
+import stripe from "@/lib/stripe-client";
+import type { NextApiRequest, NextApiResponse } from "next";
+import { Image } from "types";
 
-export default async (req: any, res: any) => {
+export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { currency, items, locale, success_url, ...rest } = req.body
+    const { currency, items, locale, success_url, ...rest } = req.body;
 
-    const getProduct = async (id: any) => {
+    const getProduct = async (id: string) => {
       const {
-        product: { description, images, name, price, ...product }
+        product: { description, images, name, price, ...product },
       } = await hygraphClient.request(
         gql`
           query ProductQuery($id: ID!, $locale: Locale!) {
@@ -26,50 +26,50 @@ export default async (req: any, res: any) => {
         `,
         {
           id,
-          locale
+          locale,
         }
-      )
+      );
 
       return {
         currency,
         product_data: {
           description,
           metadata: {
-            ...product
+            ...product,
           },
           name,
-          images: images.map((img: any) => img.url)
+          images: images.map((img: Image) => img.url),
         },
-        unit_amount: price
+        unit_amount: price,
       };
-    }
+    };
 
     const line_items = await Promise.all(
       items.map(async (item: any) => ({
         adjustable_quantity: {
           enabled: true,
-          minimum: 1
+          minimum: 1,
         },
 
         price_data: await getProduct(item.productId),
-        quantity: item.quantity
+        quantity: item.quantity,
       }))
-    )
+    );
 
     const session = await stripe.checkout.sessions.create({
-      mode: 'payment',
+      mode: "payment",
       line_items,
       locale,
-      payment_method_types: ['card'],
+      payment_method_types: ["card"],
       success_url: `${success_url}?id={CHECKOUT_SESSION_ID}`,
-      ...rest
-    })
+      ...rest,
+    });
 
-    res.status(201).json({ session })
+    res.status(201).json({ session });
   } catch (error) {
-    console.error(error)
+    console.error(error);
     res.status(500).json({
-      message: 'There was a problem creating the Stripe Checkout session'
-    })
+      message: "There was a problem creating the Stripe Checkout session",
+    });
   }
-}
+};

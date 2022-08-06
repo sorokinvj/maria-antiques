@@ -1,5 +1,5 @@
-// @ts-expect-error TS(2307): Cannot find module '@/lib/hygraph-client' or its c... Remove this comment to see the full error message
-import hygraphClient, { gql } from '@/lib/hygraph-client'
+import hygraphClient, { gql } from "@/lib/hygraph-client";
+import { Order } from "types";
 
 export const getOrderSessionIdQuery = gql`
   query OrderSessionIdQuery($id: String!) {
@@ -22,20 +22,21 @@ export const getOrderSessionIdQuery = gql`
       total
     }
   }
-`
+`;
 
-async function getOrderBySessionId({
-  id
-}: any) {
-  const {
-    orders: [order]
-  } = await hygraphClient.request(getOrderSessionIdQuery, {
-    id
-  })
-
-  return {
-    order
+export async function getOrderBySessionId({
+  id,
+}: {
+  id: string | string[] | undefined;
+}): Promise<Order> {
+  if (!id) {
+    throw new Error("getOrderBySessionId: id is required");
   }
-}
+  const {
+    orders: [order],
+  } = await hygraphClient.request(getOrderSessionIdQuery, {
+    id,
+  });
 
-export default getOrderBySessionId
+  return order;
+}

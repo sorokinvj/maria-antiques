@@ -1,8 +1,18 @@
+import { Currency } from "types";
+
 export const formatCurrencyValue = ({
   currency,
-  value
-}: any) =>
-  new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: currency.code
-  }).format(value / 100)
+  value,
+}: {
+  currency: Currency;
+  value?: number;
+}) => {
+  if (!value) {
+    return "";
+  }
+
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency,
+  }).format(value / 100);
+};

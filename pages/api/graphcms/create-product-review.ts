@@ -1,7 +1,7 @@
-// @ts-expect-error TS(2307): Cannot find module '@/lib/hygraph-mutation-client'... Remove this comment to see the full error message
-import hygraphMutationClient, { gql } from '@/lib/hygraph-mutation-client'
+import hygraphMutationClient, { gql } from "@/lib/hygraph-mutation-client";
+import type { NextApiRequest, NextApiResponse } from "next";
 
-export default async (req: any, res: any) => {
+export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { review } = await hygraphMutationClient.request(
       gql`
@@ -12,7 +12,7 @@ export default async (req: any, res: any) => {
         }
       `,
       { review: req.body }
-    )
+    );
 
     const { publishedReview } = await hygraphMutationClient.request(
       gql`
@@ -29,16 +29,14 @@ export default async (req: any, res: any) => {
         }
       `,
       { id: review.id }
-    )
+    );
 
-    res.status(201).json({ review: publishedReview })
+    res.status(201).json({ review: publishedReview });
   } catch (error) {
-    console.log(error)
-    res
-      .status(500)
-      .json({
-        status: 500,
-        message: 'There was a problem submitting your review!'
-      })
+    console.log(error);
+    res.status(500).json({
+      status: 500,
+      message: "There was a problem submitting your review!",
+    });
   }
-}
+};
