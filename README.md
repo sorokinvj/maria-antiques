@@ -4,7 +4,7 @@
 
 `yarn`
 
-if you see a node-gyp error `fatal error: 'vips/vips8' file not found`, then install vips through Homebrew:
+if you see a node-gyp error `fatal error: 'vips/vips8' file not found`, then install `vips` through Homebrew:
 
 `brew install vips`
 
