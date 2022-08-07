@@ -38,7 +38,7 @@ export default async (req, res) => {
           name,
           images: images.map((img) => img.url)
         },
-        unit_amount: price
+        unit_amount: price * 100
       }
     }
 
