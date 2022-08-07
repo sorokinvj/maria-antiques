@@ -2,8 +2,9 @@ import React from "react";
 
 interface Props {
   disabled?: boolean;
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   children: React.ReactNode;
+  type?: "button" | "submit" | "reset";
 }
 
 const Button: React.FC<Props> = ({ children, ...props }) => {

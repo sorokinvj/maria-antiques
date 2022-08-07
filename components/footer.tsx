@@ -4,7 +4,7 @@ import Link from 'next/link'
 // @ts-expect-error TS(2307): Cannot find module '@/icons' or its corresponding ... Remove this comment to see the full error message
 import { GitHubIcon, TwitterIcon } from '@/icons'
 // @ts-expect-error TS(2307): Cannot find module '@/ui/form' or its correspondin... Remove this comment to see the full error message
-import { Select } from '@/ui/form'
+import { Select } from '@/components/ui/form/form'
 // @ts-expect-error TS(2307): Cannot find module 'hygraph.config' or its corresp... Remove this comment to see the full error message
 import { currencies, locales } from 'hygraph.config'
 // @ts-expect-error TS(2307): Cannot find module '@/context/settings' or its cor... Remove this comment to see the full error message
