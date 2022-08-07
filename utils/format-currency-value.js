@@ -2,4 +2,5 @@ export const formatCurrencyValue = ({ currency, value }) =>
   new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: currency.code
-  }).format(value / 100)
+    //prices are in euros in cms and in cents in stripe, converting to euros:
+  }).format(value)
