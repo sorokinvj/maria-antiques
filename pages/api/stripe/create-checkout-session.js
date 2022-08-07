@@ -26,8 +26,8 @@ export default async (req, res) => {
           id,
           locale
         }
-        )
-      
+      )
+
       return {
         currency,
         product_data: {
@@ -38,8 +38,7 @@ export default async (req, res) => {
           name,
           images: images.map((img) => img.url)
         },
-        // stripe prices are in smallest currency units - cents, converting to euros:
-        unit_amount: price * 100
+        unit_amount: price
       }
     }
 
