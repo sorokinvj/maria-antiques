@@ -5,6 +5,7 @@ import getOrderBySessionId from '@/lib/get-order-session-id'
 import { useSettingsContext } from '@/context/settings'
 import Link from 'next/link'
 import { formatCurrencyValue } from '@/utils/format-currency-value'
+import { convertPriceFormat } from '@/utils/convert-price-format'
 
 function SuccessPage() {
   const router = useRouter()
@@ -38,7 +39,7 @@ function SuccessPage() {
         <span className="pr-7">
           {formatCurrencyValue({
             currency: activeCurrency,
-            value: order.total
+            value: convertPriceFormat('stripeToCms', order.total)
           })}
         </span>
       </div>
@@ -70,7 +71,7 @@ function SuccessPage() {
                   Total:{' '}
                   {formatCurrencyValue({
                     currency: activeCurrency,
-                    value: item.total
+                    value: convertPriceFormat('stripeToCms', item.total)
                   })}
                 </p>
                 <p className="font-medium text-gray-800">
