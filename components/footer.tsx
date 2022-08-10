@@ -11,7 +11,10 @@ interface Props {
   collections: Collection[];
 }
 
-const Footer: React.FC<Props> = ({ categories = [], collections = [] }) => {
+export const Footer: React.FC<Props> = ({
+  categories = [],
+  collections = [],
+}) => {
   const router = useRouter();
   const activeLocale = config.locales.find(
     (locale: any) => locale.value === router.locale
@@ -115,5 +118,3 @@ const Footer: React.FC<Props> = ({ categories = [], collections = [] }) => {
     </footer>
   );
 };
-
-export default Footer;

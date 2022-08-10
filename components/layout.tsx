@@ -1,8 +1,8 @@
-import Footer from "@/components/footer";
-import Header from "@/components/header";
+import { Footer } from "@/components/footer";
+import { Header } from "@/components/header";
 import { DefaultSeo } from "next-seo";
 import { defaultSeo } from "next-seo.config";
-import * as React from "react";
+import React from "react";
 
 interface Props {
   children: React.ReactNode | React.ReactNode[];

@@ -14,6 +14,14 @@ export interface Product {
   name: string;
   price: number;
   slug: string;
+  variants: {
+    id: string;
+    name: string;
+  }[];
+  localizations: {
+    locale: string;
+  }[];
+  description: string;
 }
 
 interface OrderItem {

@@ -11,7 +11,7 @@ interface Props {
   pages: Page[];
 }
 
-const Header: React.FC<Props> = ({ pages = [] }) => {
+export const Header: React.FC<Props> = ({ pages = [] }) => {
   const { cartTotal } = useCart();
 
   return (
@@ -60,5 +60,3 @@ const Header: React.FC<Props> = ({ pages = [] }) => {
     </header>
   );
 };
-
-export default Header;

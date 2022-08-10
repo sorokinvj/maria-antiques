@@ -6,10 +6,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { mutate } from "swr";
+import { Product } from "types";
 import * as yup from "yup";
 import { FormTextarea } from "./ui/form/form-textarea";
 
-function ProductReviewForm({ product }: any) {
+interface Props {
+  product: Product;
+}
+export const ProductReviewForm: React.FC<Props> = ({ product }) => {
   const { handleSubmit, ...formMethods } = useForm({
     resolver: yupResolver(
       yup.object().shape({
@@ -69,6 +73,4 @@ function ProductReviewForm({ product }: any) {
       <Button type="submit">Submit</Button>
     </Form>
   );
-}
-
-export default ProductReviewForm;
+};

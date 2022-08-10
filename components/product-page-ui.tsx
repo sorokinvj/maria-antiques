@@ -6,17 +6,22 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useCart } from "react-use-cart";
+import { Product } from "types";
 
-function ProductPageUI({ product }: any) {
+interface Props {
+  product: Product;
+}
+
+const ProductPageUI: React.FC<Props> = ({ product }) => {
   const { addItem } = useCart();
   const router = useRouter();
   const [variantQuantity, setVariantQuantity] = React.useState(1);
 
-  const hasVariant =
-    router.query.variantId !== undefined ||
-    product.variants[0]?.id !== undefined;
+  const queryVariant =
+    (router.query.variant as string) || product.variants[0]?.id;
+  const hasVariant = queryVariant !== undefined;
   const [activeVariantId, setActiveVariantId] = React.useState(
-    hasVariant ? router.query.variantId || product.variants[0]?.id : product.id
+    hasVariant ? queryVariant : product.id
   );
 
   useEffect(() => {
@@ -24,10 +29,11 @@ function ProductPageUI({ product }: any) {
     router.replace(url, url, { shallow: true });
   }, [activeVariantId]);
 
-  const updateQuantity = (event: any) =>
+  const updateQuantity = (event: React.ChangeEvent<HTMLSelectElement>) =>
     setVariantQuantity(Number(event.target.value));
 
-  const updateVariant = (event: any) => setActiveVariantId(event.target.value);
+  const updateVariant = (event: React.ChangeEvent<HTMLSelectElement>) =>
+    setActiveVariantId(event.target.value);
 
   const [primaryImage] = product.images;
 
@@ -37,13 +43,12 @@ function ProductPageUI({ product }: any) {
         ...acc,
         [locale]: {
           ...product.localizations.find(
-            (localization: any) => localization.locale === locale
+            (localization) => localization.locale === locale
           ),
         },
       }),
       {}
     );
-
     addItem(
       {
         id: activeVariantId,
@@ -153,6 +158,6 @@ function ProductPageUI({ product }: any) {
       </div>
     </div>
   );
-}
+};
 
 export default ProductPageUI;

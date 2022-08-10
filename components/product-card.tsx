@@ -5,7 +5,13 @@ import Link from "next/link";
 import React from "react";
 import { Product } from "types";
 
-const ProductCard: React.FC<Product> = ({ id, images, name, price, slug }) => {
+export const ProductCard: React.FC<Product> = ({
+  id,
+  images,
+  name,
+  price,
+  slug,
+}) => {
   const [primaryImage] = images;
 
   return (
@@ -39,5 +45,3 @@ const ProductCard: React.FC<Product> = ({ id, images, name, price, slug }) => {
     </article>
   );
 };
-
-export default ProductCard;
