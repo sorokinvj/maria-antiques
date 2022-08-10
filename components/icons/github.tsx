@@ -1,7 +1,7 @@
 import React from "react";
 import { IconsProps } from ".";
 
-export const GitHubIcon: React.FC = (props: IconsProps) => {
+export const GitHubIcon: React.FC<IconsProps> = (props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

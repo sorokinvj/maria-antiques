@@ -10,11 +10,12 @@ interface SelectProps {
   field: string;
   placeholder?: string;
   className?: string;
-  children: React.ReactNode | React.ReactNode[];
+  children?: React.ReactNode | React.ReactNode[];
   disabled?: boolean;
   defaultValue?: string;
   label?: string;
   options: OptionItem[];
+  onChange?: (value: string) => void;
 }
 
 export const Select = React.forwardRef((props: SelectProps, ref: any) => {
