@@ -57,7 +57,7 @@ function ProductReviewForm({ product }: any) {
   return (
     <Form
       className="space-y-4"
-      methods={formMethods}
+      methods={{ handleSubmit, ...formMethods }}
       onSubmit={handleSubmit(onSubmit)}
     >
       <FormInput field="headline" />

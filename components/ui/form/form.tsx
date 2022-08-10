@@ -3,7 +3,7 @@ import { FormProvider, UseFormMethods } from "react-hook-form";
 
 interface Props {
   children: React.ReactNode;
-  methods: Omit<UseFormMethods, "handleSubmit">;
+  methods: UseFormMethods;
   onSubmit: (data: any) => void;
   className?: string;
 }
