@@ -38,3 +38,10 @@ export interface Category {
   name: string;
   products: Product[];
 }
+
+export interface Page {
+  id: string;
+  name: string;
+  type: string;
+  slug: string;
+}

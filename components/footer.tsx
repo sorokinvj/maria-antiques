@@ -3,11 +3,16 @@ import config from "hygraph.config";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
+import { Category, Collection } from "types";
 import { FormSelect } from "./ui/form/form-select";
 
-function Footer({ categories = [], collections = [] }) {
-  const router = useRouter();
+interface Props {
+  categories: Category[];
+  collections: Collection[];
+}
 
+const Footer: React.FC<Props> = ({ categories = [], collections = [] }) => {
+  const router = useRouter();
   const activeLocale = config.locales.find(
     (locale: any) => locale.value === router.locale
   );
@@ -109,6 +114,6 @@ function Footer({ categories = [], collections = [] }) {
       </div>
     </footer>
   );
-}
+};
 
 export default Footer;

@@ -1,7 +1,7 @@
 import React from "react";
 import { IconsProps } from ".";
 
-const ShoppingCart: React.FC = (props: IconsProps) => {
+const ShoppingCart: React.FC<IconsProps> = (props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -10,7 +10,6 @@ const ShoppingCart: React.FC = (props: IconsProps) => {
       stroke="currentColor"
       {...props}
     >
-      // @ts-expect-error TS(2304): Cannot find name 'path'.
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
