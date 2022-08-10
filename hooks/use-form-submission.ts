@@ -1,16 +1,30 @@
-// @ts-expect-error TS(7016): Could not find a declaration file for module 'reac... Remove this comment to see the full error message
-import * as React from 'react'
+import React from "react";
 
-function submissionReducer(state: any, action: any) {
+interface SubmissionState {
+  status: string | null;
+  message: string | null;
+}
+
+interface Action {
+  type: "ERROR" | "LOADING" | "SUCCESS";
+  payload: {
+    message: string;
+  };
+}
+
+function submissionReducer(
+  state: SubmissionState,
+  action: Action
+): SubmissionState {
   switch (action.type) {
-    case 'ERROR':
-      return { ...state, status: 'error', ...action.payload }
-    case 'LOADING':
-      return { ...state, status: 'loading', ...action.payload }
-    case 'SUCCESS':
-      return { ...state, status: 'success', ...action.payload }
+    case "ERROR":
+      return { ...state, status: "error", ...action.payload };
+    case "LOADING":
+      return { ...state, status: "loading", ...action.payload };
+    case "SUCCESS":
+      return { ...state, status: "success", ...action.payload };
     default:
-      throw new Error(`Unhandled action type: ${action.type}`)
+      throw new Error(`Unhandled action type: ${action.type}`);
   }
 }
 
@@ -19,31 +33,31 @@ function useSubmissionState() {
     submissionReducer,
     {
       status: null,
-      message: null
+      message: null,
     }
-  )
+  );
 
-  const submissionError = submissionState.status === 'error'
-  const submissionLoading = submissionState.status === 'loading'
-  const submissionSuccess = submissionState.status === 'success'
+  const submissionError = submissionState.status === "error";
+  const submissionLoading = submissionState.status === "loading";
+  const submissionSuccess = submissionState.status === "success";
 
-  const setSubmissionError = (message = 'Error') =>
+  const setSubmissionError = (message = "Error") =>
     submissionDispatch({
-      type: 'ERROR',
-      payload: { message }
-    })
+      type: "ERROR",
+      payload: { message },
+    });
 
-  const setSubmissionLoading = (message = 'Loading') =>
+  const setSubmissionLoading = (message = "Loading") =>
     submissionDispatch({
-      type: 'LOADING',
-      payload: { message }
-    })
+      type: "LOADING",
+      payload: { message },
+    });
 
-  const setSubmissionSuccess = (message = 'Success') =>
+  const setSubmissionSuccess = (message = "Success") =>
     submissionDispatch({
-      type: 'SUCCESS',
-      payload: { message }
-    })
+      type: "SUCCESS",
+      payload: { message },
+    });
 
   return {
     submissionError,
@@ -52,8 +66,8 @@ function useSubmissionState() {
     submissionSuccess,
     setSubmissionError,
     setSubmissionLoading,
-    setSubmissionSuccess
-  }
+    setSubmissionSuccess,
+  };
 }
 
-export default useSubmissionState
+export default useSubmissionState;
