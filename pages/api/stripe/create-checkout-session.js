@@ -1,5 +1,6 @@
 import hygraphClient, { gql } from '@/lib/hygraph-client'
 import stripe from '@/lib/stripe-client'
+import { convertPrice, convertPriceFormat } from '@/utils/convert-price-format'
 
 export default async (req, res) => {
   try {
@@ -38,7 +39,7 @@ export default async (req, res) => {
           name,
           images: images.map((img) => img.url)
         },
-        unit_amount: price
+        unit_amount: convertPriceFormat('cmsToStripe', price)
       }
     }
 
