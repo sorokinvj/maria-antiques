@@ -24,11 +24,11 @@ export const getOrderSessionIdQuery = gql`
   }
 `;
 
-export async function getOrderBySessionId({
+export const getOrderBySessionId = async ({
   id,
 }: {
-  id: string | string[] | undefined;
-}): Promise<Order> {
+  id: string;
+}): Promise<Order> => {
   if (!id) {
     throw new Error("getOrderBySessionId: id is required");
   }
@@ -39,4 +39,4 @@ export async function getOrderBySessionId({
   });
 
   return order;
-}
+};

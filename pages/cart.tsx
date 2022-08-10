@@ -6,7 +6,7 @@ import {
 import { SEO } from "@/components/seo";
 import Button from "@/components/ui/button";
 import { CURRENCY, DEFAULT_LOCALE } from "@/constants";
-import getPageData from "@/lib/get-page-data";
+import { getPageData } from "@/lib/get-page-data";
 import { formatCurrencyValue } from "@/utils/format-currency-value";
 import { loadStripe } from "@stripe/stripe-js";
 import useSubmissionState from "hooks/use-form-submission";
@@ -103,6 +103,7 @@ function Cart() {
                   src={item.image.url}
                   width={item.image.width}
                   height={item.image.height}
+                  alt={item.image.alt}
                 />
               </div>
               <div>
@@ -127,7 +128,6 @@ function Cart() {
                 onClick={() => incrementItemQuantity(item)}
                 disabled={submissionLoading}
               >
-                {/* @ts-expect-error TS(17004): Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message */}
                 <ChevronUpSmallIcon className="h-4 w-4" />
               </button>
               <span className="mx-3 md:mx-6 p-1">{item.quantity}</span>
@@ -146,8 +146,7 @@ function Cart() {
                   value: item.itemTotal,
                 })}
               </p>
-              {/* @ts-expect-error TS(2532): Object is possibly 'undefined'. */}
-              {item.quantity > 1 && (
+              {Number(item?.quantity) > 1 && (
                 <p className="text-gray-400 text-sm">
                   {formatCurrencyValue({
                     currency: CURRENCY,

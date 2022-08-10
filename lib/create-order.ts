@@ -1,5 +1,6 @@
 import hygraphMutationClient, { gql } from "@/lib/hygraph-mutation-client";
 import stripe from "@/lib/stripe-client";
+import Stripe from "stripe";
 
 export const createOrderMutation = gql`
   mutation CreateOrderMutation($order: OrderCreateInput!) {
@@ -9,11 +10,7 @@ export const createOrderMutation = gql`
   }
 `;
 
-async function createOrder({
-  sessionId,
-}: {
-  sessionId: string;
-}): Promise<Order> {
+export async function createOrder({ sessionId }: { sessionId: string }) {
   const {
     customer,
     line_items,
@@ -23,7 +20,7 @@ async function createOrder({
   });
   return await hygraphMutationClient.request(createOrderMutation, {
     order: {
-      email: customer?.email,
+      email: (customer as Stripe.Customer)?.email,
       total: session.amount_total,
       stripeCheckoutId: session.id,
       orderItems: {
@@ -41,5 +38,3 @@ async function createOrder({
     },
   });
 }
-
-export default createOrder;

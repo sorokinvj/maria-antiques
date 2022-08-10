@@ -1,7 +1,7 @@
 import React from "react";
 import { IconsProps } from ".";
 
-const ChevronUpSmall: React.FC = (props: IconsProps) => {
+const ChevronUpSmall: React.FC<IconsProps> = (props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

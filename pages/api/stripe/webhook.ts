@@ -1,5 +1,5 @@
-import createOrder from "@/lib/create-order";
-import stripeSigningSecret from "@/lib/stripe-signing-secret";
+import { createOrder } from "@/lib/create-order";
+import { stripeSigningSecret } from "@/lib/stripe-signing-secret";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export const config = { api: { bodyParser: false } };

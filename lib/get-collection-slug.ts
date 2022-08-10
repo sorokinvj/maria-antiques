@@ -1,10 +1,9 @@
-// @ts-expect-error TS(2307): Cannot find module '@/lib/hygraph-client' or its c... Remove this comment to see the full error message
-import hygraphClient, { gql } from '@/lib/hygraph-client'
 import {
   CollectionFragment,
-  ProductCardFragment
-// @ts-expect-error TS(2307): Cannot find module '@/lib/graphql-fragments' or it... Remove this comment to see the full error message
-} from '@/lib/graphql-fragments'
+  ProductCardFragment,
+} from "@/lib/graphql-fragments";
+import hygraphClient, { gql } from "@/lib/hygraph-client";
+import { Collection, LibParams } from "types";
 
 export const getCollectionSlugQuery = gql`
   query CollectionSlugQuery($locale: Locale!, $slug: String!) {
@@ -17,22 +16,18 @@ export const getCollectionSlugQuery = gql`
   }
 
   ${[CollectionFragment, ProductCardFragment]}
-`
+`;
 
-async function getCollectionBySlug({
-  locale = 'en',
-  slug
-}: any) {
+export const getCollectionBySlug = async ({
+  locale = "en",
+  slug,
+}: LibParams): Promise<Collection> => {
   const {
-    collections: [collection]
+    collections: [collection],
   } = await hygraphClient.request(getCollectionSlugQuery, {
     locale,
-    slug
-  })
+    slug,
+  });
 
-  return {
-    collection
-  }
-}
-
-export default getCollectionBySlug
+  return collection;
+};

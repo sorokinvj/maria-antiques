@@ -1,8 +1,8 @@
-import ProductGrid from "@/components/product-grid";
+import { ProductGrid } from "@/components/product-grid";
 import { SEO } from "@/components/seo";
-import getAllCategories from "@/lib/get-all-categories";
-import getCategoryBySlug from "@/lib/get-category-slug";
-import getPageData from "@/lib/get-page-data";
+import { getAllCategories } from "@/lib/get-all-categories";
+import { getCategoryBySlug } from "@/lib/get-category-slug";
+import { getPageData } from "@/lib/get-page-data";
 import { GetStaticPaths, GetStaticProps } from "next";
 import React from "react";
 import { Category } from "types";
@@ -20,11 +20,11 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
   let paths: any = [];
 
   for (const locale of locales!) {
-    const { categories } = await getAllCategories({ locale });
+    const categories = await getAllCategories({ locale });
 
     paths = [
       ...paths,
-      ...categories.map((category: any) => ({
+      ...categories.map((category: Category) => ({
         params: { slug: category.slug },
         locale,
       })),
@@ -39,9 +39,9 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
 
 export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
   const pageData = await getPageData({ locale });
-  const { category } = await getCategoryBySlug({
+  const category = await getCategoryBySlug({
     locale,
-    slug: params?.slug,
+    slug: params?.slug as string,
   });
 
   return {

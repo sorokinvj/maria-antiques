@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 export const config = { api: { bodyParser: false } };
 
-const stripeSigningSecret = (handler: any) => async (
+export const stripeSigningSecret = (handler: any) => async (
   req: NextApiRequest,
   res: NextApiResponse
 ) => {
@@ -24,5 +24,3 @@ const stripeSigningSecret = (handler: any) => async (
   }
   return handler(req, res, event);
 };
-
-export default stripeSigningSecret;

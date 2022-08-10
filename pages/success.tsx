@@ -14,7 +14,9 @@ function SuccessPage() {
 
   useEffect(() => {
     const fetchOrder = async () => {
-      const order = await getOrderBySessionId({ id: router?.query?.id });
+      const order = await getOrderBySessionId({
+        id: router?.query?.id as string,
+      });
       setLoading(false);
       setOrder(order);
     };

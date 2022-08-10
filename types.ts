@@ -44,6 +44,7 @@ export interface Collection {
 
 export interface Category {
   name: string;
+  slug: string;
   products: Product[];
 }
 
@@ -52,4 +53,9 @@ export interface Page {
   name: string;
   type: string;
   slug: string;
+}
+
+export interface LibParams {
+  locale?: string;
+  slug?: string;
 }

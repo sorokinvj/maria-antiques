@@ -1,5 +1,4 @@
-// @ts-expect-error TS(2307): Cannot find module '@/lib/hygraph-client' or its c... Remove this comment to see the full error message
-import { gql } from '@/lib/hygraph-client'
+import { gql } from "@/lib/hygraph-client";
 
 export const CategoryFragment = gql`
   fragment CategoryFragment on Category {
@@ -8,7 +7,7 @@ export const CategoryFragment = gql`
     name
     slug
   }
-`
+`;
 export const CollectionFragment = gql`
   fragment CollectionFragment on Collection {
     id
@@ -16,7 +15,7 @@ export const CollectionFragment = gql`
     name
     slug
   }
-`
+`;
 
 export const ImageFragment = gql`
   fragment ImageFragment on Asset {
@@ -25,7 +24,7 @@ export const ImageFragment = gql`
     url
     width
   }
-`
+`;
 
 export const ProductVariantFragment = gql`
   fragment ProductVariantFragment on ProductVariants {
@@ -43,7 +42,7 @@ export const ProductVariantFragment = gql`
       name
     }
   }
-`
+`;
 
 export const ProductFragment = gql`
   fragment ProductFragment on Product {
@@ -61,7 +60,7 @@ export const ProductFragment = gql`
   }
 
   ${[ImageFragment, ProductVariantFragment]}
-`
+`;
 
 export const ProductCardFragment = gql`
   fragment ProductCardFragment on Product {
@@ -78,4 +77,4 @@ export const ProductCardFragment = gql`
   }
 
   ${[ImageFragment, ProductVariantFragment]}
-`
+`;

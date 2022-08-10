@@ -12,7 +12,7 @@ interface Props {
   product: Product;
 }
 
-const ProductPageUI: React.FC<Props> = ({ product }) => {
+export const ProductPageUI: React.FC<Props> = ({ product }) => {
   const { addItem } = useCart();
   const router = useRouter();
   const [variantQuantity, setVariantQuantity] = React.useState(1);
@@ -159,5 +159,3 @@ const ProductPageUI: React.FC<Props> = ({ product }) => {
     </div>
   );
 };
-
-export default ProductPageUI;

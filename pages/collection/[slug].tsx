@@ -1,8 +1,8 @@
-import ProductGrid from "@/components/product-grid";
+import { ProductGrid } from "@/components/product-grid";
 import { SEO } from "@/components/seo";
-import getAllCollections from "@/lib/get-all-collections";
-import getCollectionBySlug from "@/lib/get-collection-slug";
-import getPageData from "@/lib/get-page-data";
+import { getAllCollections } from "@/lib/get-all-collections";
+import { getCollectionBySlug } from "@/lib/get-collection-slug";
+import { getPageData } from "@/lib/get-page-data";
 import { GetStaticPaths, GetStaticProps } from "next";
 import React from "react";
 import { Collection } from "types";
@@ -20,7 +20,7 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
   let paths: any = [];
 
   for (const locale of locales!) {
-    const { collections } = await getAllCollections({ locale });
+    const collections = await getAllCollections({ locale });
 
     paths = [
       ...paths,
@@ -39,9 +39,9 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
 
 export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
   const pageData = await getPageData({ locale });
-  const { collection } = await getCollectionBySlug({
+  const collection = await getCollectionBySlug({
     locale,
-    slug: params?.slug,
+    slug: params?.slug as string,
   });
 
   return {
