@@ -1,5 +1,6 @@
 import { CURRENCY } from "@/constants";
 import { getOrderBySessionId } from "@/lib/get-order-session-id";
+import { convertPriceFormat } from "@/utils/convert-price-format";
 import { formatCurrencyValue } from "@/utils/format-currency-value";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -39,7 +40,7 @@ function SuccessPage() {
         <span className="pr-7">
           {formatCurrencyValue({
             currency: CURRENCY,
-            value: order.total,
+            value: convertPriceFormat("stripeToCms", order.total),
           })}
         </span>
       </div>
@@ -75,7 +76,7 @@ function SuccessPage() {
                   Total:{" "}
                   {formatCurrencyValue({
                     currency: CURRENCY,
-                    value: item.total,
+                    value: convertPriceFormat("stripeToCms", item.total),
                   })}
                 </p>
 
