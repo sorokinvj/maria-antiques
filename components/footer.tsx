@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { Category, Collection } from "types";
-import { FormSelect } from "./ui/form/form-select";
+import { Select } from "./ui/form/form-select";
 
 interface Props {
   categories: Category[];
@@ -84,7 +84,7 @@ export const Footer: React.FC<Props> = ({
           <div className="mt-12 xl:mt-0">
             <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase"></h3>
             <form className="mt-4 space-y-4 sm:max-w-xs">
-              <FormSelect
+              <Select
                 className="w-full"
                 defaultValue={activeLocale?.value}
                 field="language"

@@ -68,6 +68,7 @@ Select.displayName = "Select";
 
 export const FormSelect: React.FC<SelectProps> = (props) => {
   const { errors, register } = useFormContext();
+
   return (
     <Select ref={register} {...props}>
       {errors?.[props.field] ? (

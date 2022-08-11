@@ -1,8 +1,7 @@
-import Layout from "@/components/layout";
-import type { AppProps } from "next/app";
-import React from "react";
-import { CartProvider } from "react-use-cart";
-import "tailwindcss/tailwind.css";
+import Layout from '@/components/layout'
+import type { AppProps } from 'next/app'
+import { CartProvider } from 'react-use-cart'
+import 'styles/index.css'
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -11,7 +10,7 @@ function App({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </Layout>
     </CartProvider>
-  );
+  )
 }
 
-export default App;
+export default App
