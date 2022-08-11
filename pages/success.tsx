@@ -1,31 +1,31 @@
-import { CURRENCY } from "@/constants";
-import { getOrderBySessionId } from "@/lib/get-order-session-id";
-import { convertPriceFormat } from "@/utils/convert-price-format";
-import { formatCurrencyValue } from "@/utils/format-currency-value";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import React, { useEffect } from "react";
-import { Order } from "types";
+import { CURRENCY } from '@/constants'
+import { getOrderBySessionId } from '@/lib/get-order-session-id'
+import { convertPriceFormat } from '@/utils/convert-price-format'
+import { formatCurrencyValue } from '@/utils/format-currency-value'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
+import React, { useEffect } from 'react'
+import { Order } from 'types'
 
 function SuccessPage() {
-  const router = useRouter();
-  const [loading, setLoading] = React.useState(true);
-  const [order, setOrder] = React.useState<Order | null>(null);
+  const router = useRouter()
+  const [loading, setLoading] = React.useState(true)
+  const [order, setOrder] = React.useState<Order | null>(null)
 
   useEffect(() => {
     const fetchOrder = async () => {
       const order = await getOrderBySessionId({
-        id: router?.query?.id as string,
-      });
-      setLoading(false);
-      setOrder(order);
-    };
+        id: router?.query?.id as string
+      })
+      setLoading(false)
+      setOrder(order)
+    }
 
-    if (router.query.id) fetchOrder();
-  }, [router.query.id]);
+    if (router.query.id) fetchOrder()
+  }, [router.query.id])
 
-  if (!order) return null;
-  if (loading) return "loading";
+  if (!order) return null
+  if (loading) return 'loading'
   return (
     <div className="py-6">
       <h1 className="font-bold text-3xl md:text-6xl mb-3 text-primary leading-tight">
@@ -42,7 +42,7 @@ function SuccessPage() {
         <span className="pr-7">
           {formatCurrencyValue({
             currency: CURRENCY,
-            value: convertPriceFormat("stripeToCms", order.total),
+            value: convertPriceFormat('stripeToCms', order.total)
           })}
         </span>
       </div>
@@ -63,6 +63,7 @@ function SuccessPage() {
                     layout="fill"
                     objectFit="cover"
                     objectPosition="center"
+                    alt={item.product.name}
                   />
                 </div>
 
@@ -75,19 +76,19 @@ function SuccessPage() {
 
               <div className="text-right md:w-1/5">
                 <p className="font-medium text-gray-800">
-                  Total:{" "}
+                  Total:{' '}
                   {formatCurrencyValue({
                     currency: CURRENCY,
-                    value: convertPriceFormat("stripeToCms", item.total),
+                    value: convertPriceFormat('stripeToCms', item.total)
                   })}
                 </p>
 
                 <p className="font-medium text-gray-800">
-                  Quanity: {item.quantity}{" "}
+                  Quanity: {item.quantity}{' '}
                 </p>
               </div>
             </div>
-          );
+          )
         })}
       </ul>
 
@@ -95,7 +96,7 @@ function SuccessPage() {
         Shipping info:
       </h2>
     </div>
-  );
+  )
 }
 
-export default SuccessPage;
+export default SuccessPage
