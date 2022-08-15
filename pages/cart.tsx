@@ -1,25 +1,25 @@
 import {
   ChevronDownSmallIcon,
   ChevronUpSmallIcon,
-  XSmallIcon,
-} from "@/components/icons";
-import { SEO } from "@/components/seo";
-import Button from "@/components/ui/button";
-import { CURRENCY, DEFAULT_LOCALE } from "@/constants";
-import { getPageData } from "@/lib/get-page-data";
-import { formatCurrencyValue } from "@/utils/format-currency-value";
-import { loadStripe } from "@stripe/stripe-js";
-import useSubmissionState from "hooks/use-form-submission";
-import { GetStaticProps } from "next";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import React from "react";
-import { useCart } from "react-use-cart";
+  XSmallIcon
+} from '@/components/icons'
+import { SEO } from '@/components/seo'
+import Button from '@/components/ui/button'
+import { CURRENCY, DEFAULT_LOCALE } from '@/constants'
+import { getPageData } from '@/lib/get-page-data'
+import { formatCurrencyValue } from '@/utils/format-currency-value'
+import { loadStripe } from '@stripe/stripe-js'
+import useSubmissionState from 'hooks/use-form-submission'
+import { GetStaticProps } from 'next'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import React from 'react'
+import { useCart } from 'react-use-cart'
 
 const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ""
-);
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ''
+)
 
 function Cart() {
   const {
@@ -27,66 +27,64 @@ function Cart() {
     isEmpty,
     items,
     removeItem,
-    updateItemQuantity,
-  } = useCart();
-  const router = useRouter();
+    updateItemQuantity
+  } = useCart()
+  const router = useRouter()
   const {
     setSubmissionError,
     setSubmissionLoading,
     submissionLoading,
-    setSubmissionSuccess,
-  } = useSubmissionState();
+    setSubmissionSuccess
+  } = useSubmissionState()
 
   const decrementItemQuantity = (item: any) =>
-    updateItemQuantity(item.id, item.quantity - 1);
+    updateItemQuantity(item.id, item.quantity - 1)
 
   const incrementItemQuantity = (item: any) =>
-    updateItemQuantity(item.id, item.quantity + 1);
+    updateItemQuantity(item.id, item.quantity + 1)
 
   const handleClick = async () => {
     try {
-      setSubmissionLoading();
+      setSubmissionLoading()
 
-      const stripe = await stripePromise;
+      const stripe = await stripePromise
 
-      const res = await fetch("/api/stripe/create-checkout-session", {
-        method: "POST",
+      const res = await fetch('/api/stripe/create-checkout-session', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           cancel_url: window.location.href,
           currency: CURRENCY,
           items,
           locale: router.locale,
-          success_url: `${window.location.origin}/success`,
-        }),
-      });
+          success_url: `${window.location.origin}/success`
+        })
+      })
 
       if (!res.ok) {
         const error = new Error(
-          "An error occurred while performing this request"
-        );
-        (error as any).info = await res.json();
-        (error as any).status = res.status;
-
-        throw error;
+          'An error occurred while performing this request'
+        )
+        setSubmissionError(error.message)
+        throw error
       }
 
-      const { session } = await res.json();
+      const { session } = await res.json()
 
       await stripe?.redirectToCheckout({
-        sessionId: session.id,
-      });
-      setSubmissionSuccess();
+        sessionId: session.id
+      })
+      setSubmissionSuccess()
     } catch (error) {
-      setSubmissionError((error as any).info.message);
+      setSubmissionError((error as any).info.message)
     }
-  };
+  }
 
-  const locale = router.locale || DEFAULT_LOCALE;
+  const locale = router.locale || DEFAULT_LOCALE
 
-  if (isEmpty) return <p>Your cart is empty</p>;
+  if (isEmpty) return <p>Your cart is empty</p>
 
   return (
     <React.Fragment>
@@ -109,7 +107,7 @@ function Cart() {
               <div>
                 <Link href={`/products/${item[locale].slug}`}>
                   <a className="text-gray-800 font-medium text-sm md:text-base">
-                    {item[locale]}
+                    {item[locale]?.name}
                   </a>
                 </Link>
                 <button
@@ -143,21 +141,21 @@ function Cart() {
               <p className="font-medium text-gray-800">
                 {formatCurrencyValue({
                   currency: CURRENCY,
-                  value: item.itemTotal,
+                  value: item.itemTotal
                 })}
               </p>
               {Number(item?.quantity) > 1 && (
                 <p className="text-gray-400 text-sm">
                   {formatCurrencyValue({
                     currency: CURRENCY,
-                    value: item.price,
-                  })}{" "}
+                    value: item.price
+                  })}{' '}
                   each
                 </p>
               )}
             </div>
           </div>
-        );
+        )
       })}
       <div className="mt-3 md:mt-6 py-3 md:py-6 border-t-2 border-gray-50">
         <div className="flex flex-col items-end">
@@ -166,7 +164,7 @@ function Cart() {
             <span className="text-xl font-bold text-indigo-600">
               {formatCurrencyValue({
                 currency: CURRENCY,
-                value: cartTotal,
+                value: cartTotal
               })}
             </span>
           </div>
@@ -176,17 +174,17 @@ function Cart() {
         </div>
       </div>
     </React.Fragment>
-  );
+  )
 }
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  const pageData = await getPageData({ locale });
+  const pageData = await getPageData({ locale })
 
   return {
     props: {
-      ...pageData,
-    },
-  };
-};
+      ...pageData
+    }
+  }
+}
 
-export default Cart;
+export default Cart

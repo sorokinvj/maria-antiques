@@ -5,10 +5,12 @@ import { formatCurrencyValue } from '@/utils/format-currency-value'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
+import { useCart } from 'react-use-cart'
 import { Order } from 'types'
 
 function SuccessPage() {
   const router = useRouter()
+  const { emptyCart } = useCart()
   const [loading, setLoading] = React.useState(true)
   const [order, setOrder] = React.useState<Order | null>(null)
 
@@ -20,7 +22,7 @@ function SuccessPage() {
       setLoading(false)
       setOrder(order)
     }
-
+    emptyCart()
     if (router.query.id) fetchOrder()
   }, [router.query.id])
 
