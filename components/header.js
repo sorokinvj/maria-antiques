@@ -2,8 +2,7 @@ import Link from 'next/link'
 import { useCart } from 'react-use-cart'
 
 import { formatCurrencyValue } from '@/utils/format-currency-value'
-import { HygraphSVG } from '@/svgs'
-import { ShoppingCartIcon } from '@/icons'
+import { ShoppingCartIcon, LogoIcon } from '@/icons'
 import { useSettingsContext } from '@/context/settings'
 
 function Header({ pages = [] }) {
@@ -13,10 +12,10 @@ function Header({ pages = [] }) {
   return (
     <header className="max-w-7xl mx-auto bg-white flex-grow flex items-center justify-between px-4 sm:px-6">
       <div className="py-6 w-full">
-        <nav className="flex items-center justify-between flex-wrap space-x-4">
+        <nav style={{height: "80px"}} className="flex items-center justify-between flex-wrap space-x-4">
           <Link href="/">
-            <a>
-              <HygraphSVG className="h-auto text-primary w-5" />
+            <a style={{width: "260px", marginLeft: "15px"}}>
+              <LogoIcon />
             </a>
           </Link>
           {pages.length ? (
