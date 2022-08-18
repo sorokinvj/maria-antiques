@@ -14,7 +14,7 @@ function Header({ pages = [] }) {
       <div className="py-6 w-full">
         <nav style={{height: "80px"}} className="flex items-center justify-between flex-wrap space-x-4">
           <Link href="/">
-            <a style={{width: "260px", marginLeft: "15px"}}>
+            <a style={{width: "260px", marginLeft: "15px", marginRight: "40px"}}>
               <LogoIcon />
             </a>
           </Link>

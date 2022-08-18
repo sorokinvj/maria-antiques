@@ -1,6 +1,7 @@
 import { CartProvider } from 'react-use-cart'
 
 import 'tailwindcss/tailwind.css'
+import '../components/css/overrides.css'
 
 import { SettingsProvider } from '@/context/settings'
 import Layout from '@/components/layout'
