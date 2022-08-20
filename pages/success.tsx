@@ -43,7 +43,7 @@ const SuccessPage: React.FC<Props> = ({ order }) => {
       <p className="mb-4 text-xl">Order contents:</p>
 
       <ul className="flex flex-col">
-        {order.orderItems.map((item: any) => {
+        {order.orderItems.map((item) => {
           return (
             <div
               className="md:bg-gray-50 md:rounded-lg flex items-center py-3 md:py-6 md:px-6 md:mb-3"
