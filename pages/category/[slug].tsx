@@ -33,7 +33,8 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
 
   return {
     paths,
-    fallback: false,
+    fallback: 'blocking'
+
   };
 };
 
@@ -49,6 +50,7 @@ export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
       category,
       ...pageData,
     },
+    revalidate: 10
   };
 };
 
