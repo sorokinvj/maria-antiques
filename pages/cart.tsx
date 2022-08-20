@@ -78,7 +78,11 @@ function Cart() {
       })
       setSubmissionSuccess()
     } catch (error) {
-      setSubmissionError((error as any).info.message)
+      if (error instanceof Error) {
+        setSubmissionError(error.message)
+      } else {
+        setSubmissionError(JSON.stringify(error))
+      }
     }
   }
 
