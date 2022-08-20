@@ -48,8 +48,6 @@ export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
     slug: params?.slug as string
   })
 
-  console.log(product)
-
   return {
     props: {
       product,
