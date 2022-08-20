@@ -1,21 +1,19 @@
+// write a description for SEO for a store that sell jewellery: earrings, bracelets, etc
+
 const description =
-  'Learn how to build modern, SEO ready commerce storefronts with Hygraph, Next.js, Stripe, and Vercel.'
-const title = 'Build Modern Commerce Experiences with a Headless CMS'
-const url = 'https://commerce.withheadlesscms.com'
+  "Maria's Antiques is a boutique jewellery store that sells earrings, bracelets, necklaces, and more. We are a family run business and we are dedicated to providing the highest quality jewellery at the lowest prices."
+const title = "Maria's Antiques"
+const url = 'maria-antiques.vercel.app'
 
 const seo = {
   title,
-  titleTemplate: '%s | Hygraph',
+  titleTemplate: '%s',
   description,
   openGraph: {
     description,
     title,
     type: 'website',
     url
-  },
-  twitter: {
-    handle: '@Hygraphcom',
-    site: '@Hygraphcom'
   }
 }
 
