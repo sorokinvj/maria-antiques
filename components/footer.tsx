@@ -23,7 +23,6 @@ export const Footer: React.FC<Props> = ({
   }))
 
   const updateLocale = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log('updateLocale', event.target.value)
     const path = ['/cart'].includes(router.asPath) ? router.asPath : '/'
     router.push(path, path, { locale: event.target.value })
   }
