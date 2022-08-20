@@ -1,33 +1,34 @@
-import { ChevronDownSmallIcon } from "@/components/icons";
-import React from "react";
-import { useFormContext } from "react-hook-form";
+import { ChevronDownSmallIcon } from '@/components/icons'
+import React from 'react'
+import { useFormContext } from 'react-hook-form'
 
 interface OptionItem {
-  value: string;
-  label: string;
+  value: string
+  label: string
 }
 interface SelectProps {
-  field: string;
-  placeholder?: string;
-  className?: string;
-  children?: React.ReactNode | React.ReactNode[];
-  disabled?: boolean;
-  defaultValue?: string;
-  label?: string;
-  options: OptionItem[];
-  onChange?: (value: string) => void;
+  field: string
+  placeholder?: string
+  className?: string
+  children?: React.ReactNode | React.ReactNode[]
+  disabled?: boolean
+  defaultValue?: string
+  label?: string
+  options: OptionItem[]
+  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
 }
 
 export const Select = React.forwardRef((props: SelectProps, ref: any) => {
   const {
     children,
     className,
-    defaultValue = "",
+    defaultValue = '',
     disabled,
     field,
     label,
     options,
-  } = props;
+    onChange
+  } = props
   return (
     <fieldset className={className}>
       {label ? (
@@ -43,6 +44,7 @@ export const Select = React.forwardRef((props: SelectProps, ref: any) => {
           defaultValue={defaultValue}
           className="appearance-none block w-full bg-none bg-white border border-gray-300 rounded-md py-2 pl-3 pr-10 text-base text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           ref={ref}
+          onChange={onChange}
         >
           <option disabled value="">
             Please select an option
@@ -62,12 +64,12 @@ export const Select = React.forwardRef((props: SelectProps, ref: any) => {
       </div>
       {children}
     </fieldset>
-  );
-});
-Select.displayName = "Select";
+  )
+})
+Select.displayName = 'Select'
 
 export const FormSelect: React.FC<SelectProps> = (props) => {
-  const { errors, register } = useFormContext();
+  const { errors, register } = useFormContext()
 
   return (
     <Select ref={register} {...props}>
@@ -77,5 +79,5 @@ export const FormSelect: React.FC<SelectProps> = (props) => {
         </p>
       ) : null}
     </Select>
-  );
-};
+  )
+}
