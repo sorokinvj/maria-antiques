@@ -98,10 +98,10 @@ function Cart() {
             <div className="w-3/5 flex flex-grow items-center">
               <div className="h-16 md:h-20 w-16 md:w-20 mr-4 bg-gray-50 p-1 rounded-lg">
                 <Image
-                  src={item.image.url}
-                  width={item.image.width}
-                  height={item.image.height}
-                  alt={item.image.alt}
+                  src={item?.image?.url}
+                  width={item?.image?.width}
+                  height={item?.image?.height}
+                  alt={item?.image?.alt}
                 />
               </div>
               <div>
@@ -112,7 +112,7 @@ function Cart() {
                 </Link>
                 <button
                   className="text-gray-400 hover:text-indigo-600 text-xs flex items-center focus:outline-none"
-                  onClick={() => removeItem(item.id)}
+                  onClick={() => removeItem(item?.id)}
                   disabled={submissionLoading}
                 >
                   <XSmallIcon className="h-3 w-3" />
@@ -128,7 +128,7 @@ function Cart() {
               >
                 <ChevronUpSmallIcon className="h-4 w-4" />
               </button>
-              <span className="mx-3 md:mx-6 p-1">{item.quantity}</span>
+              <span className="mx-3 md:mx-6 p-1">{item?.quantity}</span>
               <button
                 className="text-gray-400 hover:text-indigo-600 focus:outline-none p-1"
                 onClick={() => decrementItemQuantity(item)}
@@ -141,14 +141,14 @@ function Cart() {
               <p className="font-medium text-gray-800">
                 {formatCurrencyValue({
                   currency: CURRENCY,
-                  value: item.itemTotal
+                  value: item?.itemTotal
                 })}
               </p>
               {Number(item?.quantity) > 1 && (
                 <p className="text-gray-400 text-sm">
                   {formatCurrencyValue({
                     currency: CURRENCY,
-                    value: item.price
+                    value: item?.price
                   })}{' '}
                   each
                 </p>
