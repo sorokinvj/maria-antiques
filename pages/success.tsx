@@ -2,32 +2,23 @@ import { CURRENCY } from '@/constants'
 import { getOrderBySessionId } from '@/lib/get-order-session-id'
 import { convertPriceFormat } from '@/utils/convert-price-format'
 import { formatCurrencyValue } from '@/utils/format-currency-value'
+import { GetServerSideProps } from 'next'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useCart } from 'react-use-cart'
 import { Order } from 'types'
 
-function SuccessPage() {
-  const router = useRouter()
+interface Props {
+  order: Order
+}
+
+const SuccessPage: React.FC<Props> = ({ order }) => {
   const { emptyCart } = useCart()
-  const [loading, setLoading] = React.useState(true)
-  const [order, setOrder] = React.useState<Order | null>(null)
 
   useEffect(() => {
-    const fetchOrder = async () => {
-      const order = await getOrderBySessionId({
-        id: router?.query?.id as string
-      })
-      setLoading(false)
-      setOrder(order)
-    }
     emptyCart()
-    if (router.query.id) fetchOrder()
-  }, [router.query.id])
+  }, [emptyCart])
 
-  if (!order) return null
-  if (loading) return 'loading'
   return (
     <div className="py-6">
       <h1 className="font-bold text-3xl md:text-6xl mb-3 text-primary leading-tight">
@@ -99,6 +90,15 @@ function SuccessPage() {
       </h2>
     </div>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const order = await getOrderBySessionId({
+    id: query?.id as string
+  })
+  return {
+    props: { order }
+  }
 }
 
 export default SuccessPage
