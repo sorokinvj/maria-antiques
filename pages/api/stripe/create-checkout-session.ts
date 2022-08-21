@@ -47,11 +47,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const line_items = await Promise.all(
       items.map(async (item: any) => ({
-        adjustable_quantity: {
-          enabled: true,
-          minimum: 1
-        },
-
         price_data: await getProduct(item.productId),
         quantity: item.quantity
       }))
