@@ -1,19 +1,20 @@
 import { CartItem } from '@/components/CartItem/CartItem'
-import { SEO } from '@/components/seo'
 import Button from '@/components/ui/button'
 import { CURRENCY } from '@/constants'
+import { useHasMounted } from '@/hooks/useHasMounted'
 import { formatCurrencyValue } from '@/utils/format-currency-value'
 import { loadStripe } from '@stripe/stripe-js'
 import useSubmissionState from 'hooks/use-form-submission'
 import { useRouter } from 'next/router'
-import { Item, useCart } from 'react-use-cart'
+import { useCart } from 'react-use-cart'
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ''
 )
 
 const Cart: React.FC = () => {
-  const { cartTotal, isEmpty, items } = useCart()
+  const { isEmpty, items, cartTotal } = useCart()
+
   const router = useRouter()
   const {
     setSubmissionError,
@@ -65,12 +66,13 @@ const Cart: React.FC = () => {
     }
   }
 
-  if (isEmpty) return <p>Your cart is empty</p>
+  const hasMounted = useHasMounted()
 
+  if (!hasMounted) return null
+  if (isEmpty) return <p>Your cart is empty</p>
   return (
     <>
-      <SEO title="Cart" />
-      {items.map((item: Item) => (
+      {items.map((item) => (
         <CartItem item={item} key={item.id} />
       ))}
 

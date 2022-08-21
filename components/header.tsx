@@ -1,18 +1,21 @@
-import { HygraphSVG } from "@/components/icons";
-import { CURRENCY } from "@/constants";
-import { ShoppingCartIcon } from "@/icons";
-import { formatCurrencyValue } from "@/utils/format-currency-value";
-import Link from "next/link";
-import React from "react";
-import { useCart } from "react-use-cart";
-import { Page } from "types";
+import { HygraphSVG } from '@/components/icons'
+import { CURRENCY } from '@/constants'
+import { useHasMounted } from '@/hooks/useHasMounted'
+import { ShoppingCartIcon } from '@/icons'
+import { formatCurrencyValue } from '@/utils/format-currency-value'
+import Link from 'next/link'
+import { useCart } from 'react-use-cart'
+import { Page } from 'types'
 
 interface Props {
-  pages: Page[];
+  pages: Page[]
 }
 
 export const Header: React.FC<Props> = ({ pages = [] }) => {
-  const { cartTotal } = useCart();
+  const { cartTotal } = useCart()
+  const hasMounted = useHasMounted()
+
+  if (!hasMounted) return null
 
   return (
     <header className="max-w-7xl mx-auto bg-white flex-grow flex items-center justify-between px-4 sm:px-6">
@@ -49,7 +52,7 @@ export const Header: React.FC<Props> = ({ pages = [] }) => {
                 <span className="text-gray-900">
                   {formatCurrencyValue({
                     currency: CURRENCY,
-                    value: cartTotal,
+                    value: cartTotal
                   })}
                 </span>
               </a>
@@ -58,5 +61,5 @@ export const Header: React.FC<Props> = ({ pages = [] }) => {
         </nav>
       </div>
     </header>
-  );
-};
+  )
+}
