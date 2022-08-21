@@ -2,9 +2,11 @@ import { CartItem } from '@/components/CartItem/CartItem'
 import Button from '@/components/ui/button'
 import { CURRENCY } from '@/constants'
 import { useHasMounted } from '@/hooks/useHasMounted'
+import getPageData from '@/lib/get-page-data'
 import { formatCurrencyValue } from '@/utils/format-currency-value'
 import { loadStripe } from '@stripe/stripe-js'
 import useSubmissionState from 'hooks/use-form-submission'
+import { GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import { useCart } from 'react-use-cart'
 
@@ -94,6 +96,16 @@ const Cart: React.FC = () => {
       </div>
     </>
   )
+}
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  const pageData = await getPageData({ locale })
+
+  return {
+    props: {
+      ...pageData
+    }
+  }
 }
 
 export default Cart
