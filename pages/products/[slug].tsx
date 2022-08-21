@@ -5,19 +5,23 @@ import { getPageData } from '@/lib/get-page-data'
 import { getProductBySlug } from '@/lib/get-product-slug'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import React from 'react'
+import { Product } from 'types'
 
-function ProductPage({ product }: any) {
-  return (
-    <React.Fragment>
-      <SEO title={product.name} {...product} />
-      <ProductPageUI product={product} />
-    </React.Fragment>
-  )
+interface ProductPageProps {
+  product: Product
 }
-
 interface ProductPath {
   params: { slug: string }
   locale: string
+}
+
+function ProductPage({ product }: ProductPageProps) {
+  return (
+    <React.Fragment>
+      <SEO title={product.name} image={product.images[0]} {...product} />
+      <ProductPageUI product={product} />
+    </React.Fragment>
+  )
 }
 
 export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
