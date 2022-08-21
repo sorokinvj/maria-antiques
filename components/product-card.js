@@ -28,7 +28,7 @@ function ProductCard({ id, images, name, price, slug }) {
               <p className="text-gray-800 font-semibold text-lg group-hover:text-indigo-600 mb-1">
                 {name}
               </p>
-              <p className="text-gray-400 text-sm">
+              <p className="text-gray-400 text-sm font-semibold">
                 {formatCurrencyValue({
                   currency: activeCurrency,
                   value: price
