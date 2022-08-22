@@ -1,7 +1,8 @@
 module.exports = {
   i18n: {
-    locales: ['en', 'pt_PT'],
-    defaultLocale: 'en'
+    locales: ['en', 'pt'],
+    defaultLocale: 'en',
+    localeDetection: false
   },
   images: {
     domains: ['media.graphassets.com']
