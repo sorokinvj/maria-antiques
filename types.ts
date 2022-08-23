@@ -52,8 +52,3 @@ export interface Page {
 export interface LibParams {
   slug?: string
 }
-
-interface LocalProduct {
-  name: string
-  slug: string
-}
