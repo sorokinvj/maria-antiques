@@ -1,5 +1,6 @@
 import { CURRENCY } from '@/constants'
 import { getOrderBySessionId } from '@/lib/get-order-session-id'
+import getPageData from '@/lib/get-page-data'
 import { convertPriceFormat } from '@/utils/convert-price-format'
 import { formatCurrencyValue } from '@/utils/format-currency-value'
 import { GetServerSideProps } from 'next'
@@ -96,8 +97,10 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const order = await getOrderBySessionId({
     id: query?.id as string
   })
+  const pageData = await getPageData()
+
   return {
-    props: { order }
+    props: { order, ...pageData }
   }
 }
 
