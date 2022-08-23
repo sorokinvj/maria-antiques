@@ -31,6 +31,7 @@ export interface Order {
 }
 
 export interface Collection {
+  slug: string
   name: string
   products: Product[]
 }

@@ -3,7 +3,7 @@ import {
   ChevronUpSmallIcon,
   XSmallIcon
 } from '@/components/icons'
-import { CURRENCY, DEFAULT_LOCALE } from '@/constants'
+import { CURRENCY } from '@/constants'
 import useSubmissionState from '@/hooks/use-form-submission'
 import { formatCurrencyValue } from '@/utils/format-currency-value'
 import Image from 'next/image'
@@ -23,7 +23,6 @@ interface Props {
 
 export const CartItem: React.FC<Props> = ({ item }) => {
   const router = useRouter()
-  const locale = router.locale || DEFAULT_LOCALE
   const { submissionLoading } = useSubmissionState()
   const { removeItem, updateItemQuantity } = useCart()
 
@@ -55,14 +54,14 @@ export const CartItem: React.FC<Props> = ({ item }) => {
               src={item.image?.url}
               width={item.image?.width}
               height={item.image?.height}
-              alt={item[locale]?.name}
+              alt={item?.name}
             />
           )}
         </div>
         <div>
-          <Link href={`/products/${item[locale]?.slug}`}>
+          <Link href={`/products/${item?.slug}`}>
             <a className="text-gray-800 font-medium text-sm md:text-base">
-              {item[locale]?.name}
+              {item?.name}
             </a>
           </Link>
           <button

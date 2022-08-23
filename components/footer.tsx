@@ -2,8 +2,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { Category, Collection } from 'types'
-import nextConfig from '../next.config'
-import { Select } from './ui/form/form-select'
 
 interface Props {
   categories: Category[]
@@ -15,17 +13,6 @@ export const Footer: React.FC<Props> = ({
   collections = []
 }) => {
   const router = useRouter()
-  const activeLocale = router.locale
-
-  const localeOptions = nextConfig.i18n.locales.map((locale) => ({
-    value: locale,
-    label: locale === 'en' ? 'English' : 'Português'
-  }))
-
-  const updateLocale = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const path = ['/cart'].includes(router.asPath) ? router.asPath : '/'
-    router.push(path, path, { locale: event.target.value })
-  }
 
   return (
     <footer className="bg-white" aria-labelledby="footerHeading">
@@ -79,21 +66,6 @@ export const Footer: React.FC<Props> = ({
                 </ul>
               </div>
             ) : null}
-          </div>
-          <div className="xl:mt-0 flex flex-col justify-self-end">
-            <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase">
-              Language
-            </h3>
-            <form className="mt-4 space-y-4 sm:max-w-xs">
-              <Select
-                className="w-full"
-                defaultValue={activeLocale}
-                field="language"
-                label="Language"
-                onChange={updateLocale}
-                options={localeOptions}
-              />
-            </form>
           </div>
         </div>
       </div>

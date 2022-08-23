@@ -23,16 +23,11 @@ function ProductPage({ product }: ProductPageProps) {
   )
 }
 
-export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
-  let paths: ProductPath[] = []
-
+export const getStaticPaths: GetStaticPaths = async () => {
   const products = await getAllProducts()
-  paths = [
-    ...paths,
-    ...products.map((product: any) => ({
-      params: { slug: product.slug }
-    }))
-  ]
+  const paths = products.map((product) => ({
+    params: { slug: product.slug }
+  }))
 
   return {
     paths,
@@ -40,7 +35,7 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
   }
 }
 
-export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const pageData = await getPageData()
   const product = await getProductBySlug({
     slug: params?.slug as string
