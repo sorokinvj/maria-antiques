@@ -38,9 +38,7 @@ const Cart: React.FC = () => {
         },
         body: JSON.stringify({
           cancel_url: window.location.href,
-          currency: CURRENCY,
           items,
-          locale: router.locale,
           success_url: `${window.location.origin}/success`
         })
       })

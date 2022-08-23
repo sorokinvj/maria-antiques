@@ -1,13 +1,13 @@
 import {
   CollectionFragment,
-  ProductCardFragment,
-} from "@/lib/graphql-fragments";
-import hygraphClient, { gql } from "@/lib/hygraph-client";
-import { Collection, LibParams } from "types";
+  ProductCardFragment
+} from '@/lib/graphql-fragments'
+import hygraphClient, { gql } from '@/lib/hygraph-client'
+import { Collection, LibParams } from 'types'
 
 export const getCollectionSlugQuery = gql`
-  query CollectionSlugQuery($locale: Locale!, $slug: String!) {
-    collections(where: { slug: $slug }, locales: [$locale, en]) {
+  query CollectionSlugQuery($slug: String!) {
+    collections(where: { slug: $slug }) {
       ...CollectionFragment
       products {
         ...ProductCardFragment
@@ -16,18 +16,16 @@ export const getCollectionSlugQuery = gql`
   }
 
   ${[CollectionFragment, ProductCardFragment]}
-`;
+`
 
 export const getCollectionBySlug = async ({
-  locale = "en",
-  slug,
+  slug
 }: LibParams): Promise<Collection> => {
   const {
-    collections: [collection],
+    collections: [collection]
   } = await hygraphClient.request(getCollectionSlugQuery, {
-    locale,
-    slug,
-  });
+    slug
+  })
 
-  return collection;
-};
+  return collection
+}

@@ -14,13 +14,6 @@ export interface Product {
   name: string
   price: number
   slug: string
-  variants: {
-    id: string
-    name: string
-  }[]
-  localizations: {
-    locale: string
-  }[]
   description: string
 }
 
@@ -56,16 +49,10 @@ export interface Page {
 }
 
 export interface LibParams {
-  locale?: string
   slug?: string
 }
 
 interface LocalProduct {
-  locale: string
   name: string
   slug: string
-}
-
-export interface LocaleMetadata {
-  [key: string]: LocalProduct
 }

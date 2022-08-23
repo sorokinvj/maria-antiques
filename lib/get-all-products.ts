@@ -1,23 +1,18 @@
-import { ProductCardFragment } from "@/lib/graphql-fragments";
-import hygraphClient, { gql } from "@/lib/hygraph-client";
-import { LibParams, Product } from "types";
+import { ProductCardFragment } from '@/lib/graphql-fragments'
+import hygraphClient, { gql } from '@/lib/hygraph-client'
+import { Product } from 'types'
 
 export const getAllProductsQuery = gql`
-  query AllProductsQuery($locale: Locale!) {
-    products(locales: [$locale, en]) {
+  query AllProductsQuery() {
+    products() {
       ...ProductCardFragment
     }
   }
 
   ${ProductCardFragment}
-`;
+`
 
-export const getAllProducts = async ({
-  locale = "en",
-}: LibParams): Promise<Product[]> => {
-  const { products } = await hygraphClient.request(getAllProductsQuery, {
-    locale,
-  });
-
-  return products;
-};
+export const getAllProducts = async (): Promise<Product[]> => {
+  const { products } = await hygraphClient.request(getAllProductsQuery)
+  return products
+}

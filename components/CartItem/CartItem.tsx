@@ -11,7 +11,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { Item, useCart } from 'react-use-cart'
-import { LocaleMetadata } from 'types'
 
 export interface CartItem extends Item {
   image?: { id: string; height: number; url: string; width: number }
@@ -19,7 +18,7 @@ export interface CartItem extends Item {
 }
 
 interface Props {
-  item: CartItem & Partial<LocaleMetadata>
+  item: CartItem
 }
 
 export const CartItem: React.FC<Props> = ({ item }) => {

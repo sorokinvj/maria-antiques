@@ -12,7 +12,6 @@ interface ProductPageProps {
 }
 interface ProductPath {
   params: { slug: string }
-  locale: string
 }
 
 function ProductPage({ product }: ProductPageProps) {
@@ -27,17 +26,13 @@ function ProductPage({ product }: ProductPageProps) {
 export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
   let paths: ProductPath[] = []
 
-  for (const locale of locales!) {
-    const products = await getAllProducts({ locale })
-
-    paths = [
-      ...paths,
-      ...products.map((product: any) => ({
-        params: { slug: product.slug },
-        locale
-      }))
-    ]
-  }
+  const products = await getAllProducts()
+  paths = [
+    ...paths,
+    ...products.map((product: any) => ({
+      params: { slug: product.slug }
+    }))
+  ]
 
   return {
     paths,
@@ -46,9 +41,8 @@ export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
-  const pageData = await getPageData({ locale })
+  const pageData = await getPageData()
   const product = await getProductBySlug({
-    locale,
     slug: params?.slug as string
   })
 
