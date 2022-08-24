@@ -1,14 +1,9 @@
-import {
-  ChevronDownSmallIcon,
-  ChevronUpSmallIcon,
-  XSmallIcon
-} from '@/components/icons'
+import { XSmallIcon } from '@/components/icons'
 import { CURRENCY } from '@/constants'
 import useSubmissionState from '@/hooks/use-form-submission'
 import { formatCurrencyValue } from '@/utils/format-currency-value'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import React from 'react'
 import { Item, useCart } from 'react-use-cart'
 
@@ -22,26 +17,13 @@ interface Props {
 }
 
 export const CartItem: React.FC<Props> = ({ item }) => {
-  const router = useRouter()
   const { submissionLoading } = useSubmissionState()
   const { removeItem, updateItemQuantity } = useCart()
 
   const handleRemove = () => {
     removeItem(item.id)
   }
-
-  const handleIncrement = () => {
-    if (item.quantity) {
-      updateItemQuantity(item.id, item?.quantity + 1)
-    }
-  }
-
-  const handleDecrement = () => {
-    if (item.quantity) {
-      updateItemQuantity(item.id, item?.quantity - 1)
-    }
-  }
-
+  console.log(item)
   return (
     <div
       className="md:bg-gray-50 md:rounded-lg flex items-center py-3 md:py-6 md:px-6 md:mb-3"
@@ -58,9 +40,9 @@ export const CartItem: React.FC<Props> = ({ item }) => {
             />
           )}
         </div>
-        <div>
+        <div className="flex flex-col items-start md:flex-row md:items-center">
           <Link href={`/products/${item?.slug}`}>
-            <a className="text-gray-800 font-medium text-sm md:text-base">
+            <a className="text-gray-800 font-medium text-sm md:text-base mr-4">
               {item?.name}
             </a>
           </Link>
@@ -73,23 +55,6 @@ export const CartItem: React.FC<Props> = ({ item }) => {
             Remove
           </button>
         </div>
-      </div>
-      <div className="hidden md:flex flex-col items-center ml-auto">
-        <button
-          className="text-gray-400 hover:text-indigo-600 focus:outline-none p-1"
-          onClick={handleIncrement}
-          disabled={submissionLoading}
-        >
-          <ChevronUpSmallIcon className="h-4 w-4" />
-        </button>
-        <span className="mx-3 md:mx-6 p-1">{item?.quantity}</span>
-        <button
-          className="text-gray-400 hover:text-indigo-600 focus:outline-none p-1"
-          onClick={handleDecrement}
-          disabled={submissionLoading}
-        >
-          <ChevronDownSmallIcon className="h-4 w-4" />
-        </button>
       </div>
       <div className="text-right md:w-1/5">
         <p className="font-medium text-gray-800">

@@ -16,9 +16,10 @@ export const ProductPageUI: React.FC<Props> = ({ product }) => {
 
   const addToCart = () => {
     addItem({
-      id: product?.id,
+      id: product.id,
       image: primaryImage,
-      price: product.price
+      price: product.price,
+      name: product.name
     })
   }
 
