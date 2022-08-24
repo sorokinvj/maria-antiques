@@ -30,7 +30,7 @@ export const CartItem: React.FC<Props> = ({ item }) => {
       key={item.id}
     >
       <div className="w-3/5 flex flex-grow items-center">
-        <div className="h-16 md:h-20 w-16 md:w-20 mr-4 bg-gray-50 p-1 rounded-lg">
+        <div className="h-16 md:h-20 w-16 md:w-20 mr-4 bg-gray-50 p-1 rounded-lg overflow-y-clip">
           {item?.image && (
             <Image
               src={item.image?.url}
