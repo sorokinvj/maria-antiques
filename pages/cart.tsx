@@ -7,7 +7,6 @@ import { formatCurrencyValue } from '@/utils/format-currency-value'
 import { loadStripe } from '@stripe/stripe-js'
 import useSubmissionState from 'hooks/use-form-submission'
 import { GetStaticProps } from 'next'
-import { useRouter } from 'next/router'
 import { useCart } from 'react-use-cart'
 
 const stripePromise = loadStripe(
@@ -16,8 +15,6 @@ const stripePromise = loadStripe(
 
 const Cart: React.FC = () => {
   const { isEmpty, items, cartTotal } = useCart()
-
-  const router = useRouter()
   const {
     setSubmissionError,
     setSubmissionLoading,
@@ -38,9 +35,7 @@ const Cart: React.FC = () => {
         },
         body: JSON.stringify({
           cancel_url: window.location.href,
-          currency: CURRENCY,
           items,
-          locale: router.locale,
           success_url: `${window.location.origin}/success`
         })
       })
@@ -98,13 +93,14 @@ const Cart: React.FC = () => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  const pageData = await getPageData({ locale })
+export const getStaticProps: GetStaticProps = async () => {
+  const pageData = await getPageData()
 
   return {
     props: {
       ...pageData
-    }
+    },
+    revalidate: 1
   }
 }
 
