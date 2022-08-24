@@ -1,52 +1,52 @@
-import { CategoryFragment, CollectionFragment } from "@/lib/graphql-fragments";
-import hygraphClient, { gql } from "@/lib/hygraph-client";
-import { Category, Collection, LibParams, Page } from "types";
+import { CategoryFragment, CollectionFragment } from '@/lib/graphql-fragments'
+import hygraphClient, { gql } from '@/lib/hygraph-client'
+import { Category, Collection, Page } from 'types'
 
 export const getPageDataQuery = gql`
-  query PageDataQuery($locale: Locale!) {
-    footerCategories: categories(first: 4, locales: [$locale, en]) {
+  query PageDataQuery() {
+    footerCategories: categories(first: 4) {
       ...CategoryFragment
       type: __typename
     }
-    footerCollections: collections(first: 4, locales: [$locale, en]) {
+    footerCollections: collections(first: 4) {
       ...CollectionFragment
       type: __typename
     }
-    navigationCategory: categories(first: 1, locales: [$locale, en]) {
+    navigationCategory: categories(first: 1) {
       ...CategoryFragment
       type: __typename
     }
-    navigationCollection: collections(first: 1, locales: [$locale, en]) {
+    navigationCollection: collections(first: 1) {
       ...CollectionFragment
       type: __typename
     }
   }
 
   ${[CategoryFragment, CollectionFragment]}
-`;
+`
 
 interface PageData {
   footer: {
-    categories: Category[];
-    collections: Collection[];
-  };
+    categories: Category[]
+    collections: Collection[]
+  }
   navigation: {
-    pages: Page[];
-  };
+    pages: Page[]
+  }
 }
 
-export const getPageData = async ({ locale }: LibParams): Promise<PageData> => {
+export const getPageData = async (): Promise<PageData> => {
   const {
     footerCategories,
     footerCollections,
     navigationCategory,
-    navigationCollection,
-  } = await hygraphClient.request(getPageDataQuery, { locale });
+    navigationCollection
+  } = await hygraphClient.request(getPageDataQuery)
 
   return {
     footer: { categories: footerCategories, collections: footerCollections },
-    navigation: { pages: [...navigationCategory, ...navigationCollection] },
-  };
-};
+    navigation: { pages: [...navigationCategory, ...navigationCollection] }
+  }
+}
 
-export default getPageData;
+export default getPageData

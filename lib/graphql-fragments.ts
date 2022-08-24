@@ -1,4 +1,4 @@
-import { gql } from "@/lib/hygraph-client";
+import { gql } from '@/lib/hygraph-client'
 
 export const CategoryFragment = gql`
   fragment CategoryFragment on Category {
@@ -7,7 +7,7 @@ export const CategoryFragment = gql`
     name
     slug
   }
-`;
+`
 export const CollectionFragment = gql`
   fragment CollectionFragment on Collection {
     id
@@ -15,7 +15,7 @@ export const CollectionFragment = gql`
     name
     slug
   }
-`;
+`
 
 export const ImageFragment = gql`
   fragment ImageFragment on Asset {
@@ -24,25 +24,7 @@ export const ImageFragment = gql`
     url
     width
   }
-`;
-
-export const ProductVariantFragment = gql`
-  fragment ProductVariantFragment on ProductVariants {
-    __typename
-    ... on ProductColorVariant {
-      id
-      name
-    }
-    ... on ProductSizeColorVariant {
-      id
-      name
-    }
-    ... on ProductSizeVariant {
-      id
-      name
-    }
-  }
-`;
+`
 
 export const ProductFragment = gql`
   fragment ProductFragment on Product {
@@ -54,13 +36,10 @@ export const ProductFragment = gql`
     name
     price
     slug
-    variants {
-      ...ProductVariantFragment
-    }
   }
 
-  ${[ImageFragment, ProductVariantFragment]}
-`;
+  ${[ImageFragment]}
+`
 
 export const ProductCardFragment = gql`
   fragment ProductCardFragment on Product {
@@ -71,10 +50,7 @@ export const ProductCardFragment = gql`
     name
     price
     slug
-    variants(first: 1) {
-      ...ProductVariantFragment
-    }
   }
 
-  ${[ImageFragment, ProductVariantFragment]}
-`;
+  ${[ImageFragment]}
+`

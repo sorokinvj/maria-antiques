@@ -1,5 +1,6 @@
 import { CURRENCY } from '@/constants'
 import { getOrderBySessionId } from '@/lib/get-order-session-id'
+import getPageData from '@/lib/get-page-data'
 import { convertPriceFormat } from '@/utils/convert-price-format'
 import { formatCurrencyValue } from '@/utils/format-currency-value'
 import { GetServerSideProps } from 'next'
@@ -21,11 +22,11 @@ const SuccessPage: React.FC<Props> = ({ order }) => {
 
   return (
     <div className="py-6">
-      <h1 className="font-bold text-3xl md:text-6xl mb-3 text-primary leading-tight">
+      <h2 className="font-bold text-2xl md:text-4xl mb-3 text-primary leading-tight">
         Successful Order
-      </h1>
+      </h2>
 
-      <p className="font-bold text-xl text-gray-300 md:text-3xl mb-14">
+      <p className="font-bold text-l text-gray-300 md:text-xl mb-14">
         #{order.id}
       </p>
 
@@ -40,7 +41,7 @@ const SuccessPage: React.FC<Props> = ({ order }) => {
         </span>
       </div>
 
-      <p className="mb-4 text-xl">Order contents:</p>
+      <p className="mb-4 text-l">Order contents:</p>
 
       <ul className="flex flex-col">
         {order.orderItems.map((item) => {
@@ -69,15 +70,10 @@ const SuccessPage: React.FC<Props> = ({ order }) => {
 
               <div className="text-right md:w-1/5">
                 <p className="font-medium text-gray-800">
-                  Total:{' '}
                   {formatCurrencyValue({
                     currency: CURRENCY,
                     value: convertPriceFormat('stripeToCms', item.total)
                   })}
-                </p>
-
-                <p className="font-medium text-gray-800">
-                  Quanity: {item.quantity}{' '}
                 </p>
               </div>
             </div>
@@ -85,8 +81,8 @@ const SuccessPage: React.FC<Props> = ({ order }) => {
         })}
       </ul>
 
-      <h2 className="font-bold text-2xl md:text-6xl my-8 text-primary leading-tight">
-        Shipping info:
+      <h2 className="font-bold text-2xl md:text-4xl my-8 text-primary leading-tight">
+        Shipping info
       </h2>
     </div>
   )
@@ -96,8 +92,10 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const order = await getOrderBySessionId({
     id: query?.id as string
   })
+  const pageData = await getPageData()
+
   return {
-    props: { order }
+    props: { order, ...pageData }
   }
 }
 

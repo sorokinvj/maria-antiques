@@ -8,13 +8,13 @@ function IndexPage({ products }: { products: Product[] }) {
   return <ProductGrid products={products} />
 }
 
-export const getStaticProps: GetStaticProps = async (props) => {
-  const { locale } = props
-  const pageData = await getPageData({ locale })
-  const products = await getAllProducts({ locale })
+export const getStaticProps: GetStaticProps = async () => {
+  const pageData = await getPageData()
+  const products = await getAllProducts()
 
   return {
-    props: { ...pageData, products }
+    props: { ...pageData, products },
+    revalidate: 1
   }
 }
 
