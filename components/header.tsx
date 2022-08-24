@@ -19,7 +19,7 @@ export const Header: React.FC<Props> = ({ pages = [] }) => {
   return (
     <header className="max-w-7xl mx-auto bg-white flex-grow flex items-center justify-between px-4 sm:px-6">
       <div className="py-6 w-full">
-        <nav className="flex items-center justify-between flex-wrap space-x-4 h-20">
+        <nav className="flex items-center justify-between space-x-4 h-20">
           <Link href="/">
             <a className="w-72 ml-4 mr-8">
               <LogoIcon />
