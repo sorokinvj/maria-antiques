@@ -23,7 +23,7 @@ export const CartItem: React.FC<Props> = ({ item }) => {
   const handleRemove = () => {
     removeItem(item.id)
   }
-  console.log(item)
+
   return (
     <div
       className="md:bg-gray-50 md:rounded-lg flex items-center py-3 md:py-6 md:px-6 md:mb-3"
