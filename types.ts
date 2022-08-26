@@ -52,3 +52,10 @@ export interface Page {
 export interface LibParams {
   slug?: string
 }
+
+export enum ShippingDestination {
+  portugal = 'PT',
+  europe = 'EU',
+  worldwide = 'WW',
+  us = 'US'
+}
