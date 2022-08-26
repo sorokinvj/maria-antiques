@@ -1,4 +1,5 @@
 import { CartItem } from '@/components/CartItem/CartItem'
+import { ErrorComponent } from '@/components/Error/Error'
 import Button from '@/components/ui/button'
 import { CURRENCY } from '@/constants'
 import { useHasMounted } from '@/hooks/useHasMounted'
@@ -19,7 +20,8 @@ const Cart: React.FC = () => {
     setSubmissionError,
     setSubmissionLoading,
     submissionLoading,
-    setSubmissionSuccess
+    setSubmissionSuccess,
+    submissionError
   } = useSubmissionState()
 
   const handleCheckout = async () => {
@@ -84,9 +86,14 @@ const Cart: React.FC = () => {
               })}
             </span>
           </div>
-          <Button onClick={handleCheckout} disabled={submissionLoading}>
+          <Button
+            onClick={handleCheckout}
+            disabled={submissionLoading}
+            isLoading={submissionLoading}
+          >
             Checkout
           </Button>
+          <ErrorComponent error={submissionError} />
         </div>
       </div>
     </>
