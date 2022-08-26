@@ -5,6 +5,7 @@ import { CURRENCY } from '@/constants'
 import { useHasMounted } from '@/hooks/useHasMounted'
 import getPageData from '@/lib/get-page-data'
 import { formatCurrencyValue } from '@/utils/format-currency-value'
+import { getAverageShippinPriceInEur } from '@/utils/getShippingPrice'
 import { loadStripe } from '@stripe/stripe-js'
 import useSubmissionState from 'hooks/use-form-submission'
 import { GetStaticProps } from 'next'
@@ -83,6 +84,14 @@ const Cart: React.FC = () => {
               {formatCurrencyValue({
                 currency: CURRENCY,
                 value: cartTotal
+              })}
+            </span>
+            <span className="text-gray-700 mt-2">Estimated shipping</span>
+            <span className="text-xl font-bold text-indigo-600 mb-2">
+              ~
+              {formatCurrencyValue({
+                currency: CURRENCY,
+                value: getAverageShippinPriceInEur(items.length)
               })}
             </span>
           </div>

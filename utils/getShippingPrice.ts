@@ -12,3 +12,33 @@ export const getShippingPriceInCents = (
   }
   return SHIPPING_RATES_IN_EUR[destination].large * 100
 }
+
+export const getAverageShippinPriceInEur = (
+  cartItemsNumber: number
+): number => {
+  if (cartItemsNumber <= 3) {
+    const allSmallShippingRates = Object.values(SHIPPING_RATES_IN_EUR).map(
+      (rate) => rate.small
+    )
+    const averageSmallShippingRate =
+      allSmallShippingRates.reduce((a, b) => a + b) /
+      allSmallShippingRates.length
+    return averageSmallShippingRate
+  }
+  if (cartItemsNumber > 3 && cartItemsNumber < 10) {
+    const allMediumShippingRates = Object.values(SHIPPING_RATES_IN_EUR).map(
+      (rate) => rate.medium
+    )
+    const averageMediumShippingRate =
+      allMediumShippingRates.reduce((a, b) => a + b) /
+      allMediumShippingRates.length
+    return averageMediumShippingRate
+  }
+  const allLargeShippingRates = Object.values(SHIPPING_RATES_IN_EUR).map(
+    (rate) => rate.large
+  )
+
+  const averageLargeShippingRate =
+    allLargeShippingRates.reduce((a, b) => a + b) / allLargeShippingRates.length
+  return averageLargeShippingRate
+}

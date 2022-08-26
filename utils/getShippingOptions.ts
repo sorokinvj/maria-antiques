@@ -19,7 +19,7 @@ interface ShippingOption {
         value: number
       }
     }
-    tax_behavior: 'exclusive'
+    tax_behavior: 'inclusive'
     tax_code: 'txcd_92010001'
   }
 }
@@ -49,7 +49,7 @@ export const getShippingOptions = (
             value: 7
           }
         },
-        tax_behavior: 'exclusive',
+        tax_behavior: 'inclusive',
         tax_code: 'txcd_92010001'
       }
     },
@@ -74,7 +74,7 @@ export const getShippingOptions = (
             value: 7
           }
         },
-        tax_behavior: 'exclusive',
+        tax_behavior: 'inclusive',
         tax_code: 'txcd_92010001'
       }
     },
@@ -99,7 +99,7 @@ export const getShippingOptions = (
             value: 10
           }
         },
-        tax_behavior: 'exclusive',
+        tax_behavior: 'inclusive',
         tax_code: 'txcd_92010001'
       }
     },
@@ -124,7 +124,7 @@ export const getShippingOptions = (
             value: 10
           }
         },
-        tax_behavior: 'exclusive',
+        tax_behavior: 'inclusive',
         tax_code: 'txcd_92010001'
       }
     }

@@ -1,6 +1,6 @@
-import hygraphMutationClient, { gql } from "@/lib/hygraph-mutation-client";
-import stripe from "@/lib/stripe-client";
-import Stripe from "stripe";
+import hygraphMutationClient, { gql } from '@/lib/hygraph-mutation-client'
+import stripe from '@/lib/stripe-client'
+import Stripe from 'stripe'
 
 export const createOrderMutation = gql`
   mutation CreateOrderMutation($order: OrderCreateInput!) {
@@ -8,7 +8,7 @@ export const createOrderMutation = gql`
       id
     }
   }
-`;
+`
 
 export async function createOrder({ sessionId }: { sessionId: string }) {
   const {
@@ -16,8 +16,11 @@ export async function createOrder({ sessionId }: { sessionId: string }) {
     line_items,
     ...session
   } = await stripe.checkout.sessions.retrieve(sessionId, {
-    expand: ["line_items.data.price.product", "customer"],
-  });
+    expand: ['line_items.data.price.product', 'customer']
+  })
+
+  console.log(customer, session)
+  
   return await hygraphMutationClient.request(createOrderMutation, {
     order: {
       email: (customer as Stripe.Customer)?.email,
@@ -27,14 +30,13 @@ export async function createOrder({ sessionId }: { sessionId: string }) {
         create: line_items?.data.map((item: any) => ({
           quantity: item.quantity,
           total: item.amount_total,
-
           product: {
             connect: {
-              id: item.price.product.metadata.productId,
-            },
-          },
-        })),
-      },
-    },
-  });
+              id: item.price.product.metadata.productId
+            }
+          }
+        }))
+      }
+    }
+  })
 }
