@@ -1,33 +1,34 @@
-import { createOrder } from "@/lib/create-order";
-import { stripeSigningSecret } from "@/lib/stripe-signing-secret";
-import type { NextApiRequest, NextApiResponse } from "next";
+import { createOrder } from '@/lib/create-order'
+import { stripeSigningSecret } from '@/lib/stripe-signing-secret'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
-export const config = { api: { bodyParser: false } };
+export const config = { api: { bodyParser: false } }
 
 const handler = async (
   req: NextApiRequest,
   res: NextApiResponse,
   event: any
 ) => {
-  const permittedEvents = ["checkout.session.completed"];
-  if (req.method === "POST") {
+  const permittedEvents = ['checkout.session.completed']
+  if (req.method === 'POST') {
     if (permittedEvents.includes(event?.type)) {
       try {
         switch (event?.type) {
-          case "checkout.session.completed":
-            await createOrder({ sessionId: event?.data?.object?.id });
-            break;
+          case 'checkout.session.completed':
+            console.log('webhook event data', event?.data)
+            await createOrder({ sessionId: event?.data?.object?.id })
+            break
           default:
-            throw new Error(`Unhandled event: ${event?.type}`);
+            throw new Error(`Unhandled event: ${event?.type}`)
         }
       } catch (error) {
-        res.status(500).json({ message: "Unknown event" });
+        res.status(500).json({ message: 'Unknown event' })
       }
     }
-    res.send({ received: true });
+    res.send({ received: true })
   } else {
-    res.status(405).json({ message: "Method not allowed" });
+    res.status(405).json({ message: 'Method not allowed' })
   }
-};
+}
 
-export default stripeSigningSecret(handler);
+export default stripeSigningSecret(handler)

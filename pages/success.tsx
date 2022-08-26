@@ -1,6 +1,7 @@
 import { CURRENCY } from '@/constants'
 import { getOrderBySessionId } from '@/lib/get-order-session-id'
 import getPageData from '@/lib/get-page-data'
+import stripe from '@/lib/stripe-client'
 import { convertPriceFormat } from '@/utils/convert-price-format'
 import { formatCurrencyValue } from '@/utils/format-currency-value'
 import { GetServerSideProps } from 'next'
@@ -11,14 +12,29 @@ import { Order } from 'types'
 
 interface Props {
   order: Order
+  error?: string
 }
 
-const SuccessPage: React.FC<Props> = ({ order }) => {
+const SuccessPage: React.FC<Props> = ({ order, error }) => {
   const { emptyCart } = useCart()
 
   useEffect(() => {
     emptyCart()
   }, [emptyCart])
+
+  if (error) {
+    return (
+      <div className="py-6">
+        <h2 className="font-bold text-2xl md:text-4xl mb-3 text-primary leading-tight">
+          Error
+        </h2>
+        <p className="text-lg md:text-2xl mb-3 text-red-400">{error}</p>
+        <p className="text-lg md:text-2xl mb-3">
+          Please contact us if you think this is a mistake.
+        </p>
+      </div>
+    )
+  }
 
   return (
     <div className="py-6">
@@ -92,7 +108,29 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const order = await getOrderBySessionId({
     id: query?.id as string
   })
+
+  console.log(
+    'session',
+    await stripe.checkout.sessions.retrieve(query?.id as string, {
+      expand: [
+        'line_items.data.price.product',
+        'customer',
+        'shipping',
+        'shipping_details'
+      ]
+    })
+  )
+
   const pageData = await getPageData()
+
+  if (typeof order === 'string') {
+    return {
+      props: {
+        error: order,
+        ...pageData
+      }
+    }
+  }
 
   return {
     props: { order, ...pageData }

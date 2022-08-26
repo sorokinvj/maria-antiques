@@ -1,5 +1,5 @@
-import hygraphClient, { gql } from "@/lib/hygraph-client";
-import { Order } from "types";
+import hygraphClient, { gql } from '@/lib/hygraph-client'
+import { Order } from 'types'
 
 export const getOrderSessionIdQuery = gql`
   query OrderSessionIdQuery($id: String!) {
@@ -22,21 +22,22 @@ export const getOrderSessionIdQuery = gql`
       total
     }
   }
-`;
+`
 
 export const getOrderBySessionId = async ({
-  id,
+  id
 }: {
-  id: string;
-}): Promise<Order> => {
+  id: string
+}): Promise<Order | string> => {
   if (!id) {
-    throw new Error("getOrderBySessionId: id is required");
+    throw new Error('getOrderBySessionId: id is required')
   }
-  const {
-    orders: [order],
-  } = await hygraphClient.request(getOrderSessionIdQuery, {
-    id,
-  });
+  const response = await hygraphClient.request(getOrderSessionIdQuery, {
+    id
+  })
 
-  return order;
-};
+  if (!response.orders || response.orders.length === 0) {
+    return 'No order with id ' + id + ' has been found'
+  }
+  return response.orders[0]
+}

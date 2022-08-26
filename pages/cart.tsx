@@ -5,7 +5,7 @@ import { CURRENCY } from '@/constants'
 import { useHasMounted } from '@/hooks/useHasMounted'
 import getPageData from '@/lib/get-page-data'
 import { formatCurrencyValue } from '@/utils/format-currency-value'
-import { getAverageShippinPriceInEur } from '@/utils/getShippingPrice'
+import { getAverageShippingPriceInEur } from '@/utils/getShippingPrice'
 import { loadStripe } from '@stripe/stripe-js'
 import useSubmissionState from 'hooks/use-form-submission'
 import { GetStaticProps } from 'next'
@@ -58,11 +58,7 @@ const Cart: React.FC = () => {
       })
       setSubmissionSuccess()
     } catch (error) {
-      if (error instanceof Error) {
-        setSubmissionError(error.message)
-      } else {
-        setSubmissionError(JSON.stringify(error))
-      }
+      setSubmissionError(error)
     }
   }
 
@@ -91,7 +87,7 @@ const Cart: React.FC = () => {
               ~
               {formatCurrencyValue({
                 currency: CURRENCY,
-                value: getAverageShippinPriceInEur(items.length)
+                value: getAverageShippingPriceInEur(items.length)
               })}
             </span>
           </div>

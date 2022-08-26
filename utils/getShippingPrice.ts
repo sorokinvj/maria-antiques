@@ -13,7 +13,7 @@ export const getShippingPriceInCents = (
   return SHIPPING_RATES_IN_EUR[destination].large * 100
 }
 
-export const getAverageShippinPriceInEur = (
+export const getAverageShippingPriceInEur = (
   cartItemsNumber: number
 ): number => {
   if (cartItemsNumber <= 3) {
