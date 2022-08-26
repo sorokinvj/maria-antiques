@@ -41,15 +41,15 @@ export async function createOrder({ sessionId }: { sessionId: string }) {
             }))
           },
           shippingInfo:
-            (customer as Stripe.Customer)?.address?.country +
+            shipping_details?.address?.country +
             ' ' +
-            (customer as Stripe.Customer)?.address?.city +
+            shipping_details?.address?.city +
             ' ' +
-            (customer as Stripe.Customer)?.address?.line1 +
+            shipping_details?.address?.line1 +
             ' ' +
-            (customer as Stripe.Customer)?.address?.line2 +
+            shipping_details?.address?.line2 +
             ' ' +
-            (customer as Stripe.Customer)?.address?.postal_code
+            shipping_details?.address?.postal_code
         }
       }
     )
