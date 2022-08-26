@@ -3,7 +3,7 @@ interface Props {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
   children: React.ReactNode
   type?: 'button' | 'submit' | 'reset'
-  isLoading: boolean
+  isLoading?: boolean
 }
 
 // make svg with spinner and add it to the button
