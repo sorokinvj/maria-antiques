@@ -15,7 +15,6 @@ const handler = async (
       try {
         switch (event?.type) {
           case 'checkout.session.completed':
-            console.log('webhook event data', event?.data)
             await createOrder({ sessionId: event?.data?.object?.id })
             break
           default:
