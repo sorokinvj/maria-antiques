@@ -22,7 +22,7 @@ const SuccessPage: React.FC<Props> = ({ order, error }) => {
     total,
     shippingInfo: { name, address }
   } = order
-  console.log(order)
+
   useEffect(() => {
     emptyCart()
   }, [emptyCart])
