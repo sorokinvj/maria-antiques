@@ -1,5 +1,5 @@
+import { Button } from '@/components/Button/Button'
 import { CURRENCY } from '@/constants'
-import Button from '@/ui/button'
 import { formatCurrencyValue } from '@/utils/format-currency-value'
 import Image from 'next/image'
 import React from 'react'

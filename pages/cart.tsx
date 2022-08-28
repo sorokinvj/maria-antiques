@@ -1,5 +1,5 @@
+import { Button } from '@/components/Button/Button'
 import { CartItem } from '@/components/CartItem/CartItem'
-import Button from '@/components/ui/button'
 import { CURRENCY } from '@/constants'
 import { useHasMounted } from '@/hooks/useHasMounted'
 import getPageData from '@/lib/get-page-data'
