@@ -16,8 +16,8 @@ export const ProductCard: React.FC<Product> = ({
   slug
 }) => {
   const [primaryImage] = images
+  const [isOverlayVisible, setOverlayVisible] = React.useState(false)
   const { addItem } = useCart()
-
   const addToCart = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -29,8 +29,30 @@ export const ProductCard: React.FC<Product> = ({
       name: name
     })
   }
+
+  const showOverlay = (event: React.MouseEvent<HTMLElement>) => {
+    setOverlayVisible(true)
+  }
+
+  const hideOverlay = () => {
+    setOverlayVisible(false)
+  }
+
   return (
-    <article key={id}>
+    <article
+      key={id}
+      onMouseEnter={showOverlay}
+      onMouseLeave={hideOverlay}
+      className="relative"
+    >
+      {isOverlayVisible && (
+        <div className="overlay">
+          <Button onClick={addToCart} className="mt-3 z-30">
+            <ShoppingCartIcon className="text-white fill-indigo-600 w-10 hover:fill-gray-700" />
+            {/* Add to Cart */}
+          </Button>
+        </div>
+      )}
       <Link href={`/products/${slug}`}>
         <a className="group no-underline w-full h-full flex">
           <div className="bg-gray-50 rounded-lg cursor-pointer w-full overflow-hidden relative px-3 py-6 md:px-6">
@@ -53,9 +75,6 @@ export const ProductCard: React.FC<Product> = ({
                   value: price
                 })}
               </p>
-              <Button onClick={addToCart} type="secondary" className="mt-3">
-                <ShoppingCartIcon className="text-indigo-600 fill-white w-6" />
-              </Button>
             </div>
           </div>
         </a>
