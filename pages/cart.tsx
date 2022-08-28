@@ -1,5 +1,6 @@
 import { CartItem } from '@/components/CartItem/CartItem'
 import { ErrorComponent } from '@/components/Error/Error'
+import { QuestionCircleIcon } from '@/components/icons'
 import Button from '@/components/ui/button'
 import { CURRENCY } from '@/constants'
 import { useHasMounted } from '@/hooks/useHasMounted'
@@ -9,6 +10,8 @@ import { getAverageShippingPriceInEur } from '@/utils/getShippingPrice'
 import { loadStripe } from '@stripe/stripe-js'
 import useSubmissionState from 'hooks/use-form-submission'
 import { GetStaticProps } from 'next'
+import Tooltip from 'rc-tooltip'
+import 'rc-tooltip/assets/bootstrap_white.css'
 import { useCart } from 'react-use-cart'
 
 const stripePromise = loadStripe(
@@ -82,9 +85,27 @@ const Cart: React.FC = () => {
                 value: cartTotal
               })}
             </span>
-            <span className="text-gray-700 mt-2">Estimated shipping</span>
+            <div className="text-gray-700 mt-2 flex flex-row items-center">
+              <span className="mr-1">Estimated shipping</span>
+              <Tooltip
+                placement="left"
+                trigger={['hover']}
+                // overlayStyle={{
+                //   width: '200px',
+                //   backgroundColor: '#fff',
+                //   border: 'none',
+                //   opacity: 1
+                // }}
+                overlayClassName="!bg-white !border-none !opacity-100 !text-base"
+                overlay="Precise shipping cost will be calculated on the checkout"
+                id="tooltip"
+              >
+                <div>
+                  <QuestionCircleIcon />
+                </div>
+              </Tooltip>
+            </div>
             <span className="text-xl font-bold text-indigo-600 mb-2">
-              ~
               {formatCurrencyValue({
                 currency: CURRENCY,
                 value: getAverageShippingPriceInEur(items.length)
