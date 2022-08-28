@@ -1,3 +1,4 @@
+import { ImageFragment } from '@/lib/graphql-fragments'
 import hygraphClient, { gql } from '@/lib/hygraph-client'
 import { LibParams } from 'types'
 
@@ -6,14 +7,16 @@ export const getTextPageSlugQuery = gql`
     page(where: { slug: $slug }) {
       slug
       title
-      body {
-        text
+      content {
+        html
       }
       heroImage {
-        url
+        ...ImageFragment
       }
     }
   }
+
+  ${ImageFragment}
 `
 
 export const getTextPageBySlug = async ({ slug }: LibParams): Promise<any> => {

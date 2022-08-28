@@ -1,4 +1,4 @@
-import { getAllProducts } from '@/lib/get-all-products'
+import getAllTextPages from '@/lib/get-all-textpages'
 import { getPageData } from '@/lib/get-page-data'
 import getTextPageBySlug from '@/lib/get-text-page-slug'
 import { GetStaticPaths, GetStaticProps } from 'next'
@@ -6,20 +6,21 @@ import React from 'react'
 
 interface PageProps {
   textPageData: any
+  footer: any
 }
-interface ProductPath {
-  params: { slug: string }
-}
+// interface ProductPath {
+//   params: { slug: string }
+// }
 
-function Page({ textPageData }: PageProps) {
+function Page({ textPageData, footer }: PageProps) {
   console.log({ textPageData })
   return <React.Fragment></React.Fragment>
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const products = await getAllProducts()
-  const paths = products.map((product) => ({
-    params: { slug: product.slug }
+  const pages = await getAllTextPages()
+  const paths = pages.map((page: { slug: string; title: string }) => ({
+    params: { slug: page.slug }
   }))
 
   return {

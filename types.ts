@@ -43,6 +43,7 @@ export interface Category {
 }
 
 export interface Page {
+  // TODO: rename to Something
   id: string
   name: string
   type: string
