@@ -25,4 +25,4 @@ export const SHIPPING_RATES_IN_EUR = {
   }
 }
 
-// write shell command that resets npm registry
+export const FREE_SHIPPING_PRICE = 50

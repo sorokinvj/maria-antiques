@@ -17,11 +17,9 @@ interface Props {
 
 const SuccessPage: React.FC<Props> = ({ order, error }) => {
   const { emptyCart } = useCart()
-  const {
-    id,
-    total,
-    shippingInfo: { name, address }
-  } = order
+  const { id, total, shippingInfo } = order || {}
+
+  const { name, address } = shippingInfo || {}
 
   useEffect(() => {
     emptyCart()

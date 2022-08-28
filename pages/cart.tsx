@@ -2,7 +2,7 @@ import { CartItem } from '@/components/CartItem/CartItem'
 import { ErrorComponent } from '@/components/Error/Error'
 import { QuestionCircleIcon } from '@/components/icons'
 import Button from '@/components/ui/button'
-import { CURRENCY } from '@/constants'
+import { CURRENCY, FREE_SHIPPING_PRICE } from '@/constants'
 import { useHasMounted } from '@/hooks/useHasMounted'
 import getPageData from '@/lib/get-page-data'
 import { formatCurrencyValue } from '@/utils/format-currency-value'
@@ -40,9 +40,10 @@ const Cart: React.FC = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+          success_url: `${window.location.origin}/success`,
           cancel_url: window.location.href,
           items,
-          success_url: `${window.location.origin}/success`
+          cartTotal
         })
       })
 
@@ -100,10 +101,12 @@ const Cart: React.FC = () => {
               </Tooltip>
             </div>
             <span className="text-xl font-bold text-indigo-600 mb-2">
-              {formatCurrencyValue({
-                currency: CURRENCY,
-                value: getAverageShippingPriceInEur(items.length)
-              })}
+              {cartTotal > FREE_SHIPPING_PRICE
+                ? 'FREE'
+                : formatCurrencyValue({
+                    currency: CURRENCY,
+                    value: getAverageShippingPriceInEur(items.length)
+                  })}
             </span>
           </div>
           <Button

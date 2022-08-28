@@ -1,5 +1,6 @@
 import hygraphMutationClient, { gql } from '@/lib/hygraph-mutation-client'
 import stripe from '@/lib/stripe-client'
+import { getShippingCost } from '@/utils/getShippingCost'
 import { parseCountry } from '@/utils/parseCountry'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
 
@@ -23,6 +24,12 @@ export async function createOrder({ sessionId }: { sessionId: string }) {
     shipping_details,
     shipping_cost
   } = session
+  console.log(
+    'shipping_cost',
+    shipping_cost,
+    'shipping_details',
+    shipping_details
+  )
 
   try {
     const cmsResponse = await hygraphMutationClient.request(
@@ -49,9 +56,7 @@ export async function createOrder({ sessionId }: { sessionId: string }) {
               country: parseCountry(shipping_details?.address?.country)
             }
           },
-          shippingCost: shipping_cost?.amount_total
-            ? `${shipping_cost?.amount_total / 100} euro`
-            : 'Free shipping'
+          shippingCost: getShippingCost(shipping_cost)
         }
       }
     )
