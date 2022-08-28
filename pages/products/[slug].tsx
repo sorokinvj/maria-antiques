@@ -10,9 +10,6 @@ import { Product } from 'types'
 interface ProductPageProps {
   product: Product
 }
-interface ProductPath {
-  params: { slug: string }
-}
 
 function ProductPage({ product }: ProductPageProps) {
   return (
