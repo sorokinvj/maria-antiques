@@ -24,12 +24,6 @@ export async function createOrder({ sessionId }: { sessionId: string }) {
     shipping_details,
     shipping_cost
   } = session
-  console.log(
-    'shipping_cost',
-    shipping_cost,
-    'shipping_details',
-    shipping_details
-  )
 
   try {
     const cmsResponse = await hygraphMutationClient.request(
