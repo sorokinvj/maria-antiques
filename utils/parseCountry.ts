@@ -1,6 +1,6 @@
 import countries from './countries.json'
 
-export const parseCountry = (country: string | null): string => {
+export const parseCountry = (country: string | null | undefined): string => {
   if (!country) {
     return 'No country provided'
   }
