@@ -6,20 +6,20 @@ import React from 'react'
 
 interface PageProps {
   textPageData: any
-  footer: any
 }
-// interface ProductPath {
-//   params: { slug: string }
-// }
+interface PagePath {
+  slug: string
+  title: string
+}
 
-function Page({ textPageData, footer }: PageProps) {
+function Page({ textPageData }: PageProps) {
   console.log({ textPageData })
   return <React.Fragment></React.Fragment>
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const pages = await getAllTextPages()
-  const paths = pages.map((page: { slug: string; title: string }) => ({
+  const paths = pages.map((page: PagePath) => ({
     params: { slug: page.slug }
   }))
 
