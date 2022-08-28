@@ -28,6 +28,18 @@ export interface Order {
   id: string
   total: number
   orderItems: OrderItem[]
+  shippingInfo: {
+    name: string
+    address: {
+      city: string | null
+      line1: string | null
+      line2: string | null
+      state: string | null
+      country: string
+      postal_code: string
+    }
+  }
+  shippingCost: string
 }
 
 export interface Collection {

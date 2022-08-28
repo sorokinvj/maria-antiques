@@ -5,6 +5,8 @@ export const getOrderSessionIdQuery = gql`
   query OrderSessionIdQuery($id: String!) {
     orders(first: 1, stage: DRAFT, where: { stripeCheckoutId: $id }) {
       id
+      shippingInfo
+      shippingCost
       orderItems {
         id
         product {
@@ -16,7 +18,6 @@ export const getOrderSessionIdQuery = gql`
           }
           name
         }
-        quantity
         total
       }
       total

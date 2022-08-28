@@ -3,3 +3,12 @@
 @tailwind components;
 
 @tailwind utilities;
+
+@layer components {
+  a.colored {
+    @apply text-indigo-600 no-underline;
+  }
+  a.colored:hover {
+    @apply underline underline-offset-4;
+  }
+}

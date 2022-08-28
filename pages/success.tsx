@@ -3,6 +3,7 @@ import { getOrderBySessionId } from '@/lib/get-order-session-id'
 import getPageData from '@/lib/get-page-data'
 import { convertPriceFormat } from '@/utils/convert-price-format'
 import { formatCurrencyValue } from '@/utils/format-currency-value'
+import { parseCountry } from '@/utils/parseCountry'
 import { GetServerSideProps } from 'next'
 import Image from 'next/image'
 import { useEffect } from 'react'
@@ -16,7 +17,12 @@ interface Props {
 
 const SuccessPage: React.FC<Props> = ({ order, error }) => {
   const { emptyCart } = useCart()
-
+  const {
+    id,
+    total,
+    shippingInfo: { name, address }
+  } = order
+  console.log(order)
   useEffect(() => {
     emptyCart()
   }, [emptyCart])
@@ -41,64 +47,78 @@ const SuccessPage: React.FC<Props> = ({ order, error }) => {
         Successful Order
       </h2>
 
-      <p className="font-bold text-l text-gray-300 md:text-xl mb-14">
-        #{order.id}
-      </p>
+      <p className="font-bold text-l text-gray-300 md:text-xl mb-14">#{id}</p>
 
-      <div className="flex justify-between mb-4 text-xl">
-        <span>Order total:</span>
+      <div className="flex flex-col lg:flex-row">
+        <div className="flex-1 mr-8 mb-4">
+          <div className="flex justify-between mb-4 text-xl">
+            <span className="font-bold">Order total</span>
+            <span className="mr-6">
+              {formatCurrencyValue({
+                currency: CURRENCY,
+                value: convertPriceFormat('stripeToCms', total)
+              })}
+            </span>
+          </div>
+          <ul className="flex flex-col">
+            {order.orderItems.map((item) => {
+              return (
+                <div
+                  className="md:bg-gray-50 md:rounded-lg flex items-center py-3 md:py-6 md:px-6 md:mb-3"
+                  key={item.id}
+                >
+                  <div className="w-3/5 flex flex-grow items-center">
+                    <div className="h-16 md:h-20 w-16 md:w-20 mr-4 bg-gray-50 p-1 rounded-lg relative">
+                      <Image
+                        src={item.product.images[0].url}
+                        layout="fill"
+                        objectFit="cover"
+                        objectPosition="center"
+                        alt={item.product.name}
+                      />
+                    </div>
 
-        <span className="pr-7">
-          {formatCurrencyValue({
-            currency: CURRENCY,
-            value: convertPriceFormat('stripeToCms', order.total)
-          })}
-        </span>
+                    <div>
+                      <p className="text-gray-800 font-medium text-sm md:text-base">
+                        {item.product.name}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="text-right md:w-1/5">
+                    <p className="font-medium text-gray-800">
+                      {formatCurrencyValue({
+                        currency: CURRENCY,
+                        value: convertPriceFormat('stripeToCms', item.total)
+                      })}
+                    </p>
+                  </div>
+                </div>
+              )
+            })}
+          </ul>
+        </div>
+
+        <div className="flex-1">
+          <p className="text-xl mb-4 font-bold">Shipping info</p>
+          <p className="text-gray-800 font-medium text-lg">{name}</p>
+          <p className="text-gray-800 font-medium flex flex-col">
+            {address.line1 && <span>{address.line1}</span>}
+            {address.line2 && <span>{address.line2}</span>}
+            {address.city && <span>{address.city}</span>}
+            {address.state && <span>{address.state}</span>}
+            <span>{address.postal_code}</span>
+            <span>{parseCountry(address.country)}</span>
+          </p>
+          <p className="mt-4 w-2/3">
+            Please check your address carefully. If you find any errors, please{' '}
+            <a href="mailto:wynorobeira1960@outlook.pt" className="colored">
+              contact us
+            </a>
+            , so we could ship your order correctly.
+          </p>
+        </div>
       </div>
-
-      <p className="mb-4 text-l">Order contents:</p>
-
-      <ul className="flex flex-col">
-        {order.orderItems.map((item) => {
-          return (
-            <div
-              className="md:bg-gray-50 md:rounded-lg flex items-center py-3 md:py-6 md:px-6 md:mb-3"
-              key={item.id}
-            >
-              <div className="w-3/5 flex flex-grow items-center">
-                <div className="h-16 md:h-20 w-16 md:w-20 mr-4 bg-gray-50 p-1 rounded-lg relative">
-                  <Image
-                    src={item.product.images[0].url}
-                    layout="fill"
-                    objectFit="cover"
-                    objectPosition="center"
-                    alt={item.product.name}
-                  />
-                </div>
-
-                <div>
-                  <p className="text-gray-800 font-medium text-sm md:text-base">
-                    {item.product.name}
-                  </p>
-                </div>
-              </div>
-
-              <div className="text-right md:w-1/5">
-                <p className="font-medium text-gray-800">
-                  {formatCurrencyValue({
-                    currency: CURRENCY,
-                    value: convertPriceFormat('stripeToCms', item.total)
-                  })}
-                </p>
-              </div>
-            </div>
-          )
-        })}
-      </ul>
-
-      <h2 className="font-bold text-2xl md:text-4xl my-8 text-primary leading-tight">
-        Shipping info
-      </h2>
     </div>
   )
 }
