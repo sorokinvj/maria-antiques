@@ -47,13 +47,13 @@ const SuccessPage: React.FC<Props> = ({ order, error }) => {
         Successful Order
       </h2>
 
-      <p className="font-bold text-l text-gray-300 md:text-xl mb-14">#{id}</p>
+      <p className="font-bold text-l text-gray-300 mb-14 md:text-xl">#{id}</p>
 
       <div className="flex flex-col lg:flex-row">
-        <div className="flex-1 mr-8 mb-4">
+        <div className="flex-1 mb-4 lg:mr-8">
           <div className="flex justify-between mb-4 text-xl">
             <span className="font-bold">Order total</span>
-            <span className="mr-6">
+            <span className="md:mr-6">
               {formatCurrencyValue({
                 currency: CURRENCY,
                 value: convertPriceFormat('stripeToCms', total)
@@ -110,7 +110,7 @@ const SuccessPage: React.FC<Props> = ({ order, error }) => {
             <span>{address.postal_code}</span>
             <span>{parseCountry(address.country)}</span>
           </p>
-          <p className="mt-4 w-2/3">
+          <p className="mt-4 md:w-2/3">
             Please check your address carefully. If you find any errors, please{' '}
             <a href="mailto:wynorobeira1960@outlook.pt" className="colored">
               contact us

@@ -90,12 +90,6 @@ const Cart: React.FC = () => {
               <Tooltip
                 placement="left"
                 trigger={['hover']}
-                // overlayStyle={{
-                //   width: '200px',
-                //   backgroundColor: '#fff',
-                //   border: 'none',
-                //   opacity: 1
-                // }}
                 overlayClassName="!bg-white !border-none !opacity-100 !text-base"
                 overlay="Precise shipping cost will be calculated on the checkout"
                 id="tooltip"
