@@ -8,12 +8,21 @@ import { loadStripe } from '@stripe/stripe-js'
 import useSubmissionState from 'hooks/use-form-submission'
 import { GetStaticProps } from 'next'
 import { useCart } from 'react-use-cart'
+import React from 'react'
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ''
 )
 
 const Cart: React.FC = () => {
+  const [checkoutSessionUrl, setCheckoutSessionUrl] = React.useState('')
+
+  React.useEffect(() => {
+    if (window.Cypress) {
+      window.cypressCheckoutSessionSlug = checkoutSessionUrl.slice(27)
+    }
+  }, [checkoutSessionUrl])
+
   const { isEmpty, items, cartTotal } = useCart()
   const {
     setSubmissionError,
@@ -50,10 +59,21 @@ const Cart: React.FC = () => {
 
       const { session } = await res.json()
 
-      await stripe?.redirectToCheckout({
-        sessionId: session.id
-      })
-      setSubmissionSuccess()
+      if (!window.Cypress) {
+        await stripe.redirectToCheckout({
+          sessionId: session.id
+        })
+
+        setSubmissionSuccess()
+      }
+      if (window.Cypress) {
+        setCheckoutSessionUrl(session.url)
+      }
+
+      // await stripe?.redirectToCheckout({
+      //   sessionId: session.id
+      // })
+      // setSubmissionSuccess()
     } catch (error) {
       if (error instanceof Error) {
         setSubmissionError(error.message)
