@@ -60,7 +60,7 @@ const Cart: React.FC = () => {
       const { session } = await res.json()
 
       if (!window.Cypress) {
-        await stripe.redirectToCheckout({
+        await stripe?.redirectToCheckout({
           sessionId: session.id
         })
 
