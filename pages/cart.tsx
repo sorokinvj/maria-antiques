@@ -77,7 +77,7 @@ const Cart: React.FC = () => {
         <div className="flex flex-col items-end">
           <div className="flex flex-col items-end mb-3">
             <span className="text-gray-700">Sub total</span>
-            <span className="text-xl font-bold text-indigo-600">
+            <span className="text-xl font-bold text-indigo-600" data-testid="cart-total">
               {formatCurrencyValue({
                 currency: CURRENCY,
                 value: cartTotal

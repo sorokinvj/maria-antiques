@@ -33,7 +33,7 @@ const SuccessPage: React.FC<Props> = ({ order }) => {
       <div className="flex justify-between mb-4 text-xl">
         <span>Order total:</span>
 
-        <span className="pr-7">
+        <span className="pr-7" data-testid="successful-order-total">
           {formatCurrencyValue({
             currency: CURRENCY,
             value: convertPriceFormat('stripeToCms', order.total)

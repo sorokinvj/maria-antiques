@@ -48,7 +48,7 @@ export const Header: React.FC<Props> = ({ pages = [] }) => {
                   className="h-6 w-6 text-gray-400"
                   aria-hidden="true"
                 />
-                <span className="text-gray-900 font-semibold">
+                <span className="text-gray-900 font-semibold" data-testid="header-cart-total">
                   {formatCurrencyValue({
                     currency: CURRENCY,
                     value: cartTotal

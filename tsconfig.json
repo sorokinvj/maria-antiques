@@ -134,7 +134,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "tailwind.config.js", "prettier.config.js", "postcss.config.js", "hygraph.config.ks"  ],
+, "tailwind.config.js", "prettier.config.js", "postcss.config.js", "hygraph.config.ks", "cypress/e2e/user-flow.cy.js"  ],
   "exclude": [
     "node_modules"
   ]
