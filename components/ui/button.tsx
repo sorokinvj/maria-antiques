@@ -8,8 +8,6 @@ interface Props {
   isLoading?: boolean
 }
 
-// make svg with spinner and add it to the button
-
 const Button: React.FC<Props> = ({ isLoading, children, ...props }) => {
   return (
     <button
