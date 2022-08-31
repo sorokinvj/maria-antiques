@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const ProductPageUI: React.FC<Props> = ({ product }) => {
-  const { addItem } = useCart()
+  const { addItem, inCart } = useCart()
   const [primaryImage] = product.images
 
   const addToCart = () => {
@@ -23,6 +23,7 @@ export const ProductPageUI: React.FC<Props> = ({ product }) => {
     })
   }
 
+  const isProductInCart = inCart(product.id)
   return (
     <div className="lg:flex -mx-6">
       <div className="mb-8 px-6 md:mb-0 lg:w-1/2">
@@ -51,7 +52,9 @@ export const ProductPageUI: React.FC<Props> = ({ product }) => {
         <div className="mb-6">
           <p className="leading-loose text-lightgray">{product.description}</p>
         </div>
-        <Button onClick={addToCart}>Add to cart</Button>
+        <Button onClick={addToCart} disabled={isProductInCart}>
+          {isProductInCart ? 'In the cart' : 'Add to cart'}
+        </Button>
       </div>
     </div>
   )
