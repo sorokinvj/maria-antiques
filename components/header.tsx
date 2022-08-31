@@ -43,9 +43,9 @@ export const Header: React.FC<Props> = ({ pages = [] }) => {
           ) : null}
           <div className="flex items-center">
             <Link href="/cart">
-              <a className="flex space-x-2">
+              <a className="flex space-x-3">
                 <ShoppingCartIcon
-                  className="h-6 w-6 text-gray-400 fill-white"
+                  className="h-6 w-6 text-gray-400"
                   aria-hidden="true"
                 />
                 <span className="text-gray-900 font-semibold">
