@@ -1,12 +1,17 @@
 import { Button } from '@/components/Button/Button'
 import { CartItem } from '@/components/CartItem/CartItem'
-import { CURRENCY } from '@/constants'
+import { ErrorComponent } from '@/components/Error/Error'
+import { QuestionCircleIcon } from '@/components/icons'
+import { CURRENCY, FREE_SHIPPING_PRICE } from '@/constants'
 import { useHasMounted } from '@/hooks/useHasMounted'
 import getPageData from '@/lib/get-page-data'
 import { formatCurrencyValue } from '@/utils/format-currency-value'
+import { getAverageShippingPriceInEur } from '@/utils/getShippingPrice'
 import { loadStripe } from '@stripe/stripe-js'
 import useSubmissionState from 'hooks/use-form-submission'
 import { GetStaticProps } from 'next'
+import Tooltip from 'rc-tooltip'
+import 'rc-tooltip/assets/bootstrap_white.css'
 import { useCart } from 'react-use-cart'
 
 const stripePromise = loadStripe(
@@ -19,7 +24,8 @@ const Cart: React.FC = () => {
     setSubmissionError,
     setSubmissionLoading,
     submissionLoading,
-    setSubmissionSuccess
+    setSubmissionSuccess,
+    submissionError
   } = useSubmissionState()
 
   const handleCheckout = async () => {
@@ -34,9 +40,10 @@ const Cart: React.FC = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+          success_url: `${window.location.origin}/success`,
           cancel_url: window.location.href,
           items,
-          success_url: `${window.location.origin}/success`
+          cartTotal
         })
       })
 
@@ -55,11 +62,7 @@ const Cart: React.FC = () => {
       })
       setSubmissionSuccess()
     } catch (error) {
-      if (error instanceof Error) {
-        setSubmissionError(error.message)
-      } else {
-        setSubmissionError(JSON.stringify(error))
-      }
+      setSubmissionError(error)
     }
   }
 
@@ -83,10 +86,37 @@ const Cart: React.FC = () => {
                 value: cartTotal
               })}
             </span>
+            <div className="text-gray-700 mt-2 flex flex-row items-center">
+              <span className="mr-1">Estimated shipping</span>
+              <Tooltip
+                placement="left"
+                trigger={['hover']}
+                overlayClassName="!bg-white !border-none !opacity-100 !text-base"
+                overlay="Precise shipping cost will be calculated on the checkout"
+                id="tooltip"
+              >
+                <div>
+                  <QuestionCircleIcon />
+                </div>
+              </Tooltip>
+            </div>
+            <span className="text-xl font-bold text-indigo-600 mb-2">
+              {cartTotal > FREE_SHIPPING_PRICE
+                ? 'FREE'
+                : formatCurrencyValue({
+                    currency: CURRENCY,
+                    value: getAverageShippingPriceInEur(items.length)
+                  })}
+            </span>
           </div>
-          <Button onClick={handleCheckout} disabled={submissionLoading}>
+          <Button
+            onClick={handleCheckout}
+            disabled={submissionLoading}
+            isLoading={submissionLoading}
+          >
             Checkout
           </Button>
+          <ErrorComponent error={submissionError} />
         </div>
       </div>
     </>

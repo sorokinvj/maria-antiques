@@ -5,6 +5,15 @@
 @tailwind utilities;
 
 @layer components {
+  a.colored {
+    @apply text-indigo-600 no-underline;
+  }
+  a.colored:hover {
+    @apply underline underline-offset-4;
+  }
+}
+
+@layer components {
   .btn-primary {
     @apply bg-indigo-600 hover:bg-gray-700 px-4 py-3 rounded-lg text-white text-sm font-bold tracking-widest uppercase focus:outline-none;
   }

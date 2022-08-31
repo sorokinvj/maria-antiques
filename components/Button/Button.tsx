@@ -1,9 +1,12 @@
+import { SpinnerIcon } from '../icons'
+
 interface Props {
   disabled?: boolean
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
   children: React.ReactNode
   type?: 'primary' | 'secondary'
   className?: string
+  isLoading?: boolean
 }
 
 export const Button: React.FC<Props> = ({
@@ -11,7 +14,8 @@ export const Button: React.FC<Props> = ({
   type = 'primary',
   onClick,
   disabled,
-  className = ''
+  className = '',
+  isLoading = false
 }) => {
   return (
     <button
@@ -23,7 +27,7 @@ export const Button: React.FC<Props> = ({
           : `btn-secondary ${className}`
       }
     >
-      {children}
+      {isLoading ? <SpinnerIcon /> : children}
     </button>
   )
 }
