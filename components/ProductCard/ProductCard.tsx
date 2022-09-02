@@ -33,7 +33,7 @@ export const ProductCard: React.FC<Product> = ({
   return (
     <article key={id}>
       <Link href={`/products/${slug}`}>
-        <a className="group no-underline w-full h-full flex">
+        <a className="group no-underline w-full flex">
           <div className="bg-gray-50 rounded-lg cursor-pointer w-full overflow-hidden relative px-3 py-6 md:px-6">
             {primaryImage ? (
               <div className="relative group flex flex-col">

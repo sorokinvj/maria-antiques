@@ -22,7 +22,7 @@ export const AddToCartOverlay: React.FC<Props> = ({
       <Button
         onClick={onClick}
         disabled={isAdded}
-        className="bg-indigo-500 lg:bg-indigo-700 py-2 px-3"
+        className="py-2 px-3 bg-indigo-500 lg:bg-indigo-700"
       >
         <ShoppingCartIcon className="w-10 h-10" />
       </Button>
