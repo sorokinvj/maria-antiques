@@ -28,6 +28,7 @@ export const ProductCard: React.FC<Product> = ({
     })
   }
 
+  const isProductAdded = inCart(id)
 
   return (
     <article key={id}>
@@ -35,12 +36,10 @@ export const ProductCard: React.FC<Product> = ({
         <a className="group no-underline w-full h-full flex">
           <div className="bg-gray-50 rounded-lg cursor-pointer w-full overflow-hidden relative px-3 py-6 md:px-6">
             {primaryImage ? (
-              <div
-                className="relative"
-              >
+              <div className="relative group flex flex-col">
                 <AddToCartOverlay
                   onClick={addToCart}
-                  isAdded={inCart(id)}
+                  isAdded={isProductAdded}
                 />
                 <Image
                   src={primaryImage.url}
@@ -48,6 +47,7 @@ export const ProductCard: React.FC<Product> = ({
                   width={primaryImage.width}
                   alt={name}
                   title={name}
+                  className={!isProductAdded ? 'lg:group-hover:opacity-70' : ''}
                 />
               </div>
             ) : null}
