@@ -3,6 +3,7 @@ import { getPageData } from '@/lib/get-page-data'
 import getTextPageBySlug from '@/lib/get-text-page-slug'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import React from 'react'
+import { TextPage } from 'types'
 
 interface PageProps {
   textPageData: any
@@ -12,9 +13,16 @@ interface PagePath {
   title: string
 }
 
-function Page({ textPageData }: PageProps) {
-  console.log({ textPageData })
-  return <React.Fragment></React.Fragment>
+function Page({ textPageData }: { textPageData: TextPage }) {
+  console.log( textPageData.page.content )
+
+  return (
+    <React.Fragment>
+      <div className='md:w-3/4 sm:w-auto'
+      dangerouslySetInnerHTML={{__html: textPageData.page.content.html}}
+    />
+    </React.Fragment>
+  )
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {

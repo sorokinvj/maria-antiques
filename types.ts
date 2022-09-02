@@ -55,11 +55,25 @@ export interface Category {
 }
 
 export interface Page {
+  id: string
+  name: string
+  type: string
+  slug: string
+  title: string
+}
+
+export interface TextPage {
   // TODO: rename to Something
   id: string
   name: string
   type: string
   slug: string
+  title: string
+  page: {
+    content: {
+      html: string
+    }
+  }
 }
 
 export interface LibParams {

@@ -11,4 +11,11 @@
   a.colored:hover {
     @apply underline underline-offset-4;
   }
+  p {
+    @apply mb-5
+  }
+  h1 {
+    @apply mb-5 text-3xl mt-8
+    
+  }
 }
