@@ -8,7 +8,7 @@ interface Props {
 
 export const ProductGrid: React.FC<Props> = ({ products }) => {
   return (
-    <div className="gap-8 grid sm:grid-cols-2 lg:grid-cols-3">
+    <div className="gap-8 columns-1 sm:columns-2 lg:columns-3">
       {products.map(ProductCard)}
     </div>
   )
