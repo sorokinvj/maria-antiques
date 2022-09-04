@@ -14,7 +14,6 @@ interface PagePath {
 }
 
 function Page({ textPageData }: { textPageData: TextPage }) {
-  console.log( textPageData.page.content )
 
   return (
     <React.Fragment>
