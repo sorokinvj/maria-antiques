@@ -18,7 +18,7 @@ export const AddToCartOverlay: React.FC<Props> = ({
   }
 
   return (
-    <div className="absolute w-full h-full flex flex-col items-end justify-end pb-5 pr-4 lg:p-0 lg:items-center lg:justify-center lg:invisible lg:group-hover:visible z-20">
+    <div className="absolute w-full h-full flex flex-col items-end justify-end pb-5 pr-4 lg:invisible lg:group-hover:visible z-20">
       <Button
         onClick={onClick}
         disabled={isAdded}
