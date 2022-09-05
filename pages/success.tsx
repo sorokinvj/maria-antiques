@@ -76,14 +76,6 @@ const SuccessPage: React.FC<Props> = ({ order, error }) => {
                       />
                     </div>
 
-<<<<<<< HEAD
-        <span className="pr-7" data-testid="successful-order-total">
-          {formatCurrencyValue({
-            currency: CURRENCY,
-            value: convertPriceFormat('stripeToCms', order.total)
-          })}
-        </span>
-=======
                     <div>
                       <p className="text-gray-800 font-medium text-sm md:text-base">
                         {item.product.name}
@@ -92,7 +84,10 @@ const SuccessPage: React.FC<Props> = ({ order, error }) => {
                   </div>
 
                   <div className="text-right md:w-1/5">
-                    <p className="font-medium text-gray-800">
+                    <p
+                      className="font-medium text-gray-800"
+                      data-testid="successful-order-total"
+                    >
                       {formatCurrencyValue({
                         currency: CURRENCY,
                         value: convertPriceFormat('stripeToCms', item.total)
@@ -124,11 +119,6 @@ const SuccessPage: React.FC<Props> = ({ order, error }) => {
             , so we could ship your order correctly.
           </p>
         </div>
->>>>>>> main
-      </div>
-          )
-        })}
-      </ul>
 
         <div className="flex-1">
           <p className="text-xl mb-4 font-bold">Shipping info</p>

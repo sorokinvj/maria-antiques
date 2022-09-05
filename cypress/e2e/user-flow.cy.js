@@ -12,7 +12,11 @@ const STRIPE_DUMMY_DATA = {
   cardNumber: '4242424242424242',
   cardExpiry: '01/39',
   cardCvc: '111',
-  billingName: 'vova'
+  billingName: 'vova',
+  shippingName: 'Vladimir',
+  shippingAddressLine1: '123 Main St',
+  shippingLocality: 'Lisbon',
+  shippingPostalCode: '2705-122'
 }
 
 describe('full customer flow', () => {
@@ -77,29 +81,37 @@ describe('full customer flow', () => {
             })
 
           cy.get('#email').type(STRIPE_DUMMY_DATA['email'])
+          cy.get('#shippingName').type(STRIPE_DUMMY_DATA['shippingName'])
+          cy.get('#shippingAddressLine1').type(
+            STRIPE_DUMMY_DATA['shippingAddressLine1']
+          )
+          cy.get('#shippingLocality').type(
+            STRIPE_DUMMY_DATA['shippingLocality']
+          )
+          cy.get('#shippingPostalCode').type(
+            STRIPE_DUMMY_DATA['shippingPostalCode']
+          )
           cy.get('#cardNumber').type(STRIPE_DUMMY_DATA['cardNumber'])
           cy.get('#cardExpiry').type(STRIPE_DUMMY_DATA['cardExpiry'])
           cy.get('#cardCvc').type(STRIPE_DUMMY_DATA['cardCvc'])
-          cy.get('#billingName').type(STRIPE_DUMMY_DATA['billingName'])
 
           cy.wait(1000)
 
-          cy.get('[data-testid=hosted-payment-submit-button]')
-            .click()
-            .then(() => {
-              cy.get('[data-testid=hosted-payment-submit-button]', {
-                timeout: 20000
-              }).then(($payButton) => {
-                expect($payButton.text()).to.match(/processing/i)
-              })
-            })
+          cy.get('[data-testid=hosted-payment-submit-button]').click()
+          // .then(() => {
+          //   cy.get('[data-testid=hosted-payment-submit-button]', {
+          //     timeout: 20000
+          //   }).then(($payButton) => {
+          //     expect($payButton.text()).to.match(/processing/i)
+          //   })
+          // })
 
           // here stripe starts redirecting
           // here cypress ends test. How to prevent early pass ???
 
-          cy.on('url:changed', (newUrl) => {
-            console.log('newUrl ======= ', newUrl)
-          })
+          // cy.on('url:changed', (newUrl) => {
+          //   console.log('newUrl ======= ', newUrl)
+          // })
         }
       ).then(() => {
         console.log('then!!!!!!!!!!!!!!!!')
