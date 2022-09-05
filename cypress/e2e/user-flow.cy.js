@@ -98,27 +98,11 @@ describe('full customer flow', () => {
           cy.wait(1000)
 
           cy.get('[data-testid=hosted-payment-submit-button]').click()
-          // .then(() => {
-          //   cy.get('[data-testid=hosted-payment-submit-button]', {
-          //     timeout: 20000
-          //   }).then(($payButton) => {
-          //     expect($payButton.text()).to.match(/processing/i)
-          //   })
-          // })
-
-          // here stripe starts redirecting
-          // here cypress ends test. How to prevent early pass ???
-
-          // cy.on('url:changed', (newUrl) => {
-          //   console.log('newUrl ======= ', newUrl)
-          // })
         }
       ).then(() => {
-        console.log('then!!!!!!!!!!!!!!!!')
         cy.on('url:changed', (newUrl) => {
           console.log('newUrl = ', newUrl)
-          expect(newUrl).to.contain('sucecess')
-          debugger
+          expect(newUrl).to.contain('success')
         })
       })
 
@@ -126,8 +110,6 @@ describe('full customer flow', () => {
       //   cy.get(['data-testid=successful-order-total']).then(($total) => {
       //     console.log($total.text())
       //   })
-      // })
-
       // })
     })
   })
