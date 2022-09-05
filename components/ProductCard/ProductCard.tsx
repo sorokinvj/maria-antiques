@@ -52,7 +52,7 @@ export const ProductCard: React.FC<Product> = ({
               </div>
             ) : null}
             <div className="pt-3 md:pt-6 text-center">
-              <p className="text-gray-800 font-semibold text-lg group-hover:text-indigo-600 mb-1">
+              <p className="text-gray-800 font-semibold text-lg group-hover:text-red-600 mb-1">
                 {name}
               </p>
               <p className="text-gray-400 text-sm font-semibold">

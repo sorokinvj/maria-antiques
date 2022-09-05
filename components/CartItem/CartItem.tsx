@@ -47,7 +47,7 @@ export const CartItem: React.FC<Props> = ({ item }) => {
             </a>
           </Link>
           <button
-            className="text-gray-400 hover:text-indigo-600 text-xs flex items-center focus:outline-none"
+            className="text-gray-400 hover:text-red-600 text-xs flex items-center focus:outline-none"
             onClick={handleRemove}
             disabled={submissionLoading}
           >

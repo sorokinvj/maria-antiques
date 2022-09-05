@@ -1,13 +1,13 @@
-import React from "react";
-import { useFormContext } from "react-hook-form";
+import React from 'react'
+import { useFormContext } from 'react-hook-form'
 
 interface TextAreaProps {
-  field: string;
-  placeholder?: string;
-  className?: string;
-  children?: React.ReactNode | React.ReactNode[];
-  disabled?: boolean;
-  rows?: number;
+  field: string
+  placeholder?: string
+  className?: string
+  children?: React.ReactNode | React.ReactNode[]
+  disabled?: boolean
+  rows?: number
 }
 
 export const Textarea = React.forwardRef((props: TextAreaProps, ref: any) => {
@@ -17,8 +17,8 @@ export const Textarea = React.forwardRef((props: TextAreaProps, ref: any) => {
     disabled = false,
     field,
     placeholder,
-    rows = 4,
-  } = props;
+    rows = 4
+  } = props
 
   return (
     <fieldset className={className}>
@@ -28,17 +28,17 @@ export const Textarea = React.forwardRef((props: TextAreaProps, ref: any) => {
         disabled={disabled}
         placeholder={placeholder}
         rows={rows}
-        className="appearance-none min-w-0 w-full bg-white border border-gray-300 py-2 px-4 text-base rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:placeholder-gray-400"
+        className="appearance-none min-w-0 w-full bg-white border border-gray-300 py-2 px-4 text-base rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-red-500 focus:border-red-500 focus:placeholder-gray-400"
         ref={ref}
       />
       {children}
     </fieldset>
-  );
-});
-Textarea.displayName = "Textarea";
+  )
+})
+Textarea.displayName = 'Textarea'
 
 export const FormTextarea: React.FC<TextAreaProps> = (props) => {
-  const { errors, register } = useFormContext();
+  const { errors, register } = useFormContext()
 
   return (
     <React.Fragment>
@@ -50,5 +50,5 @@ export const FormTextarea: React.FC<TextAreaProps> = (props) => {
         ) : null}
       </Textarea>
     </React.Fragment>
-  );
-};
+  )
+}

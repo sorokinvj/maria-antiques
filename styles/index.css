@@ -6,7 +6,7 @@
 
 @layer components {
   a.colored {
-    @apply text-indigo-600 no-underline;
+    @apply text-red-600 no-underline;
   }
   a.colored:hover {
     @apply underline underline-offset-4;
@@ -15,9 +15,9 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-indigo-600 hover:bg-gray-700 px-4 py-3 rounded-lg text-white text-sm font-bold tracking-widest uppercase focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-500 disabled:focus:outline-none;
+    @apply bg-red-600 hover:bg-gray-700 px-4 py-3 rounded-lg text-white text-sm font-bold tracking-widest uppercase focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-500 disabled:focus:outline-none;
   }
   .btn-secondary {
-    @apply border-2 border-solid border-indigo-600 hover:bg-indigo-600 hover:text-white px-4 py-3 rounded-lg text-indigo-600 text-sm font-bold tracking-widest uppercase focus:outline-none;
+    @apply border-2 border-solid border-red-600 hover:bg-red-600 hover:text-white px-4 py-3 rounded-lg text-red-600 text-sm font-bold tracking-widest uppercase focus:outline-none;
   }
 }
