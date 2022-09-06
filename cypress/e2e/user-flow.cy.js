@@ -18,6 +18,9 @@ describe('Stripe checkout happy path', () => {
   })
 
   it('allows to add a product to cart, proceed to checkout and then success page', () => {
+    Cypress.on('uncaught:exception', () => {
+      return false
+    })
     cy.get('[data-testid=product-card]').first().click()
 
     cy.get('[data-testid=product-page-price]')
@@ -82,6 +85,7 @@ describe('Stripe checkout happy path', () => {
         }
       )
     })
-    cy.get('[data-testid="successful-order-total"]', { timeout: 20000 })
+    cy.location('pathname', { timeout: 20000 }).should('include', '/success')
+    cy.contains('Successful Order').should('be.visible')
   })
 })
