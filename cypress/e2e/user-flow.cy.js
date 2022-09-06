@@ -1,11 +1,4 @@
-/// <reference types="cypress" />
-
-const { wait } = require('@testing-library/dom')
-const { visit } = require('graphql')
-
 const BASE_URL = 'http://localhost:3000/'
-// const BASE_URL = 'https://maria-antiques.vercel.app/'
-
 const STRIPE_CHECKOUT_DOMAIN = 'https://checkout.stripe.com'
 const STRIPE_DUMMY_DATA = {
   email: 'any@email.com',
@@ -19,16 +12,12 @@ const STRIPE_DUMMY_DATA = {
   shippingPostalCode: '2705-122'
 }
 
-describe('full customer flow', () => {
+describe('Stripe checkout happy path', () => {
   beforeEach(() => {
     cy.visit(BASE_URL)
   })
 
-  it('allows to add a product  to cart, proceed to checkout and then success page', () => {
-    Cypress.on('uncaught:exception', (err, runnable) => {
-      return false
-    })
-
+  it('allows to add a product to cart, proceed to checkout and then success page', () => {
     cy.get('[data-testid=product-card]').first().click()
 
     cy.get('[data-testid=product-page-price]')
@@ -41,7 +30,6 @@ describe('full customer flow', () => {
       .invoke('text')
       .as('headerCartTotal')
       .then(function () {
-        // compare price of product added to cart and cart total from header
         expect(this.headerCartTotal).to.equal(this.productPagePrice)
       })
 
@@ -51,34 +39,27 @@ describe('full customer flow', () => {
       .invoke('text')
       .as('cartTotal')
       .then(function () {
-        // compare cart total from header and cart total from cart page
         expect(this.cartTotal).to.equal(this.headerCartTotal)
       })
 
+    cy.intercept('POST', '/api/stripe/create-checkout-session').as(
+      'createCheckoutSession'
+    )
+
     cy.findByRole('button', { name: /checkout/i }).click()
-    cy.window().its('cypressCheckoutSessionSlug').should('not.equal', '')
 
-    cy.window().then(function (window) {
-      const cartTotal = this.cartTotal
-      const checkoutSessionSlug = window.cypressCheckoutSessionSlug
-
+    cy.wait('@createCheckoutSession').then((interception) => {
+      const stripeUrl = interception.response.body.session.url
       cy.origin(
         STRIPE_CHECKOUT_DOMAIN,
-        { args: { checkoutSessionSlug, cartTotal, STRIPE_DUMMY_DATA } },
-        function ({ checkoutSessionSlug, cartTotal, STRIPE_DUMMY_DATA }) {
-          cy.visit(checkoutSessionSlug)
+        { args: { stripeUrl, STRIPE_DUMMY_DATA } },
+        function ({ stripeUrl, STRIPE_DUMMY_DATA }) {
+          cy.visit(stripeUrl)
           cy.on('uncaught:exception', (err, runnable) => {
             return false
           })
 
           cy.wait(1000)
-          //compare stripe total and cart total
-          cy.get('#ProductSummary-totalAmount>span')
-            .invoke('text')
-            .as('stripeTotal')
-            .then(function ($stripeTotal) {
-              expect($stripeTotal).to.equal(cartTotal)
-            })
 
           cy.get('#email').type(STRIPE_DUMMY_DATA['email'])
           cy.get('#shippingName').type(STRIPE_DUMMY_DATA['shippingName'])
@@ -99,18 +80,8 @@ describe('full customer flow', () => {
 
           cy.get('[data-testid=hosted-payment-submit-button]').click()
         }
-      ).then(() => {
-        cy.on('url:changed', (newUrl) => {
-          console.log('newUrl = ', newUrl)
-          expect(newUrl).to.contain('success')
-        })
-      })
-
-      // .then(() => {
-      //   cy.get(['data-testid=successful-order-total']).then(($total) => {
-      //     console.log($total.text())
-      //   })
-      // })
+      )
     })
+    cy.get('[data-testid="successful-order-total"]', { timeout: 20000 })
   })
 })

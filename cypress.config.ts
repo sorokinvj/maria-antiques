@@ -7,5 +7,6 @@ export default defineConfig({
     },
     experimentalSessionAndOrigin: true,
     chromeWebSecurity: false
-  }
+  },
+  requestTimeout: 20000
 })
