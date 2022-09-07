@@ -28,9 +28,11 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
+    "@testing-library/cypress": "^8.0.3",
     "@types/micro": "^7.3.7",
     "@types/react": "^18.0.15",
     "autoprefixer": "^10.0.0",
+    "cypress": "^10.6.0",
     "eslint": "^8.21.0",
     "eslint-config-next": "12.2.4",
     "postcss": "^8.0.0",

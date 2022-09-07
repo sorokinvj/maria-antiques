@@ -41,7 +41,7 @@ export const ProductPageUI: React.FC<Props> = ({ product }) => {
           {product.name}
         </h1>
         <div className="mb-6">
-          <p className="font-semibold text-2xl text-slategray">
+          <p className="font-semibold text-2xl text-slategray" data-testid="product-page-price">
             {formatCurrencyValue({
               currency: CURRENCY,
               value: product.price

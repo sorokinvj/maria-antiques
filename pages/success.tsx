@@ -51,7 +51,7 @@ const SuccessPage: React.FC<Props> = ({ order, error }) => {
         <div className="flex-1 mb-4 lg:mr-8">
           <div className="flex justify-between mb-4 text-xl">
             <span className="font-bold">Order total</span>
-            <span className="md:mr-6">
+            <span className="md:mr-6" data-testid="successful-order-total">
               {formatCurrencyValue({
                 currency: CURRENCY,
                 value: convertPriceFormat('stripeToCms', total)
@@ -84,7 +84,10 @@ const SuccessPage: React.FC<Props> = ({ order, error }) => {
                   </div>
 
                   <div className="text-right md:w-1/5">
-                    <p className="font-medium text-gray-800">
+                    <p
+                      className="font-medium text-gray-800"
+                      data-testid="successful-order-total"
+                    >
                       {formatCurrencyValue({
                         currency: CURRENCY,
                         value: convertPriceFormat('stripeToCms', item.total)
@@ -95,6 +98,26 @@ const SuccessPage: React.FC<Props> = ({ order, error }) => {
               )
             })}
           </ul>
+        </div>
+
+        <div className="flex-1">
+          <p className="text-xl mb-4 font-bold">Shipping info</p>
+          <p className="text-gray-800 font-medium text-lg">{name}</p>
+          <p className="text-gray-800 font-medium flex flex-col">
+            {address.line1 && <span>{address.line1}</span>}
+            {address.line2 && <span>{address.line2}</span>}
+            {address.city && <span>{address.city}</span>}
+            {address.state && <span>{address.state}</span>}
+            <span>{address.postal_code}</span>
+            <span>{parseCountry(address.country)}</span>
+          </p>
+          <p className="mt-4 md:w-2/3">
+            Please check your address carefully. If you find any errors, please{' '}
+            <a href="mailto:wynorobeira1960@outlook.pt" className="colored">
+              contact us
+            </a>
+            , so we could ship your order correctly.
+          </p>
         </div>
 
         <div className="flex-1">
