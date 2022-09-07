@@ -26,3 +26,5 @@ export const SHIPPING_RATES_IN_EUR = {
 }
 
 export const FREE_SHIPPING_PRICE = 50
+
+export const isTestEnvironment = process.env.NODE_ENV === 'test'

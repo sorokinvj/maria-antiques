@@ -2,11 +2,10 @@ import { defineConfig } from 'cypress'
 
 export default defineConfig({
   e2e: {
-    setupNodeEvents(on, config) {
-      // implement node event listeners here
-    },
-    experimentalSessionAndOrigin: true,
-    chromeWebSecurity: false
+    experimentalSessionAndOrigin: true
   },
-  requestTimeout: 20000
+  requestTimeout: 20000,
+  env: {
+    NODE_ENV: 'test'
+  }
 })

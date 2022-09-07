@@ -2,7 +2,7 @@ import { CartItem } from '@/components/CartItem/CartItem'
 import { ErrorComponent } from '@/components/Error/Error'
 import { QuestionCircleIcon } from '@/components/icons'
 import Button from '@/components/ui/button'
-import { CURRENCY, FREE_SHIPPING_PRICE } from '@/constants'
+import { CURRENCY, FREE_SHIPPING_PRICE, isTestEnvironment } from '@/constants'
 import { useHasMounted } from '@/hooks/useHasMounted'
 import getPageData from '@/lib/get-page-data'
 import { formatCurrencyValue } from '@/utils/format-currency-value'
@@ -12,22 +12,14 @@ import useSubmissionState from 'hooks/use-form-submission'
 import { GetStaticProps } from 'next'
 import Tooltip from 'rc-tooltip'
 import 'rc-tooltip/assets/bootstrap_white.css'
-import { useCart } from 'react-use-cart'
 import React from 'react'
+import { useCart } from 'react-use-cart'
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ''
 )
 
 const Cart: React.FC = () => {
-  const [checkoutSessionUrl, setCheckoutSessionUrl] = React.useState('')
-
-  React.useEffect(() => {
-    if (window.Cypress) {
-      window.cypressCheckoutSessionSlug = checkoutSessionUrl.slice(27)
-    }
-  }, [checkoutSessionUrl])
-
   const { isEmpty, items, cartTotal } = useCart()
   const {
     setSubmissionError,
@@ -66,28 +58,18 @@ const Cart: React.FC = () => {
 
       const { session } = await res.json()
 
-      if (!window.Cypress) {
+      if (!isTestEnvironment) {
         await stripe?.redirectToCheckout({
           sessionId: session.id
         })
-
         setSubmissionSuccess()
       }
-      if (window.Cypress) {
-        setCheckoutSessionUrl(session.url)
-      }
-
-      // await stripe?.redirectToCheckout({
-      //   sessionId: session.id
-      // })
-      // setSubmissionSuccess()
     } catch (error) {
       setSubmissionError(error)
     }
   }
 
   const hasMounted = useHasMounted()
-
   if (!hasMounted) return null
   if (isEmpty) return <p>Your cart is empty</p>
   return (
@@ -100,7 +82,10 @@ const Cart: React.FC = () => {
         <div className="flex flex-col items-end">
           <div className="flex flex-col items-end mb-3">
             <span className="text-gray-700">Sub total</span>
-            <span className="text-xl font-bold text-indigo-600" data-testid="cart-total">
+            <span
+              className="text-xl font-bold text-indigo-600"
+              data-testid="cart-total"
+            >
               {formatCurrencyValue({
                 currency: CURRENCY,
                 value: cartTotal
