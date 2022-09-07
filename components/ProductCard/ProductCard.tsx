@@ -9,12 +9,11 @@ import { AddToCartOverlay } from './AddToCardOverlay'
 
 export const ProductCard: React.FC<Product> = ({
   id,
-  images,
+  images: [image],
   name,
   price,
   slug
 }) => {
-  const [primaryImage] = images
   const { addItem, inCart } = useCart()
   const addToCart = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -22,9 +21,10 @@ export const ProductCard: React.FC<Product> = ({
     event.preventDefault()
     addItem({
       id,
-      image: primaryImage,
-      price: price,
-      name: name
+      image,
+      price,
+      name,
+      slug
     })
   }
 
@@ -35,16 +35,16 @@ export const ProductCard: React.FC<Product> = ({
       <Link href={`/products/${slug}`}>
         <a className="group no-underline w-full flex">
           <div className="bg-gray-50 rounded-lg cursor-pointer w-full overflow-hidden relative px-3 py-6 md:px-6">
-            {primaryImage ? (
+            {image ? (
               <div className="relative group flex flex-col">
                 <AddToCartOverlay
                   onClick={addToCart}
                   isAdded={isProductAdded}
                 />
                 <Image
-                  src={primaryImage.url}
-                  height={primaryImage.height}
-                  width={primaryImage.width}
+                  src={image.url}
+                  height={image.height}
+                  width={image.width}
                   alt={name}
                   title={name}
                   className={!isProductAdded ? 'lg:group-hover:opacity-70' : ''}

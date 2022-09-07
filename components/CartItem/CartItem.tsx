@@ -17,6 +17,7 @@ interface Props {
 }
 
 export const CartItem: React.FC<Props> = ({ item }) => {
+  console.log(item)
   const { submissionLoading } = useSubmissionState()
   const { removeItem } = useCart()
 
