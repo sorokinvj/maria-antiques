@@ -5,28 +5,20 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import React from 'react'
 import { TextPage } from 'types'
 
-interface PageProps {
-  textPageData: any
-}
-interface PagePath {
-  slug: string
-  title: string
-}
-
 function Page({ textPageData }: { textPageData: TextPage }) {
-
   return (
     <React.Fragment>
-      <div className='md:w-3/4 sm:w-auto'
-      dangerouslySetInnerHTML={{__html: textPageData.page.content.html}}
-    />
+      <div
+        className="md:w-3/4 sm:w-auto pl-4"
+        dangerouslySetInnerHTML={{ __html: textPageData.page.content.html }}
+      />
     </React.Fragment>
   )
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const pages = await getAllTextPages()
-  const paths = pages.map((page: PagePath) => ({
+  const paths = pages.map((page: TextPage) => ({
     params: { slug: page.slug }
   }))
 

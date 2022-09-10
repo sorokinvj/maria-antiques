@@ -63,7 +63,6 @@ export interface Page {
 }
 
 export interface TextPage {
-  // TODO: rename to Something
   id: string
   name: string
   type: string

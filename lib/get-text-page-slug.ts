@@ -1,6 +1,7 @@
 import { ImageFragment } from '@/lib/graphql-fragments'
 import hygraphClient, { gql } from '@/lib/hygraph-client'
 import { LibParams } from 'types'
+import { TextPage } from 'types'
 
 export const getTextPageSlugQuery = gql`
   query TextPageSlugQuery($slug: String!) {
@@ -19,7 +20,7 @@ export const getTextPageSlugQuery = gql`
   ${ImageFragment}
 `
 
-export const getTextPageBySlug = async ({ slug }: LibParams): Promise<any> => {
+export const getTextPageBySlug = async ({ slug }: LibParams): Promise<TextPage> => {
   const textPage = await hygraphClient.request(getTextPageSlugQuery, {
     slug
   })
