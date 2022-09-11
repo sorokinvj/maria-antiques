@@ -1,4 +1,4 @@
-import { ProductGrid } from '@/components/product-grid'
+import { ProductGrid } from '@/components/ProductGrid/ProductGrid'
 import { SEO } from '@/components/seo'
 import { getAllCategories } from '@/lib/get-all-categories'
 import { getCategoryBySlug } from '@/lib/get-category-slug'

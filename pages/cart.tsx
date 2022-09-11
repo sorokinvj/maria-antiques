@@ -1,7 +1,7 @@
+import { Button } from '@/components/Button/Button'
 import { CartItem } from '@/components/CartItem/CartItem'
 import { ErrorComponent } from '@/components/Error/Error'
 import { QuestionCircleIcon } from '@/components/icons'
-import Button from '@/components/ui/button'
 import { CURRENCY, FREE_SHIPPING_PRICE } from '@/constants'
 import { useHasMounted } from '@/hooks/useHasMounted'
 import getPageData from '@/lib/get-page-data'
@@ -80,7 +80,7 @@ const Cart: React.FC = () => {
         <div className="flex flex-col items-end">
           <div className="flex flex-col items-end mb-3">
             <span className="text-gray-700">Sub total</span>
-            <span className="text-xl font-bold text-indigo-600">
+            <span className="text-xl font-bold text-red-600">
               {formatCurrencyValue({
                 currency: CURRENCY,
                 value: cartTotal
@@ -100,7 +100,7 @@ const Cart: React.FC = () => {
                 </div>
               </Tooltip>
             </div>
-            <span className="text-xl font-bold text-indigo-600 mb-2">
+            <span className="text-xl font-bold text-red-600 mb-2">
               {cartTotal > FREE_SHIPPING_PRICE
                 ? 'FREE'
                 : formatCurrencyValue({

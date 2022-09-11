@@ -1,4 +1,4 @@
-import { ProductGrid } from '@/components/product-grid'
+import { ProductGrid } from '@/components/ProductGrid/ProductGrid'
 import { SEO } from '@/components/seo'
 import { getAllCollections } from '@/lib/get-all-collections'
 import { getCollectionBySlug } from '@/lib/get-collection-slug'

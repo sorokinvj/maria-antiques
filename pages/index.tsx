@@ -1,12 +1,16 @@
-import { ProductGrid } from '@/components/product-grid'
+import { ProductGrid } from '@/components/ProductGrid/ProductGrid'
 import { getAllProducts } from '@/lib/get-all-products'
 import { getPageData } from '@/lib/get-page-data'
-import { GetStaticProps } from 'next'
+import { GetStaticProps, NextPage } from 'next'
 import { Product } from 'types'
 
-function IndexPage({ products }: { products: Product[] }) {
-  return <ProductGrid products={products} />
+interface Props {
+  products: Product[]
 }
+
+const IndexPage: NextPage<Props> = ({ products }) => (
+  <ProductGrid products={products} />
+)
 
 export const getStaticProps: GetStaticProps = async () => {
   const pageData = await getPageData()

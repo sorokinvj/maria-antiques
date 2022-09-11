@@ -10,4 +10,5 @@ export { default as TwitterIcon } from './twitter'
 export { default as XSmallIcon } from './x-small'
 export interface IconsProps {
   className?: string
+  fill?: string
 }

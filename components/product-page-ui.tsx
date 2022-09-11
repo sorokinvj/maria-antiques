@@ -1,5 +1,5 @@
+import { Button } from '@/components/Button/Button'
 import { CURRENCY } from '@/constants'
-import Button from '@/ui/button'
 import { formatCurrencyValue } from '@/utils/format-currency-value'
 import Image from 'next/image'
 import React from 'react'
@@ -11,47 +11,58 @@ interface Props {
 }
 
 export const ProductPageUI: React.FC<Props> = ({ product }) => {
-  const { addItem } = useCart()
-  const [primaryImage] = product.images
+  const { addItem, inCart } = useCart()
+  const {
+    id,
+    images: [image],
+    name,
+    price,
+    slug,
+    description
+  } = product
 
   const addToCart = () => {
     addItem({
-      id: product.id,
-      image: primaryImage,
-      price: product.price,
-      name: product.name
+      id,
+      image,
+      price,
+      name,
+      slug
     })
   }
 
+  const isProductInCart = inCart(product.id)
   return (
     <div className="lg:flex -mx-6">
       <div className="mb-8 px-6 md:mb-0 lg:w-1/2">
         <div className="w-full overflow-hidden relative bg-gainsboro rounded-lg">
           <Image
-            src={primaryImage?.url}
-            height={primaryImage?.height}
-            width={primaryImage?.width}
-            alt={product?.name}
-            title={product?.name}
+            src={image?.url}
+            height={image?.height}
+            width={image?.width}
+            alt={name}
+            title={name}
           />
         </div>
       </div>
       <div className="px-6 md:py-3 lg:w-1/2">
         <h1 className="font-bold text-3xl md:text-6xl mb-3 text-primary leading-tight">
-          {product.name}
+          {name}
         </h1>
         <div className="mb-6">
           <p className="font-semibold text-2xl text-slategray">
             {formatCurrencyValue({
               currency: CURRENCY,
-              value: product.price
+              value: price
             })}
           </p>
         </div>
         <div className="mb-6">
-          <p className="leading-loose text-lightgray">{product.description}</p>
+          <p className="leading-loose text-lightgray">{description}</p>
         </div>
-        <Button onClick={addToCart}>Add to cart</Button>
+        <Button onClick={addToCart} disabled={isProductInCart}>
+          {isProductInCart ? 'In the cart' : 'Add to cart'}
+        </Button>
       </div>
     </div>
   )
