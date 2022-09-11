@@ -59,6 +59,20 @@ export interface Page {
   name: string
   type: string
   slug: string
+  title: string
+}
+
+export interface TextPage {
+  id: string
+  name: string
+  type: string
+  slug: string
+  title: string
+  page: {
+    content: {
+      html: string
+    }
+  }
 }
 
 export interface LibParams {
