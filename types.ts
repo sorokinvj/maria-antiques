@@ -72,6 +72,11 @@ export interface TextPage {
     content: {
       html: string
     }
+    heroImage: {
+      url: string
+      width: number
+      height: number
+    }
   }
 }
 
