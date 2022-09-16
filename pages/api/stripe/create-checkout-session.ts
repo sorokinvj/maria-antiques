@@ -1,11 +1,9 @@
 import { CURRENCY } from '@/constants'
-import hygraphClient, { gql } from '@/lib/hygraph-client'
 import stripe from '@/lib/stripe-client'
 import { convertPriceFormat } from '@/utils/convert-price-format'
 import { getShippingOptions } from '@/utils/getShippingOptions'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Item } from 'react-use-cart'
-import { Image } from 'types'
 
 interface CheckoutSessionBody {
   items: Item[]
@@ -16,54 +14,55 @@ interface CheckoutSessionBody {
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const {
-      items,
-      success_url,
-      cancel_url,
-      cartTotal
-    }: CheckoutSessionBody = req.body
+    const { items, success_url, cancel_url, cartTotal }: CheckoutSessionBody =
+      req.body
 
-    const getProduct = async (id: string) => {
-      const {
-        product: { description, images, name, price, ...product }
-      } = await hygraphClient.request(
-        gql`
-          query ProductQuery($id: ID!) {
-            product(where: { id: $id }) {
-              productId: id
-              description
-              images(first: 1) {
-                url
-              }
-              name
-              price
-            }
-          }
-        `,
-        {
-          id
-        }
-      )
-      return {
+    // const getProduct = async (id: string) => {
+    //   const {
+    //     product: { description, images, name, price, ...product }
+    //   } = await hygraphClient.request(
+    //     gql`
+    //       query ProductQuery($id: ID!) {
+    //         product(where: { id: $id }) {
+    //           productId: id
+    //           description
+    //           images(first: 1) {
+    //             url
+    //           }
+    //           name
+    //           price
+    //         }
+    //       }
+    //     `,
+    //     {
+    //       id
+    //     }
+    //   )
+    //   return {
+    //     currency: CURRENCY,
+    //     product_data: {
+    //       description,
+    //       metadata: {
+    //         ...product
+    //       },
+    //       name,
+    //       images: images.map((img: Image) => img.url)
+    //     },
+    //     unit_amount: convertPriceFormat('cmsToStripe', price)
+    //   }
+    // }
+    console.log('items', items)
+    const line_items = items.map((item) => ({
+      price_data: {
         currency: CURRENCY,
         product_data: {
-          description,
-          metadata: {
-            ...product
-          },
-          name,
-          images: images.map((img: Image) => img.url)
+          name: item.name,
+          images: [item.image.url]
         },
-        unit_amount: convertPriceFormat('cmsToStripe', price)
-      }
-    }
-
-    const line_items = await Promise.all(
-      items.map(async (item) => ({
-        price_data: await getProduct(item.id),
-        quantity: item.quantity
-      }))
-    )
+        unit_amount: convertPriceFormat('cmsToStripe', item.price)
+      },
+      quantity: 1
+    }))
 
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
