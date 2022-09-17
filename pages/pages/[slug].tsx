@@ -9,20 +9,22 @@ import { TextPage } from 'types'
 function Page({ textPageData }: { textPageData: TextPage }) {
   return (
     <React.Fragment>
-      <div className="pl-4 md:w-3/4 sm:w-auto">
+      <div className="pr-2 pl-2">
         {textPageData.page.heroImage && (
-            <Image
-              width={textPageData.page.heroImage.width}
-              height={textPageData.page.heroImage.height}
-              alt={textPageData.title}
-              src={textPageData.page.heroImage.url}
-              className=" sm:h-auto md:h-96 object-cover"
-            />
+          <Image
+            width={textPageData.page.heroImage.width}
+            height={textPageData.page.heroImage.height}
+            alt={textPageData.title}
+            src={textPageData.page.heroImage.url}
+            className="mt-4 sm:h-auto md:h-112 md:mb-8 object-cover w-full"
+          />
         )}
-
-        <div
-          dangerouslySetInnerHTML={{ __html: textPageData.page.content.html }}
-        />
+        <div className="flex justify-center">
+          <div
+            className=" sm:w-auto md:max-w-4xl "
+            dangerouslySetInnerHTML={{ __html: textPageData.page.content.html }}
+          />
+        </div>
       </div>
     </React.Fragment>
   )
