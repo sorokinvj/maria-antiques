@@ -17,47 +17,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const { items, success_url, cancel_url, cartTotal }: CheckoutSessionBody =
       req.body
 
-    // const getProduct = async (id: string) => {
-    //   const {
-    //     product: { description, images, name, price, ...product }
-    //   } = await hygraphClient.request(
-    //     gql`
-    //       query ProductQuery($id: ID!) {
-    //         product(where: { id: $id }) {
-    //           productId: id
-    //           description
-    //           images(first: 1) {
-    //             url
-    //           }
-    //           name
-    //           price
-    //         }
-    //       }
-    //     `,
-    //     {
-    //       id
-    //     }
-    //   )
-    //   return {
-    //     currency: CURRENCY,
-    //     product_data: {
-    //       description,
-    //       metadata: {
-    //         ...product
-    //       },
-    //       name,
-    //       images: images.map((img: Image) => img.url)
-    //     },
-    //     unit_amount: convertPriceFormat('cmsToStripe', price)
-    //   }
-    // }
-    console.log('items', items)
     const line_items = items.map((item) => ({
       price_data: {
         currency: CURRENCY,
         product_data: {
           name: item.name,
-          images: [item.image.url]
+          images: [item.image.url],
+          tax_code: 'txcd_99999999',
+          metadata: {
+            productId: item.id
+          }
         },
         unit_amount: convertPriceFormat('cmsToStripe', item.price)
       },
