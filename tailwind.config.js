@@ -7,6 +7,9 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Quicksand']
+      },
+      spacing: {
+        '112': '28rem',
       }
     }
   },
