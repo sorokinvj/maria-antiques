@@ -2,16 +2,30 @@ import getAllTextPages from '@/lib/get-all-textpages'
 import { getPageData } from '@/lib/get-page-data'
 import getTextPageBySlug from '@/lib/get-text-page-slug'
 import { GetStaticPaths, GetStaticProps } from 'next'
+import Image from 'next/future/image'
 import React from 'react'
 import { TextPage } from 'types'
 
 function Page({ textPageData }: { textPageData: TextPage }) {
   return (
     <React.Fragment>
-      <div
-        className="md:w-3/4 sm:w-auto pl-4"
-        dangerouslySetInnerHTML={{ __html: textPageData.page.content.html }}
-      />
+      <div className="pr-2 pl-2">
+        {textPageData.page.heroImage && (
+          <Image
+            width={textPageData.page.heroImage.width}
+            height={textPageData.page.heroImage.height}
+            alt={textPageData.title}
+            src={textPageData.page.heroImage.url}
+            className="mt-4 sm:h-auto md:h-112 md:mb-8 object-cover w-full"
+          />
+        )}
+        <div className="flex justify-center">
+          <div
+            className=" sm:w-auto md:max-w-4xl "
+            dangerouslySetInnerHTML={{ __html: textPageData.page.content.html }}
+          />
+        </div>
+      </div>
     </React.Fragment>
   )
 }

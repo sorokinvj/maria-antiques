@@ -12,11 +12,10 @@
     @apply underline underline-offset-4;
   }
   p {
-    @apply mb-5
+    @apply mb-5 text-lg leading-relaxed;
   }
   h1 {
-    @apply mb-5 text-3xl mt-8
-    
+    @apply mb-10 mt-8 text-5xl;
   }
 }
 
