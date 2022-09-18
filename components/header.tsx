@@ -17,8 +17,8 @@ export const Header: React.FC<Props> = ({ pages = [] }) => {
   if (!hasMounted) return null
 
   return (
-    <header className="max-w-7xl mx-auto bg-white flex-grow flex items-center justify-between px-4 sm:px-6">
-      <div className="py-6 w-full">
+    <header className="sticky top-0 z-50 max-w-7xl mx-auto bg-white flex-grow flex items-center justify-between px-4 sm:px-6">
+      <div className="mt-6 pb-2 w-full">
         <nav className="flex items-center justify-between space-x-4 h-20 pr-2">
           <Link href="/">
             <a className="w-72 ml-4 mr-8">
