@@ -1,4 +1,5 @@
 import { createOrder } from '@/lib/create-order'
+import { sendEmailConfirmation } from '@/lib/send-email-confirmation'
 import { stripeSigningSecret } from '@/lib/stripe-signing-secret'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -15,7 +16,10 @@ const handler = async (
       try {
         switch (event?.type) {
           case 'checkout.session.completed':
-            await createOrder({ sessionId: event?.data?.object?.id })
+            const orderId = await createOrder({
+              sessionId: event?.data?.object?.id
+            })
+            await sendEmailConfirmation(orderId)
             break
           default:
             throw new Error(`Unhandled event: ${event?.type}`)
