@@ -36,7 +36,7 @@ export const sendEmailConfirmation = async (orderId: string): Promise<any> => {
           products: order.orderItems.map((item) => ({
             name: item.product.name,
             price: item.product.price,
-            image: item.product.images[0].url
+            imageUrl: item.product.images[0].url
           })),
           shippingInfo: order.shippingInfo
         }
