@@ -21,7 +21,6 @@ interface OrderItem {
   id: string
   product: Product
   total: number
-  quantity: number
 }
 
 export interface Order {

@@ -10,9 +10,6 @@ export const sendEmailConfirmation = async (orderId: string): Promise<any> => {
       name: "Maria's Antiques"
     },
     template_id: 'd-5e2a6d9bbf81451db0cf5927a46f90cb',
-    asm: {
-      group_id: 32454
-    },
     tracking_settings: {
       click_tracking: {
         enable: true
