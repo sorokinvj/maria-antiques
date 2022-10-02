@@ -128,13 +128,18 @@
     "noEmit": true,
     "incremental": true,
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "moduleResolution": "node"
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "tailwind.config.js", "prettier.config.js", "postcss.config.js", "hygraph.config.ks"  ],
+    "**/*.tsx",
+    "tailwind.config.js",
+    "prettier.config.js",
+    "postcss.config.js",
+    "hygraph.config.ks"
+  ],
   "exclude": [
     "node_modules"
   ]

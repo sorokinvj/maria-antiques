@@ -1,0 +1,28 @@
+{
+  "orderId": "123",
+  "shippingName": "vova v",
+  "total": 55,
+  "products": [
+    {
+      "name": "nice earrings",
+      "price": 25,
+      "imageUrl": "https://maria-antiques-git-email-template-sorokinvj.vercel.app/_next/image?url=https%3A%2F%2Fmedia.graphassets.com%2FhpQxjH2OSQe9IKa7Xa23&w=3840&q=75"
+    },
+    {
+      "name": "gold necklace",
+      "price": 30,
+      "imageUrl": "https://maria-antiques-git-email-template-sorokinvj.vercel.app/_next/image?url=https%3A%2F%2Fmedia.graphassets.com%2FyKfWEXTS0CvXS4sg1bd9&w=3840&q=75"
+    }
+  ],
+  "shippingInfo": {
+    "name": "vova v",
+    "address": {
+      "city": "Moscow",
+      "line1": "Some street 34",
+      "line2": null,
+      "state": "Moscow",
+      "country": "Russia",
+      "postal_code": "123456"
+    }
+  }
+}

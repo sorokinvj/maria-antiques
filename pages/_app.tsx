@@ -6,9 +6,9 @@ import 'styles/index.css'
 function App({ Component, pageProps }: AppProps) {
   return (
     <CartProvider>
-      <Layout {...pageProps}>
+      {/* <Layout {...pageProps}> */}
         <Component {...pageProps} />
-      </Layout>
+      {/* </Layout> */}
     </CartProvider>
   )
 }

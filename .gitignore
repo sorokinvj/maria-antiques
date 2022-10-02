@@ -4,6 +4,7 @@
 # Environment variables
 .env
 .env.local
+sendgrid.env
 
 # Dependency directories
 node_modules
