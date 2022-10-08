@@ -5,6 +5,7 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import Image from 'next/future/image'
 import React from 'react'
 import { TextPage } from 'types'
+import textPageStyles from '../../styles/textPage.module.css'
 
 function Page({ textPageData }: { textPageData: TextPage }) {
   return (
@@ -21,7 +22,7 @@ function Page({ textPageData }: { textPageData: TextPage }) {
         )}
         <div className="flex justify-center">
           <div
-            className=" sm:w-auto md:max-w-4xl "
+            className={textPageStyles.body}
             dangerouslySetInnerHTML={{ __html: textPageData.page.content.html }}
           />
         </div>
