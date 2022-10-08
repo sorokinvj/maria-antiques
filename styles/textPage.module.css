@@ -1,0 +1,20 @@
+.body {
+  @apply sm:w-auto md:max-w-4xl;
+}
+
+.body table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.body th {
+  background: #282d4c;
+  color: white;
+  font-weight: bold;
+}
+.body td,
+.body th {
+  padding: 6px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
