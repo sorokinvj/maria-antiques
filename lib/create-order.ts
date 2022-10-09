@@ -1,8 +1,9 @@
 import hygraphMutationClient, { gql } from '@/lib/hygraph-mutation-client'
-import stripe from '@/lib/stripe-client'
+import { convertPriceFormat } from '@/utils/convert-price-format'
 import { getShippingCost } from '@/utils/getShippingCost'
 import { parseCountry } from '@/utils/parseCountry'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
+import Stripe from 'stripe'
 
 export const createOrderMutation = gql`
   mutation CreateOrderMutation($order: OrderCreateInput!) {
@@ -12,10 +13,9 @@ export const createOrderMutation = gql`
   }
 `
 
-export async function createOrder({ sessionId }: { sessionId: string }) {
-  const session = await stripe.checkout.sessions.retrieve(sessionId, {
-    expand: ['line_items.data.price.product', 'customer', 'shipping_details']
-  })
+export async function createOrder(
+  session: Stripe.Response<Stripe.Checkout.Session>
+) {
   const {
     customer_details,
     amount_total,
@@ -31,11 +31,12 @@ export async function createOrder({ sessionId }: { sessionId: string }) {
       {
         order: {
           email: customer_details?.email,
-          total: amount_total,
+          total: convertPriceFormat('stripeToCms', amount_total || 0),
           stripeCheckoutId: id,
           orderItems: {
             create: line_items?.data.map((item: any) => ({
-              total: item.amount_total,
+              price: convertPriceFormat('stripeToCms', item.amount_subtotal),
+              tax: convertPriceFormat('stripeToCms', item.amount_tax),
               product: {
                 connect: {
                   id: item.price.product.metadata.productId
