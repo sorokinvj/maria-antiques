@@ -18,7 +18,7 @@ export const getOrderSessionIdQuery = gql`
           }
           name
         }
-        total
+        price
       }
       total
     }

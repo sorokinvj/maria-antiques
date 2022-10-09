@@ -1,5 +1,7 @@
 import { createOrder } from '@/lib/create-order'
+import stripe from '@/lib/stripe-client'
 import { stripeSigningSecret } from '@/lib/stripe-signing-secret'
+import { unpublishProduct } from '@/lib/unpublish-product'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 export const config = { api: { bodyParser: false } }
@@ -15,7 +17,23 @@ const handler = async (
       try {
         switch (event?.type) {
           case 'checkout.session.completed':
-            await createOrder({ sessionId: event?.data?.object?.id })
+            const session = await stripe.checkout.sessions.retrieve(
+              event?.data?.object?.id,
+              {
+                expand: [
+                  'line_items.data.price.product',
+                  'customer',
+                  'shipping_details'
+                ]
+              }
+            )
+            await createOrder(session)
+            await Promise.all(
+              session.line_items?.data.map(
+                async (item: any) =>
+                  await unpublishProduct(item.price.product.metadata.productId)
+              ) || []
+            )
             break
           default:
             throw new Error(`Unhandled event: ${event?.type}`)

@@ -1,7 +1,6 @@
 import { CURRENCY } from '@/constants'
 import { getOrderBySessionId } from '@/lib/get-order-session-id'
 import getPageData from '@/lib/get-page-data'
-import { convertPriceFormat } from '@/utils/convert-price-format'
 import { formatCurrencyValue } from '@/utils/format-currency-value'
 import { parseCountry } from '@/utils/parseCountry'
 import { GetServerSideProps } from 'next'
@@ -54,7 +53,7 @@ const SuccessPage: React.FC<Props> = ({ order, error }) => {
             <span className="md:mr-6">
               {formatCurrencyValue({
                 currency: CURRENCY,
-                value: convertPriceFormat('stripeToCms', total)
+                value: total
               })}
             </span>
           </div>
@@ -87,7 +86,7 @@ const SuccessPage: React.FC<Props> = ({ order, error }) => {
                     <p className="font-medium text-gray-800">
                       {formatCurrencyValue({
                         currency: CURRENCY,
-                        value: convertPriceFormat('stripeToCms', item.total)
+                        value: item.price
                       })}
                     </p>
                   </div>
@@ -108,12 +107,16 @@ const SuccessPage: React.FC<Props> = ({ order, error }) => {
             <span>{address.postal_code}</span>
             <span>{parseCountry(address.country)}</span>
           </p>
-          <p className="mt-4 md:w-2/3">
+          <p className="my-4 md:w-2/3">
             Please check your address carefully. If you find any errors, please{' '}
             <a href="mailto:wynorobeira1960@outlook.pt" className="colored">
               contact us
             </a>
             , so we could ship your order correctly.
+          </p>
+          <p className="text-xl mb-4 font-bold">Shipping cost</p>
+          <p className="text-gray-800 font-medium text-lg">
+            {order.shippingCost}
           </p>
         </div>
       </div>

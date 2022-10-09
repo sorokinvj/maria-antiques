@@ -20,7 +20,7 @@ export interface Product {
 interface OrderItem {
   id: string
   product: Product
-  total: number
+  price: number
   quantity: number
 }
 
