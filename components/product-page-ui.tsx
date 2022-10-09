@@ -33,8 +33,8 @@ export const ProductPageUI: React.FC<Props> = ({ product }) => {
 
   const isProductInCart = inCart(product.id)
   return (
-    <div className="lg:flex -mx-6">
-      <div className="mb-8 px-6 md:mb-0 lg:w-1/2">
+    <div className="lg:flex">
+      <div className="mb-8 p-4 md:mb-0 lg:w-1/2">
         <div className="w-full overflow-hidden relative bg-gainsboro rounded-lg">
           <Image
             src={image?.url}
