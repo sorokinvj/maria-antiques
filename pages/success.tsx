@@ -27,7 +27,7 @@ const SuccessPage: React.FC<Props> = ({ order, error }) => {
 
   if (error) {
     return (
-      <div className="py-6">
+      <div className="py-6 px-4">
         <h2 className="font-bold text-2xl md:text-4xl mb-3 text-primary leading-tight">
           Error
         </h2>
@@ -40,7 +40,7 @@ const SuccessPage: React.FC<Props> = ({ order, error }) => {
   }
 
   return (
-    <div className="py-6">
+    <div className="py-6 px-4">
       <h2 className="font-bold text-2xl md:text-4xl mb-3 text-primary leading-tight">
         Successful Order
       </h2>
@@ -62,11 +62,11 @@ const SuccessPage: React.FC<Props> = ({ order, error }) => {
             {order.orderItems.map((item) => {
               return (
                 <div
-                  className="md:bg-gray-50 md:rounded-lg flex items-center py-3 md:py-6 md:px-6 md:mb-3"
+                  className="md:bg-gray-50 md:rounded-lg flex items-center py-3 gap-4 md:py-6 md:px-6 md:mb-3"
                   key={item.id}
                 >
-                  <div className="w-3/5 flex flex-grow items-center">
-                    <div className="h-16 md:h-20 w-16 md:w-20 mr-4 bg-gray-50 p-1 rounded-lg relative">
+                  <div className="w-3/5 flex flex-grow items-center gap-4">
+                    <div className="h-16 md:h-20 w-16 md:w-20 bg-gray-50 p-1 rounded-lg relative">
                       <Image
                         src={item.product.images[0].url}
                         layout="fill"
