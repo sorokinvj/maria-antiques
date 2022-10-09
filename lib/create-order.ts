@@ -1,5 +1,6 @@
 import hygraphMutationClient, { gql } from '@/lib/hygraph-mutation-client'
 import stripe from '@/lib/stripe-client'
+import { convertPriceFormat } from '@/utils/convert-price-format'
 import { getShippingCost } from '@/utils/getShippingCost'
 import { parseCountry } from '@/utils/parseCountry'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
@@ -31,11 +32,11 @@ export async function createOrder({ sessionId }: { sessionId: string }) {
       {
         order: {
           email: customer_details?.email,
-          total: amount_total,
+          total: convertPriceFormat('stripeToCms', amount_total || 0),
           stripeCheckoutId: id,
           orderItems: {
             create: line_items?.data.map((item: any) => ({
-              total: item.amount_total,
+              total: convertPriceFormat('stripeToCms', item.amount_total),
               product: {
                 connect: {
                   id: item.price.product.metadata.productId
