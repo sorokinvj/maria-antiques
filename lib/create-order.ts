@@ -1,9 +1,9 @@
 import hygraphMutationClient, { gql } from '@/lib/hygraph-mutation-client'
-import stripe from '@/lib/stripe-client'
 import { convertPriceFormat } from '@/utils/convert-price-format'
 import { getShippingCost } from '@/utils/getShippingCost'
 import { parseCountry } from '@/utils/parseCountry'
 import { parseErrorMessage } from '@/utils/parseErrorMessage'
+import Stripe from 'stripe'
 
 export const createOrderMutation = gql`
   mutation CreateOrderMutation($order: OrderCreateInput!) {
@@ -13,10 +13,9 @@ export const createOrderMutation = gql`
   }
 `
 
-export async function createOrder({ sessionId }: { sessionId: string }) {
-  const session = await stripe.checkout.sessions.retrieve(sessionId, {
-    expand: ['line_items.data.price.product', 'customer', 'shipping_details']
-  })
+export async function createOrder(
+  session: Stripe.Response<Stripe.Checkout.Session>
+) {
   const {
     customer_details,
     amount_total,
@@ -27,32 +26,36 @@ export async function createOrder({ sessionId }: { sessionId: string }) {
   } = session
 
   try {
-    const orderId = await hygraphMutationClient.request(createOrderMutation, {
-      order: {
-        email: customer_details?.email,
-        total: convertPriceFormat('stripeToCms', amount_total!),
-        stripeCheckoutId: id,
-        orderItems: {
-          create: line_items?.data.map((item: any) => ({
-            total: item.amount_total,
-            product: {
-              connect: {
-                id: item.price.product.metadata.productId
+    const cmsResponse = await hygraphMutationClient.request(
+      createOrderMutation,
+      {
+        order: {
+          email: customer_details?.email,
+          total: convertPriceFormat('stripeToCms', amount_total || 0),
+          stripeCheckoutId: id,
+          orderItems: {
+            create: line_items?.data.map((item: any) => ({
+              price: convertPriceFormat('stripeToCms', item.amount_subtotal),
+              tax: convertPriceFormat('stripeToCms', item.amount_tax),
+              product: {
+                connect: {
+                  id: item.price.product.metadata.productId
+                }
               }
+            }))
+          },
+          shippingInfo: {
+            ...shipping_details,
+            address: {
+              ...shipping_details?.address,
+              country: parseCountry(shipping_details?.address?.country)
             }
-          }))
-        },
-        shippingInfo: {
-          ...shipping_details,
-          address: {
-            ...shipping_details?.address,
-            country: parseCountry(shipping_details?.address?.country)
-          }
-        },
-        shippingCost: getShippingCost(shipping_cost)
+          },
+          shippingCost: getShippingCost(shipping_cost)
+        }
       }
-    })
-    return orderId
+    )
+    return cmsResponse
   } catch (error) {
     console.error('Error on creating order', parseErrorMessage(error))
     throw error

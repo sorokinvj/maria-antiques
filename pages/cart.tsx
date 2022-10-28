@@ -57,10 +57,11 @@ const Cart: React.FC = () => {
 
       const { session } = await res.json()
 
+      setSubmissionSuccess()
+
       await stripe?.redirectToCheckout({
         sessionId: session.id
       })
-      setSubmissionSuccess()
     } catch (error) {
       setSubmissionError(error)
     }

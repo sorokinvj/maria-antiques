@@ -1,7 +1,6 @@
 import { CURRENCY } from '@/constants'
 import { getOrderBySessionId } from '@/lib/get-order-session-id'
 import getPageData from '@/lib/get-page-data'
-import { convertPriceFormat } from '@/utils/convert-price-format'
 import { formatCurrencyValue } from '@/utils/format-currency-value'
 import { parseCountry } from '@/utils/parseCountry'
 import { GetServerSideProps } from 'next'
@@ -27,7 +26,7 @@ const SuccessPage: React.FC<Props> = ({ order, error }) => {
 
   if (error) {
     return (
-      <div className="py-6">
+      <div className="py-6 px-4">
         <h2 className="font-bold text-2xl md:text-4xl mb-3 text-primary leading-tight">
           Error
         </h2>
@@ -40,7 +39,7 @@ const SuccessPage: React.FC<Props> = ({ order, error }) => {
   }
 
   return (
-    <div className="py-6">
+    <div className="py-6 px-4">
       <h2 className="font-bold text-2xl md:text-4xl mb-3 text-primary leading-tight">
         Successful Order
       </h2>
@@ -54,7 +53,7 @@ const SuccessPage: React.FC<Props> = ({ order, error }) => {
             <span className="md:mr-6">
               {formatCurrencyValue({
                 currency: CURRENCY,
-                value: convertPriceFormat('stripeToCms', total)
+                value: total
               })}
             </span>
           </div>
@@ -62,11 +61,11 @@ const SuccessPage: React.FC<Props> = ({ order, error }) => {
             {order.orderItems.map((item) => {
               return (
                 <div
-                  className="md:bg-gray-50 md:rounded-lg flex items-center py-3 md:py-6 md:px-6 md:mb-3"
+                  className="md:bg-gray-50 md:rounded-lg flex items-center py-3 gap-4 md:py-6 md:px-6 md:mb-3"
                   key={item.id}
                 >
-                  <div className="w-3/5 flex flex-grow items-center">
-                    <div className="h-16 md:h-20 w-16 md:w-20 mr-4 bg-gray-50 p-1 rounded-lg relative">
+                  <div className="w-3/5 flex flex-grow items-center gap-4">
+                    <div className="h-16 md:h-20 w-16 md:w-20 bg-gray-50 p-1 rounded-lg relative">
                       <Image
                         src={item.product.images[0].url}
                         layout="fill"
@@ -87,7 +86,7 @@ const SuccessPage: React.FC<Props> = ({ order, error }) => {
                     <p className="font-medium text-gray-800">
                       {formatCurrencyValue({
                         currency: CURRENCY,
-                        value: convertPriceFormat('stripeToCms', item.total)
+                        value: item.price
                       })}
                     </p>
                   </div>
@@ -108,12 +107,16 @@ const SuccessPage: React.FC<Props> = ({ order, error }) => {
             <span>{address.postal_code}</span>
             <span>{parseCountry(address.country)}</span>
           </p>
-          <p className="mt-4 md:w-2/3">
+          <p className="my-4 md:w-2/3">
             Please check your address carefully. If you find any errors, please{' '}
             <a href="mailto:wynorobeira1960@outlook.pt" className="colored">
               contact us
             </a>
             , so we could ship your order correctly.
+          </p>
+          <p className="text-xl mb-4 font-bold">Shipping cost</p>
+          <p className="text-gray-800 font-medium text-lg">
+            {order.shippingCost}
           </p>
         </div>
       </div>
