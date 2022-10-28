@@ -16,7 +16,7 @@ export const getProductsSlugQuery = gql`
 export const getProductBySlug = async ({
   slug
 }: LibParams): Promise<Product> => {
-  avoidRateLimit()
+  await avoidRateLimit()
   const {
     products: [product]
   } = await hygraphClient.request(getProductsSlugQuery, {
