@@ -1,4 +1,5 @@
 import { createOrder } from '@/lib/create-order'
+import { sendEmailConfirmation } from '@/lib/send-email-confirmation'
 import stripe from '@/lib/stripe-client'
 import { stripeSigningSecret } from '@/lib/stripe-signing-secret'
 import { unpublishProduct } from '@/lib/unpublish-product'
@@ -27,7 +28,8 @@ const handler = async (
                 ]
               }
             )
-            await createOrder(session)
+            const orderId = await createOrder(session)
+            await sendEmailConfirmation(orderId)
             await Promise.all(
               session.line_items?.data.map(
                 async (item: any) =>

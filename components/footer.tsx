@@ -30,7 +30,7 @@ export const Footer: React.FC<Props> = ({
       const result = await getAllTextPages()
       setTextPages(result)
     } catch (e) {
-      console.log(e)
+      console.error(e)
     }
   }
 

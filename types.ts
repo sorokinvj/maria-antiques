@@ -21,11 +21,11 @@ interface OrderItem {
   id: string
   product: Product
   price: number
-  quantity: number
 }
 
 export interface Order {
   id: string
+  email: string
   total: number
   orderItems: OrderItem[]
   shippingInfo: {
