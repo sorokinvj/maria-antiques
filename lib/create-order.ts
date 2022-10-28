@@ -26,7 +26,7 @@ export async function createOrder(
   } = session
 
   try {
-    const orderId = await hygraphMutationClient.request(createOrderMutation, {
+    const response = await hygraphMutationClient.request(createOrderMutation, {
       order: {
         email: customer_details?.email,
         total: convertPriceFormat('stripeToCms', amount_total || 0),
@@ -52,7 +52,7 @@ export async function createOrder(
         shippingCost: getShippingCost(shipping_cost)
       }
     })
-    return orderId
+    return response?.order?.id
   } catch (error) {
     console.error('Error on creating order', parseErrorMessage(error))
     throw error

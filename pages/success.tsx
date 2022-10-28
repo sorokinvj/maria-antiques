@@ -114,7 +114,7 @@ const SuccessPage: React.FC<Props> = ({ order, error }) => {
             </a>
             , so we could ship your order correctly.
           </p>
-          <p className="text-xl mb-4 font-bold">Shipping cost</p>
+          <p className="text-xl mb-4 font-bold">Shipping cost (with tax)</p>
           <p className="text-gray-800 font-medium text-lg">
             {order.shippingCost}
           </p>

@@ -17,6 +17,7 @@ export const getOrderByIdQuery = gql`
         }
       }
       shippingInfo
+      shippingCost
       total
     }
   }

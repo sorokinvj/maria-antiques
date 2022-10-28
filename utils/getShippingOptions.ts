@@ -78,7 +78,7 @@ export const getShippingOptions = (
             value: 7
           }
         },
-        tax_behavior: 'inclusive',
+        tax_behavior: 'exclusive',
         tax_code: 'txcd_92010001'
       }
     },
@@ -103,7 +103,7 @@ export const getShippingOptions = (
             value: 7
           }
         },
-        tax_behavior: 'inclusive',
+        tax_behavior: 'exclusive',
         tax_code: 'txcd_92010001'
       }
     },
@@ -128,7 +128,7 @@ export const getShippingOptions = (
             value: 10
           }
         },
-        tax_behavior: 'inclusive',
+        tax_behavior: 'exclusive',
         tax_code: 'txcd_92010001'
       }
     },
@@ -153,7 +153,7 @@ export const getShippingOptions = (
             value: 10
           }
         },
-        tax_behavior: 'inclusive',
+        tax_behavior: 'exclusive',
         tax_code: 'txcd_92010001'
       }
     }
