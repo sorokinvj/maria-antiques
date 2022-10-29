@@ -4,13 +4,16 @@ import { LogoIcon, ShoppingCartIcon } from '@/icons'
 import { formatCurrencyValue } from '@/utils/format-currency-value'
 import Link from 'next/link'
 import { useCart } from 'react-use-cart'
-import { Page } from 'types'
+import { Page, StaticPage } from 'types'
+import { InfoPageLink } from './InfoPageLink'
+import { NavigationLink } from './NavigationLink'
 
 interface Props {
   pages: Page[]
+  infoPages: StaticPage[]
 }
 
-export const Header: React.FC<Props> = ({ pages = [] }) => {
+export const Header: React.FC<Props> = ({ pages = [], infoPages = [] }) => {
   const { cartTotal } = useCart()
   const hasMounted = useHasMounted()
 
@@ -27,18 +30,12 @@ export const Header: React.FC<Props> = ({ pages = [] }) => {
           </Link>
           {pages.length ? (
             <ul className="hidden md:mx-auto md:block md:flex-grow">
-              {pages.map((page: Page) => (
-                <li
-                  key={page.id}
-                  className="block my-4 md:inline-block md:my-0"
-                >
-                  <Link href={`/${page.type.toLowerCase()}/${page.slug}`}>
-                    <a className="text-lightgray hover:text-slategray hover:bg-gainsboro rounded-full py-2 px-3 font-semibold">
-                      {page.name}
-                    </a>
-                  </Link>
-                </li>
-              ))}
+              {pages.map(NavigationLink)}
+            </ul>
+          ) : null}
+          {infoPages.length ? (
+            <ul className="hidden md:ml-auto md:block md:flex-grow">
+              {infoPages.map(InfoPageLink)}
             </ul>
           ) : null}
           <div className="flex items-center">

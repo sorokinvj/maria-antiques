@@ -1,5 +1,5 @@
 import { Footer } from '@/components/footer'
-import { Header } from '@/components/header'
+import { Header } from '@/components/Header/header'
 import { DefaultSeo } from 'next-seo'
 import { defaultSeo } from 'next-seo.config'
 import React from 'react'
