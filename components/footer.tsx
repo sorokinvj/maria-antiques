@@ -1,39 +1,18 @@
-import { getAllTextPages } from '@/lib/get-all-textpages'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
-import { Category, Collection } from 'types'
+import React from 'react'
+import { Category, Collection, StaticPage } from 'types'
 
 interface Props {
   categories: Category[]
   collections: Collection[]
-}
-
-interface TextPage {
-  title: string
-  slug: string
+  staticPages: StaticPage[]
 }
 
 export const Footer: React.FC<Props> = ({
   categories = [],
-  collections = []
+  collections = [],
+  staticPages = []
 }) => {
-  const router = useRouter()
-  const [textPages, setTextPages] = useState<TextPage[]>([])
-
-  useEffect(() => {
-    getTextPages()
-  }, [])
-
-  const getTextPages = async () => {
-    try {
-      const result = await getAllTextPages()
-      setTextPages(result)
-    } catch (e) {
-      console.error(e)
-    }
-  }
-
   return (
     <footer className="bg-gray-50" aria-labelledby="footerHeading">
       <h2 id="footerHeading" className="sr-only">
@@ -87,17 +66,17 @@ export const Footer: React.FC<Props> = ({
               </div>
             ) : null}
 
-            {textPages.length ? (
+            {staticPages.length ? (
               <div>
                 <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase">
                   Information
                 </h3>
                 <ul className="mt-4 space-y-4">
-                  {textPages.map((value) => (
-                    <li key={value.title}>
-                      <Link href={`/pages/${value.slug}`}>
+                  {staticPages.map((page) => (
+                    <li key={page.title}>
+                      <Link href={`/pages/${page.slug}`}>
                         <a className="text-base text-gray-500 hover:text-gray-900">
-                          {value.title}
+                          {page.title}
                         </a>
                       </Link>
                     </li>
