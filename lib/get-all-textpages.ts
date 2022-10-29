@@ -13,6 +13,6 @@ export const getAllTextPagesQuery = gql`
 export const getAllTextPages = async (): Promise<TextPage[]> => {
   const { pages } = await hygraphClient.request(getAllTextPagesQuery, {})
   return pages
-}
+} 
 
 export default getAllTextPages

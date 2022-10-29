@@ -90,3 +90,8 @@ export enum ShippingDestination {
   worldwide = 'WW',
   us = 'US'
 }
+
+export interface StaticPage {
+  title: string
+  slug: string
+}

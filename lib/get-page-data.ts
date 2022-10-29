@@ -1,6 +1,6 @@
 import { CategoryFragment, CollectionFragment } from '@/lib/graphql-fragments'
 import hygraphClient, { gql } from '@/lib/hygraph-client'
-import { Category, Collection, Page } from 'types'
+import { Category, Collection, Page, StaticPage } from 'types'
 
 export const getPageDataQuery = gql`
   query PageDataQuery() {
@@ -20,6 +20,10 @@ export const getPageDataQuery = gql`
       ...CollectionFragment
       type: __typename
     }
+    staticPages: pages(first: 4) {
+      slug
+      title
+    }
   }
 
   ${[CategoryFragment, CollectionFragment]}
@@ -29,9 +33,11 @@ interface PageData {
   footer: {
     categories: Category[]
     collections: Collection[]
+    staticPages: StaticPage[]
   }
-  navigation: {
+  header: {
     pages: Page[]
+    infoPages: StaticPage[]
   }
 }
 
@@ -40,12 +46,20 @@ export const getPageData = async (): Promise<PageData> => {
     footerCategories,
     footerCollections,
     navigationCategory,
-    navigationCollection
+    navigationCollection,
+    staticPages
   } = await hygraphClient.request(getPageDataQuery)
 
   return {
-    footer: { categories: footerCategories, collections: footerCollections },
-    navigation: { pages: [...navigationCategory, ...navigationCollection] }
+    footer: {
+      categories: footerCategories,
+      collections: footerCollections,
+      staticPages
+    },
+    header: {
+      pages: [...navigationCategory, ...navigationCollection],
+      infoPages: staticPages
+    }
   }
 }
 
