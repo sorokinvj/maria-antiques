@@ -18,7 +18,9 @@ export const Header: React.FC<Props> = ({ pages = [], infoPages = [] }) => {
   const hasMounted = useHasMounted()
 
   if (!hasMounted) return null
-
+  const shippingInfoPage = infoPages.find(
+    (page) => page.title === 'Shipping Info'
+  )
   return (
     <header className="sticky top-0 z-50 max-w-7xl mx-auto bg-white flex-grow flex items-center justify-between px-4 sm:px-6">
       <div className="mt-6 pb-2 w-full">
@@ -54,6 +56,17 @@ export const Header: React.FC<Props> = ({ pages = [], infoPages = [] }) => {
               </a>
             </Link>
           </div>
+        </nav>
+        <nav className="sm:max-2xl:hidden flex items-center justify-between space-x-2">
+          {pages.length ? (
+            <ul className="flex">{pages.map(NavigationLink)}</ul>
+          ) : null}
+          {shippingInfoPage && (
+            <InfoPageLink
+              title={shippingInfoPage.title}
+              slug={shippingInfoPage.slug}
+            />
+          )}
         </nav>
       </div>
     </header>
