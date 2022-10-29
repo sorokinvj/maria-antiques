@@ -57,7 +57,7 @@ export const Header: React.FC<Props> = ({ pages = [], infoPages = [] }) => {
             </Link>
           </div>
         </nav>
-        <nav className="sm:max-2xl:hidden flex items-center justify-between space-x-2">
+        <nav className="sm:hidden md:hidden lg:hidden xl:hidden 2xl:hidden flex items-center justify-between space-x-2">
           {pages.length ? (
             <ul className="flex">{pages.map(NavigationLink)}</ul>
           ) : null}
