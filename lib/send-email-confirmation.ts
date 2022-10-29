@@ -33,6 +33,12 @@ export const sendEmailConfirmation = async (orderId: string): Promise<any> => {
               email: order.email
             }
           ],
+          cc: [
+            {
+              email: 'wynorobeira1960@outlook.pt',
+              name: "Maria's Antiques"
+            }
+          ],
           dynamic_template_data: {
             orderId: order.id,
             shippingName: order.shippingInfo?.name,
